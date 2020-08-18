@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
+import AppContextWrapper from './Context/AppContext';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 
@@ -8,11 +8,11 @@ function App() {
   return (
     <Suspense fallback="Loading...">
       <Router>
-        <RecoilRoot>
+        <AppContextWrapper>
           <Route path="/">
             <HomePage />
           </Route>
-        </RecoilRoot>
+        </AppContextWrapper>
       </Router>
     </Suspense>
   );
