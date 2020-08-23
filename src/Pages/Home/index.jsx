@@ -1,12 +1,22 @@
 import React from 'react';
 import Layout from '../../Commons/Layout';
-import Header from '../../Commons/Header';
+import Drawer from '../../Commons/Drawer';
+import { useAppContext } from '../../Context/AppContext';
 
 function Home() {
+  const { showDrawer, handleDrawerState } = useAppContext();
+
+  function toggleDrawer() {
+    handleDrawerState();
+  }
+
   return (
-    <Layout>
-      <Header bordered={true} title="#HenryJane2020" />
-    </Layout>
+    <>
+      {showDrawer ? <Drawer drawerPosition="right"></Drawer> : null}
+      <Layout>
+        <button onClick={toggleDrawer}>Show drawer</button>
+      </Layout>
+    </>
   );
 }
 
