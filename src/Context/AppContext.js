@@ -3,13 +3,18 @@ import React, { useState, useMemo, useContext } from 'react';
 export const AppContext = React.createContext(null);
 
 function AppContextWrapper(props) {
-  const [someState, setSomeState] = useState(false);
+  //Handles global app drawer
+  const [showDrawer, setShowDrawer] = useState(false);
 
-  function handleAState() {
-    setSomeState((prevState) => !prevState);
+  //Global toggle for app drawer
+  function handleDrawerState() {
+    setShowDrawer((prevState) => !prevState);
   }
 
-  const viewValue = useMemo(() => ({ someState, handleAState }), [someState]);
+  //Memoize context values
+  const viewValue = useMemo(() => ({ showDrawer, handleDrawerState }), [
+    showDrawer,
+  ]);
 
   return (
     <AppContext.Provider value={viewValue}>
