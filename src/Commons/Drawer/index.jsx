@@ -4,9 +4,21 @@ import { useAppContext } from '../../Context/AppContext';
 import 'animate.css';
 
 function Drawer({ drawerPosition, children }) {
-  const { showDrawer } = useAppContext();
+  const { showDrawer, handleDrawerState } = useAppContext();
+
+  function handleDrawerClose(e) {
+    if (e.target.id === 'global-drawer') {
+      handleDrawerState();
+    }
+  }
+
   return (
-    <DrawerWrapper position={drawerPosition} showDrawer={showDrawer}>
+    <DrawerWrapper
+      id="global-drawer"
+      position={drawerPosition}
+      showDrawer={showDrawer}
+      onClick={handleDrawerClose}
+    >
       <DrawerContent
         position={drawerPosition}
         showDrawer={showDrawer}
