@@ -3,14 +3,18 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AppContextWrapper from './Context/AppContext';
 
 const HomePage = lazy(() => import('./Pages/Home'));
+const EventPage = lazy(() => import('./Pages/Events'));
 
 function App() {
   return (
     <Suspense fallback="Loading...">
       <Router>
         <AppContextWrapper>
-          <Route path="/">
+          <Route path="/" exact>
             <HomePage />
+          </Route>
+          <Route path="/events" exact>
+            <EventPage />
           </Route>
         </AppContextWrapper>
       </Router>
