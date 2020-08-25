@@ -1,5 +1,10 @@
 @import './__variables.scss';
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: $default-font-family;
