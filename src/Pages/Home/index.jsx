@@ -1,54 +1,59 @@
 import React from 'react';
 import Styled from 'styled-components';
-import Layout from '../../Commons/Layout';
-import Drawer from '../../Commons/Drawer';
-import { useAppContext } from '../../Context/AppContext';
-import EventsCarousel from '../../Components/EventsCarousel';
 import Button from '../../Commons/Button';
+import { Link } from 'react-router-dom';
 
-function Home({ events }) {
-  const { showDrawer } = useAppContext();
-
+function Home() {
   return (
-    <>
-      {showDrawer ? <Drawer drawerPosition="right"></Drawer> : null}
-      <Layout fullWidth={true}>
-        <EventsCarousel data={events} />
-        <EventDescriptionWrapper>
-          <EventDescription>
-            <h4>#HenryJane2020</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore lorem ipsum dolor sit amet.
-            </p>
-            <Button text="Join In" />
-          </EventDescription>
-        </EventDescriptionWrapper>
-      </Layout>
-    </>
+    <ContentWrapper>
+      <Logo>LinkUp</Logo>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore lorem ipsum dolor sit amet.
+      </p>
+      <ButtonsArea>
+        <Link to="/events">
+          <Button text="Sign in" />
+        </Link>
+        <Link to="/">Create account</Link>
+      </ButtonsArea>
+    </ContentWrapper>
   );
 }
 
-const EventDescriptionWrapper = Styled.section`
-  width: 100%;
-  background: #fff;
+const ContentWrapper = Styled.section`
+ width: 90%;
+ margin: auto;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+ flex-direction: column;
+ p {
+   text-align: center;
+   font-size: 12px;
+   line-height: 18px;
+ }
 `;
 
-const EventDescription = Styled.article`
-  width: 90%;
-  margin: auto;
-  p {
-    font-size: 14px;
-    line-height: 1.5;
-  }
+const Logo = Styled.h1`
+  font-weight: bold;
+  font-size: 46px;
+  margin: 0;
 `;
 
-Home.defaultProps = {
-  events: [
-    { id: 1, title: '#HenryJane2020', image: '/assets/images/couple1.png' },
-    { id: 2, title: '#JohnJaneDoe2090', image: '/assets/images/couple2.png' },
-    { id: 3, title: '#SimTol2021', image: '/assets/images/couple3.png' },
-  ],
-};
+const ButtonsArea = Styled.div`
+ width: 100%;
+ margin-top: 40px;
+ a {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  font-weight: 900;
+ }
+`;
 
 export default Home;
