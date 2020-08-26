@@ -11,7 +11,7 @@ function Nav() {
             <img src="assets/home.svg" alt="" />
           </div>
           <Link to="">
-            <LinkTag>Home</LinkTag>
+        Home
           </Link>
         </div>
         <div>
@@ -19,9 +19,9 @@ function Nav() {
             <img src="assets/home.svg" alt="" />
           </div>
           <Link>
-          <LinkTag>
+          
           History
-          </LinkTag>
+    
           </Link>
         </div>
         <div className="">
@@ -29,7 +29,7 @@ function Nav() {
             <img src="assets/history.svg" alt="" />
           </div>
           <Link>
-          <LinkTag>Profile</LinkTag></Link>
+          Profile</Link>
         </div>
       </NavWrapper>
     </>
@@ -46,11 +46,6 @@ const NavWrapper = styled.nav`
   text-align: center;
   line-height: 1.7;
 `;
-const LinkTag = styled.a`
-  color: black;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-`;
+
 
 export default Nav;
