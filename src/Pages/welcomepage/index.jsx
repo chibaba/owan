@@ -1,24 +1,17 @@
 import React from "react";
 import "../welcomepage/welcome.css";
-import Nav from "../../Commons/Nav";
+import Nav from "../../Commons/ButtomNav";
+import UserHeader from "../../Commons/UserHeader/UserHeader";
 
 
 const WelcomePage = () => {
   return (
     <div className="welcome-page">
-      <div className="welcome-header">
-        <div className="welcome-user">
-          <div className="user-details">
-            <span className="welcom">Welcome,</span>
-            <span className="name">Tamakloe</span>
-          </div>
-          <div className="user-img" />
-        </div>
-        <div className="time-date">
-          <span className="time">14PM</span>
-          <span className="date">Sunday 23 August, 2010</span>
-        </div>
-      </div>
+      <UserHeader
+       firstName='TamaKloe'
+       time="1:42PM"
+       date="Sunday, 23 August 2020"
+      />
       <div className="event-directory">
         <div className="path">
           <img

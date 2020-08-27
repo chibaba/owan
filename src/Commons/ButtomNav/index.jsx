@@ -24,7 +24,7 @@ function Nav() {
     
           </Link>
         </div>
-        <div className="">
+        <div >
           <div>
             <img src="assets/history.svg" alt="" />
           </div>

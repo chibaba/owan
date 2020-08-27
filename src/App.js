@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import './App.scss'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AppContextWrapper from './Context/AppContext';
+import DashBoard from './Pages/dashboard/DashBoard';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route path="/welcome" exact>
             <WelcomePage/>
+          </Route>
+          <Route path="/dashboard"  >
+            <DashBoard/>
           </Route>
         </AppContextWrapper>
       </Router>

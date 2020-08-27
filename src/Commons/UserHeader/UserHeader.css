@@ -1,0 +1,35 @@
+.welcome-header{
+    display: flex;
+    flex-direction: column;
+}
+.welcome-user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.user-details{
+    display: flex;
+    flex-direction: column;
+}
+.name{
+    font-weight: bolder;
+    margin-top: 3px;
+}
+.user-img{
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border-radius: 50%;
+    border: 3px solid #28C101
+
+}
+.biggerUserImg{
+    width: 70px;
+    height: 70px;
+}
+.time-date{
+    padding-top: 2rem;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+}
