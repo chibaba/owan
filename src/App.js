@@ -4,6 +4,7 @@ import AppContextWrapper from './Context/AppContext';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
+const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
           </Route>
           <Route path="/events" exact>
             <EventPage />
+          </Route>
+          <Route path="/dashboard" exact>
+            <DashboardPage />
           </Route>
         </AppContextWrapper>
       </Router>
