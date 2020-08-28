@@ -18,13 +18,13 @@ function App() {
           <Route path="/" exact>
             <HomePage />
           </Route>
-          <Route path="/events" exact>
+          <Route path="/events">
             <EventPage />
           </Route>
-          <Route path="/dash" exact>
+          <Route path="/dash">
             <DashboardPage />
           </Route>
-          <Route path="/welcome" exact>
+          <Route path="/welcome">
             <WelcomePage />
           </Route>
           <Route path="/dashboard">
