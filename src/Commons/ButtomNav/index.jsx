@@ -11,25 +11,33 @@ function Nav() {
             <img src="assets/home.svg" alt="" />
           </div>
           <Link to="">
+            <LinkTo>
         Home
+        </LinkTo>
           </Link>
         </div>
         <div>
           <div>
-            <img src="assets/home.svg" alt="" />
+          <img src="/assets/images/icons/calendar.png" alt="settings" />
           </div>
           <Link>
-          
+          <span>
+          <LinkTo>
           History
+          </LinkTo>
+        
+          </span>
     
           </Link>
         </div>
         <div >
           <div>
-            <img src="assets/history.svg" alt="" />
+          <img src="/assets/images/icons/star.png" alt="settings" />
           </div>
           <Link>
-          Profile</Link>
+          <LinkTo>
+          Profile
+          </LinkTo></Link>
         </div>
       </NavWrapper>
     </>
@@ -39,13 +47,19 @@ function Nav() {
 const NavWrapper = styled.nav`
   width: 100%;
   display: flex;
+  
   justify-content: space-between;
   padding-top: 1rem;
   border-top: 1px solid #f4f4fe;
   align-items: center;
   text-align: center;
-  line-height: 1.7;
+  line-height: 1.5;
 `;
+const LinkTo = styled.nav`
+      font-size:11px;
+
+`
+
 
 
 export default Nav;

@@ -8,6 +8,7 @@ const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
 const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 const WelcomePage = lazy(() => import('./Pages/welcomepage'));
+const EventStatus =lazy(() => import('./Pages/EventStatus'))
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path="/dashboard">
             <DashBoard />
+          </Route>
+          <Route path="/status">
+            <EventStatus />
           </Route>
         </AppContextWrapper>
       </Router>
