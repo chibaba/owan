@@ -16,7 +16,7 @@ function Header({ bordered, title }) {
 const MainHeader = Styled.header`
   height: 79px;
   border-bottom: ${(props) =>
-    props.bordered ? '1px solid rgba(0, 0, 0, 0.08)' : ''};
+    props.bordered ? '1px solid rgba(0, 0, 0, 0.08)' : '2px solid  #28C101'};
   display: flex;
   align-items: center;
   padding: 0 1.2rem;

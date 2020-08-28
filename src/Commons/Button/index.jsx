@@ -2,17 +2,17 @@ import React from 'react';
 import Styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function Button({ text }) {
-  return <DefaultButton>{text}</DefaultButton>;
+function Button({ text, cancelbtn }) {
+  return <DefaultButton cancelbtn={cancelbtn}>{text}</DefaultButton>;
 }
 
 const DefaultButton = Styled.button`
   width: 100%;
   border: none;
-  background: #28C101;
+  background: ${({cancelbtn})=>cancelbtn? '':'#28C101'};
   border-radius: 5px;
   box-shadow: 0px 20px 45px rgba(0, 0, 0, 0.07);
-  color: #fff;
+  color: ${({cancelbtn})=>cancelbtn?'black':'white'};
   font-size: 14px;
   font-family: 'Sailec', sans-serif;
   font-weight: 900;

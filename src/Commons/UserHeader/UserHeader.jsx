@@ -1,5 +1,6 @@
 import React from "react";
 import '../UserHeader/UserHeader.css'
+import PropTypes from 'prop-types'
 
 const UserHeader = ({ firstName, lastName, time, date, biggerUserImg }) => {
   return (
@@ -23,4 +24,9 @@ const UserHeader = ({ firstName, lastName, time, date, biggerUserImg }) => {
     </div>
   );
 };
+UserHeader.propTypes={
+  firstName: PropTypes.string,
+  lastName:PropTypes.string
+
+}
 export default UserHeader;
