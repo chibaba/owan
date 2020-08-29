@@ -3,6 +3,7 @@ import Header from './Header';
 import EventOptions from './EventOptions';
 import Drawer from '../Drawer';
 import { useAppContext } from '../../Context/AppContext';
+import EventComments from './EventComments';
 
 function VideoCallLayout({ children }) {
   const { showDrawer } = useAppContext();
@@ -12,6 +13,7 @@ function VideoCallLayout({ children }) {
       <Header />
       {children}
       <EventOptions />
+      <EventComments />
     </>
   );
 }
