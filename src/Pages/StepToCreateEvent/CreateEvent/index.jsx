@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 import CheckBox from "../../../Commons/CheckBox"
 import Button from "../../../Commons/Button"
@@ -6,7 +7,7 @@ import CreateEventLayout from "../../../Commons/CreateEventLayout";
 import "../CreateEvent/CreateEvent.css";
 import styled from "styled-components";
 
-import { useState } from "react";
+
 import ImageContainer from "../../../Components/ImageCard/ImageContainer";
 
 const CreateEvent = () => {
@@ -23,6 +24,13 @@ const CreateEvent = () => {
       [event.target.name]: event.target.value,
     });
   };
+  const handleInputCancel =event=>{
+      event.preventDefault();
+      setData({
+          ...data,[initialState]: "",
+        
+      })
+  }
   console.log(data);
   return (
     <CreateEventLayout>
@@ -114,7 +122,7 @@ const CreateEvent = () => {
         <h4 className="title">Add Images(max of 20mb for each)</h4>
         <ImageContainer></ImageContainer>
         <Button cancelbtn={false} text="Continue" />
-        <Button cancelbtn={true} text="Cancel"></Button>
+        <Button cancelbtn={true} text="Cancel" onClick={handleInputCancel}></Button>
 
 
         
