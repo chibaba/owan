@@ -48,6 +48,26 @@ input[type=date], input[type=time]{
     
 
 }
+.locationCheckbox{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    
+    margin-bottom: 0.6rem;
+
+}
+.switch{
+    font-weight: 300;
+}
+.locationInput{
+    width: 100%;
+    box-sizing: border-box;
+    font: inherit;
+    margin-bottom: 1rem;
+    padding: 10px 0;
+    font-size: 12px;
+
+}
 .multiple-checked{
     display: flex;
     flex-direction: column;
@@ -59,6 +79,7 @@ input[type=date], input[type=time]{
     margin-bottom: 0.6rem;
     font-size: 12px
 }
+
 .checklist{
     display: flex;
     justify-content: space-between;
