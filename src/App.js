@@ -8,9 +8,9 @@ import UserRegistration from './Commons/UserRegistration';
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
 const DashboardPage = lazy(() => import('./Pages/Dashboard'));
-const WelcomePage = lazy(() => import('./Pages/welcomepage'));
 const EventStatus =lazy(() => import('./Pages/EventStatus'))
 const CreateEvent= lazy(()=> import('./Pages/StepToCreateEvent/CreateEvent/index'))
+const EventOwnerRegister =lazy(()=>import('./Pages/EventOwnerLogin'))
 
 function App() {
   return (
@@ -35,8 +35,11 @@ function App() {
           <Route path="/status">
             <EventStatus />
           </Route>
-          <Route path="/create">
+          <Route path="/createEvent">
             <CreateEvent />
+          </Route>
+          <Route path="/eventLogin">
+            <EventOwnerRegister />
           </Route>
         </AppContextWrapper>
       </Router>
