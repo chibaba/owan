@@ -17,7 +17,7 @@ const EventOnwerLayout = ({children, createAcc, title }) => {
 
 const LoginTitle = styled.span`
   font-weight: 500;
-  font-size: 12px;
+  font-size: ${({createAcc})=>createAcc?"14px": "12px"};
   padding-top: 5px;
 `;
 

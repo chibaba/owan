@@ -10,7 +10,9 @@ const EventPage = lazy(() => import('./Pages/Events'));
 const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 const EventStatus =lazy(() => import('./Pages/EventStatus'))
 const CreateEvent= lazy(()=> import('./Pages/StepToCreateEvent/CreateEvent/index'))
-const EventOwnerRegister =lazy(()=>import('./Pages/EventOwnerLogin'))
+const EventOwnerLogin =lazy(()=>import('./Pages/EventOwnerLogin'))
+const EventOwnerRegister =lazy(()=>import('./Pages/EventOwnerRegister'))
+
 
 function App() {
   return (
@@ -39,6 +41,9 @@ function App() {
             <CreateEvent />
           </Route>
           <Route path="/eventLogin">
+            <EventOwnerLogin />
+          </Route>
+          <Route path="/eventreg">
             <EventOwnerRegister />
           </Route>
         </AppContextWrapper>

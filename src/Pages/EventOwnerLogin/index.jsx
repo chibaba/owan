@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const EventOwnerLogin = () => {
   return (
-    <EventOwnerLayout title="Log in into your account">
+    <EventOwnerLayout createAcc={false} title="Log in into your account">
       <EventOwnerLoginForm>
         <div>
           <LabelText>
@@ -26,7 +26,7 @@ const EventOwnerLogin = () => {
       </EventOwnerLoginForm>
       <Redirect>
         Dont have an account?
-        <Link to="">
+        <Link to="/eventreg">
           <RegisterLink> Register</RegisterLink>
         </Link>
       </Redirect>

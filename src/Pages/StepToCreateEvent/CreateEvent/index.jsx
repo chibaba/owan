@@ -94,6 +94,7 @@ const CreateEvent = () => {
               name="locationOn"
               onChange={handleInputChange}
               location={false}
+              square={true}
             />
             Online
           </label>
