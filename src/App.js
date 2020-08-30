@@ -13,6 +13,7 @@ const CreateEvent= lazy(()=> import('./Pages/StepToCreateEvent/CreateEvent/index
 const EventOwnerLogin =lazy(()=>import('./Pages/EventOwnerLogin'))
 const EventOwnerRegister =lazy(()=>import('./Pages/EventOwnerRegister'))
 const EmailVerification =lazy(()=> import('./Pages/EmailVerification'))
+const NewDashBoard = lazy(()=>import('./Pages/NewDashBoard'))
 
 
 function App() {
@@ -34,6 +35,9 @@ function App() {
           </Route>
           <Route path="/dashboard">
             <DashBoard />
+          </Route>
+          <Route path="/newDashboard">
+            <NewDashBoard />
           </Route>
           <Route path="/status">
             <EventStatus />

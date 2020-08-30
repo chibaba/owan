@@ -13,15 +13,14 @@ const EmailVerification = ({ email }) => {
       </IconDiv>
       <VerificationRes>
         <h3>
-          A verification email has been sent to <Email>{email = "lagbajamadua@gmail.com"}</Email>
+          A verification email has been sent to{" "}
+          <Email>{(email = "lagbajamadua@gmail.com")}</Email>
         </h3>
       </VerificationRes>
       <Link to="">
-      <WrongEmail>Wrong Email?</WrongEmail>
+        <WrongEmail>Wrong Email?</WrongEmail>
       </Link>
-      <Button text="Edit Email"/>
-
-      
+      <Button text="Edit Email" />
     </EventOnwerLayout>
   );
 };
@@ -32,8 +31,7 @@ const IconDiv = styled.div`
   justify-content: center;
 `;
 const VerificationRes = styled.div`
-
-
+  padding-top: 1.2rem;
   text-align: center;
   font-size: 12px;
   margin-bottom: 4rem;
@@ -42,15 +40,13 @@ const Email = styled.div`
   color: ${Colors.defaultGreen};
 `;
 const WrongEmail = styled.span`
-display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-font-size: 12px;
-text-align: center;
-font-weight: bold;
-padding: 10px 0;
-
-    
-`
+  font-size: 12px;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px 0;
+`;
 
 export default EmailVerification;
