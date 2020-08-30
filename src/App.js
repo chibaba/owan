@@ -3,6 +3,7 @@ import './App.scss';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AppContextWrapper from './Context/AppContext';
 import DashBoard from './Pages/Dashboard/DashBoard';
+import UserRegistration from './Commons/UserRegistration';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
@@ -25,8 +26,8 @@ function App() {
           <Route path="/dash">
             <DashboardPage />
           </Route>
-          <Route path="/welcome">
-            <WelcomePage />
+          <Route path="/userReg">
+            <UserRegistration/>
           </Route>
           <Route path="/dashboard">
             <DashBoard />
