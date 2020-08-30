@@ -80,10 +80,11 @@ const VideoAttendees = Styled.li`
     font-weight: 800;
   }
 `;
-const EventTitle = Styled.h4`
+const EventTitle = Styled.h5`
   color:#fff;
   flex: 1;
   text-align: center;
+  font-weight: 900;
 `;
 
 const SideNavToggle = Styled.div`
