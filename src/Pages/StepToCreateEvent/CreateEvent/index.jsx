@@ -1,12 +1,12 @@
 import React from "react";
+import { useState } from "react";
 
-import CheckBox from "../../../Commons/CheckBox"
-import Button from "../../../Commons/Button"
+import CheckBox from "../../../Commons/CheckBox";
+import Button from "../../../Commons/Button";
 import CreateEventLayout from "../../../Commons/CreateEventLayout";
 import "../CreateEvent/CreateEvent.css";
 import styled from "styled-components";
 
-import { useState } from "react";
 import ImageContainer from "../../../Components/ImageCard/ImageContainer";
 
 const CreateEvent = () => {
@@ -14,6 +14,7 @@ const CreateEvent = () => {
     eventType: "",
     description: "",
     eventPassword: "",
+    location: "",
   };
   const [data, setData] = useState(initialState);
 
@@ -23,11 +24,18 @@ const CreateEvent = () => {
       [event.target.name]: event.target.value,
     });
   };
+  const handleInputCancel = (event) => {
+    event.preventDefault();
+    setData({
+      ...data,
+      [initialState]: "",
+    });
+  };
   console.log(data);
   return (
     <CreateEventLayout>
       <EventForm>
-      <div>
+        <div>
           <label className="event">
             Event Name
             <input
@@ -81,16 +89,33 @@ const CreateEvent = () => {
         </div>
         <h4 className="tittle">Location</h4>
         <div className="locationCheckbox">
-            <label>
-            <CheckBox name="loactionOn" onChange={handleInputChange} location={false} />
-                Online
-            </label>
-            <label>
-            <CheckBox name="loactionOff" onChange={handleInputChange} location={false} />
-                Offline
-            </label>
-
-
+          <label className="switch">
+            <CheckBox
+              name="locationOn"
+              onChange={handleInputChange}
+              location={false}
+              square={true}
+            />
+            Online
+          </label>
+          <label className="switch">
+            <CheckBox
+              name="locationOff"
+              onChange={handleInputChange}
+              location={false}
+            />
+            Offline
+          </label>
+        </div>
+        <div>
+          <input
+          className="locationInput"
+            type="text"
+            name="location"
+            placeholder="Enter Venue Location"
+            value={data.location}
+            onChange={handleInputChange}
+          />
         </div>
         <h4 className="title">Advance</h4>
         <div className="multiple-checked">
@@ -100,11 +125,15 @@ const CreateEvent = () => {
           </div>
           <div className="checklist">
             <span>Enabble join before host</span>
-            <CheckBox name="EnableHost" checked={false}onChange={handleInputChange} />
+            <CheckBox
+              name="EnableHost"
+              checked={false}
+              onChange={handleInputChange}
+            />
           </div>
           <div className="checklist">
             <span>Mute participant before entry</span>
-            <CheckBox name="Mute"  onChange={handleInputChange} />
+            <CheckBox name="Mute" onChange={handleInputChange} />
           </div>
           <div className="checklist">
             <span>Auto record meeting</span>
@@ -114,11 +143,11 @@ const CreateEvent = () => {
         <h4 className="title">Add Images(max of 20mb for each)</h4>
         <ImageContainer></ImageContainer>
         <Button cancelbtn={false} text="Continue" />
-        <Button cancelbtn={true} text="Cancel"></Button>
-
-
-        
-        
+        <Button
+          cancelbtn={true}
+          text="Cancel"
+          onClick={handleInputCancel}
+        ></Button>
       </EventForm>
     </CreateEventLayout>
   );
