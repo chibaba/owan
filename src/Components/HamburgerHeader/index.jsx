@@ -22,7 +22,7 @@ const NavHeader = styled.div`
 height:79px;
 display:flex;
 align-items: center;
-padding: 0 1.2rem;
+padding: 0 1.2rem 1.5rem 1.2rem;
 
 
 `;
