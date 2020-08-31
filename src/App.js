@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AppContextWrapper from './Context/AppContext';
 import DashBoard from './Pages/Dashboard/DashBoard';
 import UserRegistration from './Commons/UserRegistration';
+import SuccessPage from './Pages/SuccessPage';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
@@ -57,6 +58,9 @@ function App() {
           </Route>
           <Route path="/portal">
             <EventPortal />
+          </Route>
+          <Route path="/res">
+            <SuccessPage />
           </Route>
         </AppContextWrapper>
       </Router>
