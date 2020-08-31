@@ -14,6 +14,7 @@ const EventOwnerLogin =lazy(()=>import('./Pages/EventOwnerLogin'))
 const EventOwnerRegister =lazy(()=>import('./Pages/EventOwnerRegister'))
 const EmailVerification =lazy(()=> import('./Pages/EmailVerification'))
 const NewDashBoard = lazy(()=>import('./Pages/NewDashBoard'))
+const EventPortal = lazy(()=>import('./Pages/EventPortal'))
 
 
 function App() {
@@ -53,6 +54,9 @@ function App() {
           </Route>
           <Route path="/emailverify">
             <EmailVerification />
+          </Route>
+          <Route path="/portal">
+            <EventPortal />
           </Route>
         </AppContextWrapper>
       </Router>
