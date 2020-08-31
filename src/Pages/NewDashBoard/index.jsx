@@ -2,6 +2,7 @@ import React from "react";
 import NewDashBoardLayout from "../../Components/NewDashBoardLayout";
 import Styled from "styled-components";
 import DashBoardHomeCard from "../../Components/DashBoardHomeCard";
+import DashBoardCardLayout from "../../Components/DashBoardHomeCard/DashBoardCardLayout"
 import Colors from '../../Commons/Colors'
 import { Link } from "react-router-dom";
 
@@ -9,7 +10,7 @@ const NewDashBoard = () => {
   return (
     <NewDashBoardLayout lastName="Opeyemi" firstName="Tamkloe">
       <OptionHeader>Here are a few things you can do</OptionHeader>
-      <DashboardContent>
+      <DashBoardCardLayout>
         <DashBoardHomeCard>
           <img src="/assets/greenLayers.svg" alt="Create" />
           
@@ -32,7 +33,7 @@ const NewDashBoard = () => {
           <img src="/assets/images/icons/unlock.png" alt="Create" />
           <span>Wallet</span>
         </DashBoardHomeCard>
-      </DashboardContent>
+      </DashBoardCardLayout>
     </NewDashBoardLayout>
   );
 };
@@ -43,20 +44,6 @@ const OptionHeader = Styled.h3`
   letter-spacing: 0.8px;
   text-align: center;
 `;
-const DashboardContent = Styled.main`
-  width: 90%;
-  margin: auto;
-  padding: 10px 0; 
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; 
-  overflow: scroll;
-  margin-bottom: 80px;
-  @media (min-width: 768px) {
-    width: 40%;
-  }
-
-`
 
 
 
