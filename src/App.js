@@ -5,6 +5,7 @@ import AppContextWrapper from './Context/AppContext';
 import DashBoard from './Pages/Dashboard/DashBoard';
 import UserRegistration from './Commons/UserRegistration';
 import SuccessPage from './Pages/SuccessPage';
+import WalletBalance from './Pages/WalletBalance';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
@@ -61,6 +62,9 @@ function App() {
           </Route>
           <Route path="/res">
             <SuccessPage />
+          </Route>
+          <Route path="/bal">
+            <WalletBalance />
           </Route>
         </AppContextWrapper>
       </Router>
