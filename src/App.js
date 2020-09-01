@@ -6,6 +6,7 @@ import DashBoard from './Pages/Dashboard/DashBoard';
 import UserRegistration from './Commons/UserRegistration';
 import SuccessPage from './Pages/SuccessPage';
 import WalletBalance from './Pages/WalletBalance';
+import FundWallet from './Pages/FundWallet';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
@@ -65,6 +66,9 @@ function App() {
           </Route>
           <Route path="/bal">
             <WalletBalance />
+          </Route>
+          <Route path="/fund">
+            <FundWallet />
           </Route>
         </AppContextWrapper>
       </Router>
