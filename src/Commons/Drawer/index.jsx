@@ -63,7 +63,7 @@ function Drawer({ drawerPosition, children }) {
 }
 
 const DrawerWrapper = Styled.div`
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 100vh;
   background: rgba(0,0,0,0.8);

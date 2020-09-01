@@ -32,7 +32,7 @@ function Header() {
 const HeaderWrapper = Styled.header`
   width: 100%;
   height: 80px;
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
