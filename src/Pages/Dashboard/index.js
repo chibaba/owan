@@ -3,6 +3,7 @@ import Styled from 'styled-components';
 import DashboardLayout from '../../Commons/DashboardLayout';
 import DashboardHeader from '../../Components/DashboardHeader';
 import Colors from '../../Commons/Colors';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
   const data = {
@@ -13,25 +14,25 @@ function Dashboard() {
     <DashboardLayout>
       <DashboardHeader data={data} />
       <DashboardContent>
-        <DashboardHomeCard>
+        <DashboardHomeCard to="/">
           <div>
             <img src="/assets/images/icons/layers.png" alt="Create" />
             <span>Create Event</span>
           </div>
         </DashboardHomeCard>
-        <DashboardHomeCard>
+        <DashboardHomeCard to="/events">
           <div>
             <img src="/assets/images/icons/tag.png" alt="Join" />
             <span>Join Event</span>
           </div>
         </DashboardHomeCard>
-        <DashboardHomeCard>
+        <DashboardHomeCard to="/">
           <div>
             <img src="/assets/images/icons/home.svg" alt="Home" />
             <span>Schedule</span>
           </div>
         </DashboardHomeCard>
-        <DashboardHomeCard>
+        <DashboardHomeCard to="/">
           <div>
             <img src="/assets/images/icons/unlock.png" alt="Wallet" />
             <span>Fund Wallet</span>
@@ -56,7 +57,7 @@ const DashboardContent = Styled.main`
   }
 `;
 
-const DashboardHomeCard = Styled.a`
+const DashboardHomeCard = Styled(Link)`
   display: flex;
   height: 158px;
   background: ${Colors.defaultGreen};
