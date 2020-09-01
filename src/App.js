@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import './App.scss';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AppContextWrapper from './Context/AppContext';
-import DashBoard from './Pages/Dashboard/DashBoard';
+// import DashBoard from './Pages/Dashboard/DashBoard';
 import UserRegistration from './Commons/UserRegistration';
 import VideoCallContextWrapper from './Context/VideoCallContext';
 import ProtectedRoutes from './Commons/Auth/ProtectedRoutes';
@@ -43,9 +43,9 @@ function App() {
             <Route path="/userReg">
               <UserRegistration />
             </Route>
-            <Route path="/dash">
+            {/* <Route path="/dash">
               <DashBoard />
-            </Route>
+            </Route> */}
             <Route path="/newDashboard">
               <NewDashBoard />
             </Route>
