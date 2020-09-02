@@ -4,10 +4,16 @@ import Colors from '../../Colors';
 import Icon from '@mdi/react';
 import { mdiRadioboxMarked, mdiDotsVertical } from '@mdi/js';
 import { useAppContext } from '../../../Context/AppContext';
+import { useVideoCallContext } from '../../../Context/VideoCallContext';
 
 function Header() {
   const { handleDrawerState } = useAppContext();
-
+  const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
+  function sideNavHandler() {
+    handleDrawerState();
+    handleTablesState(false);
+    handleSideDrawerState(true);
+  }
   return (
     <HeaderWrapper>
       <HeaderNav>
@@ -21,7 +27,7 @@ function Header() {
           </VideoAttendees>
         </VideoStats>
         <EventTitle>HenryJane2020</EventTitle>
-        <SideNavToggle onClick={handleDrawerState}>
+        <SideNavToggle onClick={sideNavHandler}>
           <Icon path={mdiDotsVertical} color="#fff" size={1} />
         </SideNavToggle>
       </HeaderNav>
@@ -32,7 +38,7 @@ function Header() {
 const HeaderWrapper = Styled.header`
   width: 100%;
   height: 80px;
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;

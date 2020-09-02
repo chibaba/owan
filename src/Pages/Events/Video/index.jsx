@@ -1,10 +1,21 @@
 import React from 'react';
 import Styled from 'styled-components';
 import VideoCallLayout from '../../../Commons/VideoCallLayout';
+import Drawer from '../../../Commons/Drawer';
+import { useAppContext } from '../../../Context/AppContext';
+import { useVideoCallContext } from '../../../Context/VideoCallContext';
 
 function Video() {
+  const { showDrawer } = useAppContext();
+  const { showTables, showSideDrawer } = useVideoCallContext();
   return (
     <VideoCallLayout>
+      {showDrawer && showSideDrawer ? (
+        <Drawer drawerPosition="right"></Drawer>
+      ) : null}
+      {showDrawer && showTables ? (
+        <Drawer drawerPosition="bottom"></Drawer>
+      ) : null}
       <VideoLayer>
         <VideoPlayer></VideoPlayer>
       </VideoLayer>
