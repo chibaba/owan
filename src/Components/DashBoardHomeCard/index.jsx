@@ -21,7 +21,7 @@ const DashBoardHomeCard=({children})=>{
 const DashboardHomeCardContainer = styled.a`
   display: flex;
   height: 130px;
-  background: rgba(40,193,1, 0.2);
+  background:${Colors.lightDefaultGreen};
   width: 47.25%;
   margin-bottom: 10px;
   border-radius: 4px;

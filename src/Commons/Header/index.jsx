@@ -1,6 +1,7 @@
 import React from 'react';
 import Styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function Header({ bordered, title }) {
   return (
@@ -8,7 +9,11 @@ function Header({ bordered, title }) {
       <NavIcons>
         <img src="/assets/images/glyphiconLeft.png" alt="Back" />
       </NavIcons>
-      <HeaderTitle>{title}</HeaderTitle>
+      <HeaderTitle>
+      <Link to="/">
+        {title}
+        </Link>
+        </HeaderTitle>
     </MainHeader>
   );
 }
