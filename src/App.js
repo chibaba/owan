@@ -25,7 +25,6 @@ import Styled from 'styled-components';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
-const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 const EventStatus =lazy(() => import('./Pages/Events/EventStatus'))
 const CreateEvent= lazy(()=> import('./Pages/StepToCreateEvent/CreateEvent/index'))
 const EventOwnerLogin =lazy(()=>import('./Pages/auth/EventOwnerLogin'))
@@ -50,9 +49,9 @@ function App() {
                   <EventPage />
                 </Route>
               </VideoCallContextWrapper>
-              <Route path="/dashboard">
+             { /*<Route path="/dashboard">
                 <DashboardPage />
-              </Route>
+  </Route>*/}
             </ProtectedRoutes>
             <Route path="/userReg">
               <UserRegistration />
