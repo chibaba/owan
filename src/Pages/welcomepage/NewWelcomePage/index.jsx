@@ -6,7 +6,7 @@ import DashBoardCardLayout from "../../../Components/DashBoardHomeCard/DashBoard
 import Colors from '../../../Commons/Colors'
 import { Link } from "react-router-dom";
 
-const NewDashBoard = () => {
+const NewWelcomePage = () => {
   return (
     <NewDashBoardLayout lastName="Opeyemi" firstName="Tamkloe">
       <OptionHeader>Here are a few things you can do</OptionHeader>
@@ -47,4 +47,4 @@ const OptionHeader = Styled.h3`
 
 
 
-export default NewDashBoard;
+export default NewWelcomePage;

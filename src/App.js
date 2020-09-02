@@ -30,9 +30,9 @@ const CreateEvent= lazy(()=> import('./Pages/StepToCreateEvent/CreateEvent/index
 const EventOwnerLogin =lazy(()=>import('./Pages/auth/EventOwnerLogin'))
 const EventOwnerRegister =lazy(()=>import('./Pages/auth/EventOwnerRegister'))
 const EmailVerification =lazy(()=> import('./Pages/auth/EmailVerification'))
-const NewDashBoard = lazy(()=>import('./Pages/Dashboard/NewDashBoard'))
+const WelcomePage = lazy(()=>import('./Pages/welcomepage/NewWelcomePage'))
 const EventPortal = lazy(()=>import('./Pages/Events/EventPortal'))
-
+const DashboardPage = lazy(()=>import('./Pages/Dashboard/DashBoard'))
 
 function App() {
   return (
@@ -49,9 +49,9 @@ function App() {
                   <EventPage />
                 </Route>
               </VideoCallContextWrapper>
-             { /*<Route path="/dashboard">
+             {<Route path="/dashboard">
                 <DashboardPage />
-  </Route>*/}
+              </Route>}
             </ProtectedRoutes>
             <Route path="/userReg">
               <UserRegistration />
@@ -59,8 +59,8 @@ function App() {
             {/* <Route path="/dash">
               <DashBoard />
             </Route> */}
-            <Route path="/newDashboard">
-              <NewDashBoard />
+            <Route path="/welcome">
+              <WelcomePage/>
             </Route>
             <Route path="/status">
               <EventStatus />
