@@ -96,7 +96,7 @@ const EventOwnerLogin = () => {
       </EventOwnerLoginForm>
       <Redirect>
         Dont have an account?
-        <Link to="/eventreg">
+        <Link to="/signup">
           <RegisterLink> Register</RegisterLink>
         </Link>
       </Redirect>

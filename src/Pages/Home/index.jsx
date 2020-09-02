@@ -12,10 +12,10 @@ function Home() {
         tempor incididunt ut labore lorem ipsum dolor sit amet.
       </p>
       <ButtonsArea>
-        <Link to="/events">
+        <Link to="/login">
           <Button text="Sign in" />
         </Link>
-        <Link to="/">Create account</Link>
+        <Link to="/signup">Create account</Link>
       </ButtonsArea>
     </ContentWrapper>
   );

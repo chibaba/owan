@@ -10,7 +10,7 @@ function Nav() {
           <div>
             <img src="assets/home.svg" alt="" />
           </div>
-          <Link to="">
+          <Link to="/welcome">
             <LinkTo>
         Home
         </LinkTo>
