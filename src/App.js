@@ -42,7 +42,7 @@ function App() {
               <Route path="/" exact>
                 <HomePage />
               </Route>
-               <Route path={["/events", "/dashboard"]}> 
+              {/* <Route path={["/events", "/dashboard"]}> */}
                <ProtectedRoutes>
                 <VideoCallContextWrapper>
                   <Route path="/events">
@@ -53,7 +53,7 @@ function App() {
                   <DashboardPage />
                 </Route>
               </ProtectedRoutes>
-               </Route> 
+               {/*</Route> */}
               <Route path="/userReg">
                 <UserRegistration />
               </Route>
