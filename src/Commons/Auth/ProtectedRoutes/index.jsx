@@ -8,7 +8,7 @@ function ProtectedRoutes({ children }) {
   useEffect(() => {
     const token = window.localStorage.getItem('rt');
     if (!token) {
-      history.push('/signup');
+      history.push('/');
     }
   }, [history]);
 
