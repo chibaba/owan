@@ -18,7 +18,7 @@ const WalletCredited =()=>{
           <span className="done">Your account has been <br/> successfully funded</span>
           
 <div className='iono'>
-         <Link to="/fund">
+         <Link to="/walletbal">
              <ButtonLnk>Go back</ButtonLnk>
          </Link>
          </div>

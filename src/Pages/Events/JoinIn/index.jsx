@@ -5,6 +5,7 @@ import Colors from "../../../Commons/Colors"
 import FormInput from '../../../Commons/FormInput/Index';
 import Button from '../../../Commons/Button';
 import BackgroundForOverlay from '../../../Components/BackgroundForOverlay';
+import { Link } from 'react-router-dom';
 
 
 const JoinIn =()=>{
@@ -22,7 +23,11 @@ const JoinIn =()=>{
                 Required
 
                 />
+                
+                
                 <Button text="Continue"/>
+                
+                
 
                 <Button cancelbtn={true}  text="Cancel" />
 
@@ -54,6 +59,7 @@ const ResponseContent = styled.div`
       font-weight:100;
   }
   button{
+      width: 100%;
       margin-top: 0.6rem;
       padding: 14px 0;
   }
