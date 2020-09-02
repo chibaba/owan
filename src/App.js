@@ -21,6 +21,7 @@ import PasswordInput from './Pages/Events/PasswordInput';
 
 import VideoCallContextWrapper from './Context/VideoCallContext';
 import ProtectedRoutes from './Commons/Auth/ProtectedRoutes';
+import Styled from 'styled-components';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
@@ -37,84 +38,62 @@ const EventPortal = lazy(()=>import('./Pages/Events/EventPortal'))
 function App() {
   return (
     <Suspense fallback="Loading...">
-      <Router>
-        <AppContextWrapper>
-          <Route path="/" exact>
-            <HomePage />
-          </Route>
-          <ProtectedRoutes>
-            <VideoCallContextWrapper>
-              <Route path="/events">
-                <EventPage />
-              </Route>
-            </VideoCallContextWrapper>
-            <Route path="/dashboard">
-              <DashboardPage />
+      <BodyWrapper>
+        <Router>
+          <AppContextWrapper>
+            <Route path="/" exact>
+              <HomePage />
             </Route>
-          </ProtectedRoutes>
-          <Route path="/userReg">
-            <UserRegistration />
-          </Route>
-          <Route path="/dash">
-            <DashBoard />
-          </Route>
-          <Route path="/newDashboard">
-            <NewDashBoard />
-          </Route>
-          <Route path="/status">
-            <EventStatus />
-          </Route>
-          <Route path="/createEvent">
-            <CreateEvent />
-          </Route>
-          <Route path="/login">
-            <EventOwnerLogin />
-          </Route>
-          <Route path="/signup">
-            <EventOwnerRegister />
-          </Route>
-          <Route path="/emailverify">
-            <EmailVerification />
-          </Route>
-          <Route path="/portal">
-            <EventPortal />
-          </Route>
-          <Route path="/res">
-            <SuccessPage />
-          </Route>
-          <Route path="/bal">
-            <WalletBalance />
-          </Route>
-          <Route path="/fund">
-            <FundWallet />
-          </Route>
-          <Route path="/report">
-            <Report/>
-          </Route>
-          <Route path="/users">
-            <RegsisteredUsers/>
-          </Route>
-          <Route path="/join">
-            <JoinIn/>
-          </Route>
-          <Route path="/addbal">
-            <FundForm/>
-          </Route>
-          <Route path="/done">
-            <WalletCredited/>
-          </Route>
-         
-          <Route path="/eventpass">
-            <PasswordInput/>
-          </Route>
-         
-          
-          
-          
-        </AppContextWrapper>
-      </Router>
+            <ProtectedRoutes>
+              <VideoCallContextWrapper>
+                <Route path="/events">
+                  <EventPage />
+                </Route>
+              </VideoCallContextWrapper>
+              <Route path="/dashboard">
+                <DashboardPage />
+              </Route>
+            </ProtectedRoutes>
+            <Route path="/userReg">
+              <UserRegistration />
+            </Route>
+            {/* <Route path="/dash">
+              <DashBoard />
+            </Route> */}
+            <Route path="/newDashboard">
+              <NewDashBoard />
+            </Route>
+            <Route path="/status">
+              <EventStatus />
+            </Route>
+            <Route path="/createEvent">
+              <CreateEvent />
+            </Route>
+            <Route path="/login">
+              <EventOwnerLogin />
+            </Route>
+            <Route path="/signup">
+              <EventOwnerRegister />
+            </Route>
+            <Route path="/emailverify">
+              <EmailVerification />
+            </Route>
+            <Route path="/portal">
+              <EventPortal />
+            </Route>
+          </AppContextWrapper>
+        </Router>
+      </BodyWrapper>
     </Suspense>
   );
 }
+
+export const BodyWrapper = Styled.div`
+  max-width: 480px;
+  margin: auto;
+  position: relative;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.15);
+  height: 100vh;
+`;
 
 export default App;

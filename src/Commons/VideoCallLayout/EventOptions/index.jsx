@@ -3,19 +3,23 @@ import Styled from 'styled-components';
 import Icon from '@mdi/react';
 import { mdiBullseye, mdiCardsHeart, mdiRadioboxMarked } from '@mdi/js';
 import Colors from '../../Colors';
+import { useAppContext } from '../../../Context/AppContext';
 import { useVideoCallContext } from '../../../Context/VideoCallContext';
 
 function EventOptions() {
-  const { handleTablesState, showTables } = useVideoCallContext();
+  const { handleDrawerState } = useAppContext();
+  const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
 
-  function tableToggleHandler() {
-    handleTablesState();
+  function showTablesHandler() {
+    handleDrawerState();
+    handleTablesState(true);
+    handleSideDrawerState(false);
   }
 
   return (
     <OptionsWrapper>
       <OptionItems>
-        <SingleOption onClick={tableToggleHandler}>
+        <SingleOption onClick={showTablesHandler}>
           <Icon path={mdiBullseye} size={1} color="#fff" />
           <span>Join Table</span>
         </SingleOption>
