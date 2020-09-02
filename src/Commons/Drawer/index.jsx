@@ -2,14 +2,48 @@ import React from 'react';
 import Styled from 'styled-components';
 import { useAppContext } from '../../Context/AppContext';
 import 'animate.css';
+import { useVideoCallContext } from '../../Context/VideoCallContext';
 
 function Drawer({ drawerPosition, children }) {
   const { showDrawer, handleDrawerState } = useAppContext();
+  const { showTables, showSideDrawer } = useVideoCallContext();
+
+  console.log(drawerPosition, showTables);
 
   function handleDrawerClose(e) {
     if (e.target.id === 'global-drawer') {
       handleDrawerState();
     }
+  }
+
+  function renderBottomDrawer(children) {
+    return (
+      <DrawerContent
+        position="bottom"
+        showDrawer={showTables}
+        className={
+          showTables &&
+          'animate__animated animate__fadeInUp animate__delay-0.5s'
+        }
+      >
+        {children}
+      </DrawerContent>
+    );
+  }
+
+  function renderSideDrawer(children) {
+    return (
+      <DrawerContent
+        position="right"
+        showDrawer={showDrawer}
+        className={
+          showDrawer &&
+          'animate__animated animate__fadeInRight animate__delay-0.5s'
+        }
+      >
+        {children}
+      </DrawerContent>
+    );
   }
 
   return (
@@ -19,17 +53,11 @@ function Drawer({ drawerPosition, children }) {
       showDrawer={showDrawer}
       onClick={handleDrawerClose}
     >
-      <DrawerContent
-        position={drawerPosition}
-        showDrawer={showDrawer}
-        className={
-          showDrawer && drawerPosition === 'right'
-            ? 'animate__animated animate__fadeInRight animate__delay-0.5s'
-            : 'animate__animated animate__fadeInUp animate__delay-0.5s'
-        }
-      >
-        {children}
-      </DrawerContent>
+      {showTables
+        ? renderBottomDrawer(children)
+        : showDrawer
+        ? renderSideDrawer(children)
+        : null}
     </DrawerWrapper>
   );
 }

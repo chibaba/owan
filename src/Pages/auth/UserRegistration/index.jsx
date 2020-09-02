@@ -6,86 +6,63 @@ import Colors from "../../../Commons/Colors"
 import FormInput from '../../../Commons/FormInput/Index';
 import Button from '../../../Commons/Button';
 
-
-
-
-const UserRegistration =({event})=>{
-    return(
-        <>
-        <DualHeader isLogin={false}>
-    <Instruction>You have to register before you can attend <EventTitle>{event="#HenryJane2020"}</EventTitle> event</Instruction>
-        </DualHeader>
-    <RegFormWrapper>
+const UserRegistration = ({ event }) => {
+  return (
+    <>
+      <DualHeader isLogin={false}>
+        <Instruction>
+          You have to register before you can attend{' '}
+          <EventTitle>{(event = '#HenryJane2020')}</EventTitle> event
+        </Instruction>
+      </DualHeader>
+      <RegFormWrapper>
         <FormData>
-            <div>
-            <LabelField >
-                Full Name
-                <FormInput
-                name="fullName"
-                type="text"
-                required
-
-                />
-            </LabelField>
-            </div>
-            <div>
+          <div>
             <LabelField>
-                Email
-                <FormInput
-                 name="email"
-                 type="email"
-
-                />
+              Full Name
+              <FormInput name="fullName" type="text" required />
             </LabelField>
-            </div>
-            <NumberDiv>
+          </div>
+          <div>
             <LabelField>
-                Phone Number
-                <FormInput
-                 name="PhoneNumber"
-                 type="Number"
-
-                />
+              Email
+              <FormInput name="email" type="email" />
             </LabelField>
-            </NumberDiv>
-        <Button text="Register"/>
+          </div>
+          <NumberDiv>
+            <LabelField>
+              Phone Number
+              <FormInput name="PhoneNumber" type="Number" />
+            </LabelField>
+          </NumberDiv>
+          <Button text="Register" />
         </FormData>
-
-
-    </RegFormWrapper>
-
-
-        </>
-    )
-}
+      </RegFormWrapper>
+    </>
+  );
+};
 const RegFormWrapper = styled.section`
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-
-
-`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+`;
 const FormData = styled.form`
-    display: flex;
-    flex-direction: column;
-
-`
-const Instruction= styled.p`
-    padding-top:1.5rem;
-    font-size:16px;
-
-`
+  display: flex;
+  flex-direction: column;
+`;
+const Instruction = styled.p`
+  padding-top: 1.5rem;
+  font-size: 16px;
+`;
 const EventTitle = styled.span`
- color: ${Colors.defaultGreen}
-
-`
+  color: ${Colors.defaultGreen};
+`;
 const LabelField = styled.label`
-font-weight: 600;
-font-size: 13px;
-`
+  font-weight: 600;
+  font-size: 13px;
+`;
 const NumberDiv = styled.div`
-margin-bottom: 2rem;
-
-`
-export default UserRegistration
+  margin-bottom: 2rem;
+`;
+export default UserRegistration;
