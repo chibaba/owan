@@ -6,44 +6,14 @@ import { useVideoCallContext } from '../../Context/VideoCallContext';
 
 function Drawer({ drawerPosition, children }) {
   const { showDrawer, handleDrawerState } = useAppContext();
-  const { showTables, showSideDrawer } = useVideoCallContext();
-
-  console.log(drawerPosition, showTables);
+  const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
 
   function handleDrawerClose(e) {
     if (e.target.id === 'global-drawer') {
       handleDrawerState();
+      handleTablesState(false);
+      handleSideDrawerState(false);
     }
-  }
-
-  function renderBottomDrawer(children) {
-    return (
-      <DrawerContent
-        position="bottom"
-        showDrawer={showTables}
-        className={
-          showTables &&
-          'animate__animated animate__fadeInUp animate__delay-0.5s'
-        }
-      >
-        {children}
-      </DrawerContent>
-    );
-  }
-
-  function renderSideDrawer(children) {
-    return (
-      <DrawerContent
-        position="right"
-        showDrawer={showDrawer}
-        className={
-          showDrawer &&
-          'animate__animated animate__fadeInRight animate__delay-0.5s'
-        }
-      >
-        {children}
-      </DrawerContent>
-    );
   }
 
   return (
@@ -53,17 +23,23 @@ function Drawer({ drawerPosition, children }) {
       showDrawer={showDrawer}
       onClick={handleDrawerClose}
     >
-      {showTables
-        ? renderBottomDrawer(children)
-        : showDrawer
-        ? renderSideDrawer(children)
-        : null}
+      <DrawerContent
+        position={drawerPosition}
+        showDrawer={showDrawer}
+        className={
+          showDrawer && drawerPosition === 'right'
+            ? 'animate__animated animate__fadeInRight animate__delay-0.5s'
+            : 'animate__animated animate__fadeInUp animate__delay-0.5s'
+        }
+      >
+        {children}
+      </DrawerContent>
     </DrawerWrapper>
   );
 }
 
 const DrawerWrapper = Styled.div`
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100vh;
   background: rgba(0,0,0,0.8);
