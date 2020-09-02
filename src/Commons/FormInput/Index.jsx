@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import PropType from "prop-types"
 
-const FormInput =({name, type, onChange})=>{
+const FormInput =({name, type, onChange, placeholder})=>{
     return(
         <InputField
         name={name}
         type={type}
         onChange={onChange}
+        placeholder={placeholder}
         />
 
     )

@@ -1,10 +1,10 @@
 import React from 'react';
-import DualHeader from "../DualHeader"
+import DualHeader from "../../../Commons/DualHeader"
 import styled from 'styled-components';
-import Colors from "../Colors"
+import Colors from "../../../Commons/Colors"
 
-import FormInput from '../FormInput/Index';
-import Button from '../Button';
+import FormInput from '../../../Commons/FormInput/Index';
+import Button from '../../../Commons/Button';
 
 
 

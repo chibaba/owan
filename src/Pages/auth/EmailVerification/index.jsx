@@ -1,9 +1,10 @@
 import React from "react";
-import EventOnwerLayout from "../../Commons/EventOwnerLayout";
+import EventOnwerLayout from "../../../Commons/EventOwnerLayout";
 import styled from "styled-components";
-import Colors from "../../Commons/Colors";
+import Button from "../../../Commons/Button"
 import { Link } from "react-router-dom";
-import Button from "../../Commons/Button";
+import Colors from "../../../Commons/Colors"
+
 
 const EmailVerification = ({ email }) => {
   return (

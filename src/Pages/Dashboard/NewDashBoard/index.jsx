@@ -1,9 +1,9 @@
 import React from "react";
-import NewDashBoardLayout from "../../Components/NewDashBoardLayout";
+import NewDashBoardLayout from "../../../Components/NewDashBoardLayout";
 import Styled from "styled-components";
-import DashBoardHomeCard from "../../Components/DashBoardHomeCard";
-import DashBoardCardLayout from "../../Components/DashBoardHomeCard/DashBoardCardLayout"
-import Colors from '../../Commons/Colors'
+import DashBoardHomeCard from "../../../Components/DashBoardHomeCard";
+import DashBoardCardLayout from "../../../Components/DashBoardHomeCard/DashBoardCardLayout"
+import Colors from '../../../Commons/Colors'
 import { Link } from "react-router-dom";
 
 const NewDashBoard = () => {

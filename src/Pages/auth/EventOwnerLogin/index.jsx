@@ -1,9 +1,9 @@
 import React from "react";
-import EventOwnerLayout from "../../Commons/EventOwnerLayout";
+import EventOwnerLayout from "../../../Commons/EventOwnerLayout";
 import styled from "styled-components";
-import FormInput from "../../Commons/FormInput/Index";
-import Button from "../../Commons/Button";
-import Colors from "../../Commons/Colors";
+import FormInput from "../../../Commons/FormInput/Index";
+import Button from "../../../Commons/Button";
+import Colors from "../../../Commons/Colors";
 import { Link } from "react-router-dom";
 
 const EventOwnerLogin = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from '../../Commons/Layout';
-import Button from '../../Commons/Button';
+import Layout from '../../../Commons/Layout';
+import Button from '../../../Commons/Button';
 import Styled from 'styled-components';
 import styled from 'styled-components';
 

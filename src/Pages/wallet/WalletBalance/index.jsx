@@ -1,11 +1,12 @@
 import React from "react";
-import HamburgerHeader from "../../Components/HamburgerHeader";
+import HamburgerHeader from "../../../Components/HamburgerHeader";
 
 import styled from "styled-components";
-import DashBoardCardLayout from "../../Components/DashBoardHomeCard/DashBoardCardLayout";
-import DashBoardHomeCard from "../../Components/DashBoardHomeCard";
-import CurrBalance from "../../Components/CurrBalance"
-import Button from "../../Commons/Button";
+import DashBoardCardLayout from "../../../Components/DashBoardHomeCard/DashBoardCardLayout";
+import DashBoardHomeCard from "../../../Components/DashBoardHomeCard";
+import CurrBalance from "../../../Components/CurrBalance"
+import Button from "../../../Commons/Button";
+
 
 const WalletBalance = ({ currentBal }) => {
   return (
@@ -27,7 +28,8 @@ const WalletBalance = ({ currentBal }) => {
           </DashBoardHomeCard>
       </DashBoardCardLayout>
 
-      <Button text="Withdraw Funds"/>
+      <Button text="Withdraw Funds" />
+      
 
      
       

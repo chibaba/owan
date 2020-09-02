@@ -1,11 +1,11 @@
 import React from 'react';
 import {  Link} from 'react-router-dom'
-import EventOnwerLayout from '../../Commons/EventOwnerLayout';
-import FormInput from '../../Commons/FormInput/Index'
+import EventOnwerLayout from '../../../Commons/EventOwnerLayout';
+import FormInput from '../../../Commons/FormInput/Index'
 import styled from 'styled-components';
-import CheckBox from '../../Commons/CheckBox';
-import Button from '../../Commons/Button';
-import Colors from "../../Commons/Colors";
+import CheckBox from '../../../Commons/CheckBox';
+import Button from '../../../Commons/Button';
+import Colors from "../../../Commons/Colors";
 
 
 const EventOwnerRegister =()=>{

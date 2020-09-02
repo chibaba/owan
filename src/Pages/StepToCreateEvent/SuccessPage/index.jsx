@@ -1,8 +1,12 @@
 import React from "react";
-import BackDrop from "../../Components/BackDrop";
+import BackDrop from "../../../Components/BackDrop";
 import styled from "styled-components";
-import Colors from "../../Commons/Colors";
-import Button from "../../Commons/Button";
+import Colors from "../../../Commons/Colors";
+
+
+
+
+
 
 const SuccessPage = ({copy}) => {
   return (
@@ -16,7 +20,7 @@ const SuccessPage = ({copy}) => {
           <span className="done">Sucessfully <br/> create event</span>
           
 
-         <Button cancelbtn={true}text="linkup.com/wqiwuf26356"/>
+         <ButtonLnk>linkup.com/wqiwuf26356</ButtonLnk>
          <SmallBtnDiv>
              <SmallButton copy={true}>Copy</SmallButton>
              <SmallButton>Share</SmallButton>
@@ -69,6 +73,22 @@ const SmallBtnDiv= styled.div`
     width:100%;
     margin-top: 2rem;
     justify-content: space-between;;
+
+`
+const ButtonLnk = styled.div`
+width: 100%;
+ border:none;
+ background: #22A900;
+ color:  #fff;
+ font-size: 14px;
+ font-family: 'Sailec', sans-serif;
+ font-weight: 900;
+ padding: 10px 0;
+ border-radius: 5px;
+ box-shadow: 0px 20px 45px rgba(0, 0, 0, 0.07);
+
+
+
 
 `
 const SmallButton= styled.button`

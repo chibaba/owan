@@ -1,13 +1,13 @@
 import React from "react";
 
-import generateAppDateFormat from "../../Utils/currentDay";
+import generateAppDateFormat from "../../../Utils/currentDay";
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Colors from "../../Commons/Colors";
-import Button from "../../Commons/Button";
-import DashBoardHomeCard from "../../Components/DashBoardHomeCard";
-import DashBoardCardLayout from "../../Components/DashBoardHomeCard/DashBoardCardLayout";
+import Colors from "../../../Commons/Colors";
+import Button from "../../../Commons/Button";
+import DashBoardHomeCard from "../../../Components/DashBoardHomeCard";
+import DashBoardCardLayout from "../../../Components/DashBoardHomeCard/DashBoardCardLayout";
 
 const EventPortal = ({ currentEvent, imageUrl, time }) => {
   return (
