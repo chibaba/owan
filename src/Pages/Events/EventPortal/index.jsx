@@ -57,7 +57,12 @@ const EventPortal = ({ currentEvent, imageUrl, time }) => {
           </DashBoardHomeCard>
           <DashBoardHomeCard>
             <img src="/assets/images/icons/unlock.png" alt="Create" />
-            <span>Wallet</span>
+            
+            <span>
+              <Link to="walletbal" style={{ color: `${Colors.defaultGreen}` }}>
+              Wallet
+              </Link>
+              </span>
           </DashBoardHomeCard>
         </DashBoardCardLayout>
       </EventPortalHeader>

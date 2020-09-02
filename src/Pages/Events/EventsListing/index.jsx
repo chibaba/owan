@@ -22,7 +22,7 @@ function EventsListing({ events }) {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore lorem ipsum dolor sit amet.
             </p>
-            <Link to="/events/video">
+            <Link to="/events/join">
               <Button text="Join In" />
             </Link>
           </EventDescription>

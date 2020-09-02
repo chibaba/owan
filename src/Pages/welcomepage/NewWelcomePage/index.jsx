@@ -30,8 +30,12 @@ const NewWelcomePage = () => {
               </span>
         </DashBoardHomeCard>
         <DashBoardHomeCard>
-          <img src="/assets/images/icons/unlock.png" alt="Create" />
-          <span>Wallet</span>
+          <img src="/assets/images/icons/unlock.png" alt="wallet" />
+          <span>
+          <Link to="/walletbal" style={{color: `${Colors.defaultGreen}`}}>
+              Wallet
+              </Link>
+          </span>
         </DashBoardHomeCard>
       </DashBoardCardLayout>
     </NewDashBoardLayout>
