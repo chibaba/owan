@@ -58,7 +58,7 @@ const EventOwnerLogin = () => {
     })
       .then((response) => {
         if (response.status === 200) {
-          const refreshToken = response.data.refresh;
+          const refreshToken = response.data.data.refresh;
           window.localStorage.setItem('rt', refreshToken);
           window.location.href = '/dashboard';
         }
