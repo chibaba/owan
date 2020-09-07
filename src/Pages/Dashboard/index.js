@@ -20,7 +20,7 @@ function Dashboard() {
             <span>Create Event</span>
           </div>
         </DashboardHomeCard>
-        <DashboardHomeCard to="/events">
+        <DashboardHomeCard to="/events/video">
           <div>
             <img src="/assets/images/icons/tag.png" alt="Join" />
             <span>Join Event</span>

@@ -10,9 +10,9 @@ function Event() {
       <Route path="/events" exact>
         <EventsListing />
       </Route>
-      {/*<Route path="/events/video" exact>
+      <Route path="/events/video" exact>
         <Video />
-  </Route>*/}
+      </Route>
       <Route path="/events/join" exact>
         <JoinIn />
       </Route>
