@@ -10,7 +10,7 @@ import FundForm from './Pages/wallet/FundForm';
 import WalletCredited from './Pages/wallet/WalletCredited';
 
 import VideoCallContextWrapper from './Context/VideoCallContext';
-import ProtectedRoutes from './Commons/Auth/ProtectedRoutes';
+// import ProtectedRoutes from './Commons/Auth/ProtectedRoutes';
 import Styled from 'styled-components';
 
 const HomePage = lazy(() => import('./Pages/Home'));
@@ -24,7 +24,7 @@ const EventOwnerRegister = lazy(() =>
   import('./Pages/auth/EventOwnerRegister'),
 );
 const EmailVerification = lazy(() => import('./Pages/auth/EmailVerification'));
-const WelcomePage = lazy(() => import('./Pages/welcomepage/NewWelcomePage'));
+const OwnerPage = lazy(() => import('./Pages/Owner'));
 const EventPortal = lazy(() => import('./Pages/Events/EventPortal'));
 const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 
@@ -37,7 +37,6 @@ function App() {
             <Route path="/" exact>
               <HomePage />
             </Route>
-            {/* <Route path={["/events", "/dashboard"]}> */}
             {/* <ProtectedRoutes> */}
             <VideoCallContextWrapper>
               <Route path="/events">
@@ -52,16 +51,13 @@ function App() {
             <Route path="/userReg">
               <UserRegistration />
             </Route>
-            {/* <Route path="/dash">
-              <DashBoard />
-            </Route> */}
-            <Route path="/welcome">
-              <WelcomePage />
+            <Route path="/owner">
+              <OwnerPage />
             </Route>
             <Route path="/status">
               <EventStatus />
             </Route>
-            <Route path="/createEvent">
+            <Route path="/createevent">
               <CreateEvent />
             </Route>
             <Route path="/login">
@@ -85,7 +81,6 @@ function App() {
             <Route path="/fundres">
               <WalletCredited />
             </Route>
-
             <Route path="/users">
               <RegsisteredUsers />
             </Route>
