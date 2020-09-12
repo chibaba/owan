@@ -38,16 +38,16 @@ function App() {
               <HomePage />
             </Route>
             {/* <Route path={["/events", "/dashboard"]}> */}
-            <ProtectedRoutes>
-              <VideoCallContextWrapper>
-                <Route path="/events">
-                  <EventPage />
-                </Route>
-              </VideoCallContextWrapper>
-              <Route path="/dashboard">
-                <DashboardPage />
+            {/* <ProtectedRoutes> */}
+            <VideoCallContextWrapper>
+              <Route path="/events">
+                <EventPage />
               </Route>
-            </ProtectedRoutes>
+            </VideoCallContextWrapper>
+            <Route path="/dashboard">
+              <DashboardPage />
+            </Route>
+            {/* </ProtectedRoutes> */}
             {/*</Route> */}
             <Route path="/userReg">
               <UserRegistration />
@@ -76,7 +76,7 @@ function App() {
             <Route path="/portal">
               <EventPortal />
             </Route>
-            <Route path="/walletbal">
+            <Route path="/wallet">
               <WalletBalance />
             </Route>
             <Route path="/fund">
@@ -105,7 +105,8 @@ export const BodyWrapper = Styled.div`
   position: relative;
   box-shadow: 0 4px 4px rgba(0,0,0,0.15);
   height: 100vh;
-  @media (min-width: 768px) {
+  overflow: scroll;
+  @media (max-width: 768px) {
     box-shadow: none;
   }
 `;

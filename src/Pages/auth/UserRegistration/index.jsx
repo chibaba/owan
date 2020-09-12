@@ -3,7 +3,7 @@ import DualHeader from "../../../Commons/DualHeader"
 import styled from 'styled-components';
 import Colors from "../../../Commons/Colors"
 
-import FormInput from '../../../Commons/FormInput/Index';
+import FormInput from '../../../Components/FormInput/Index';
 import Button from '../../../Commons/Button';
 
 const UserRegistration = ({ event }) => {

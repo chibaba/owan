@@ -61,7 +61,7 @@ function EventOptions() {
 }
 
 const OptionsWrapper = Styled.nav`
-  position: fixed;
+  position: absolute;
   bottom: 80px;
   right: 0;
   width: 70px;

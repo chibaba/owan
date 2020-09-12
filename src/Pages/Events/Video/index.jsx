@@ -9,10 +9,6 @@ function Video() {
   const { showDrawer } = useAppContext();
   const { showTables, showSideDrawer } = useVideoCallContext();
 
-  // curl -X POST \
-  //                               -H "Authorization: EaEIPVGShjsel5RilwhJN65cLWISlcl7LKu7Ow69E4" \
-  //                               -d "user[name]=Bob Marley" \
-  //                               "https://api.eyeson.team/rooms"
   return (
     <VideoCallLayout>
       {showDrawer && showSideDrawer ? (

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import {  Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import EventOnwerLayout from '../../../Commons/EventOwnerLayout';
-import FormInput from '../../../Commons/FormInput/Index'
+import FormInput from '../../../Components/FormInput/Index';
 import styled from 'styled-components';
 import CheckBox from '../../../Commons/CheckBox';
 import Button from '../../../Commons/Button';
-import Colors from "../../../Commons/Colors";
+import Colors from '../../../Commons/Colors';
 
-import axios from 'axios'
+import axios from 'axios';
 
 //Request call should be refactored later
 

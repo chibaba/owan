@@ -2,7 +2,7 @@ import React from 'react';
 import BackDrop from '../../../Components/BackDrop';
 import styled from 'styled-components';
 import Colors from '../../../Commons/Colors';
-import FormInput from '../../../Commons/FormInput/Index';
+import FormInput from '../../../Components/FormInput/Index';
 import Button from '../../../Commons/Button';
 import BackgroundForOverlay from '../../../Components/BackgroundForOverlay';
 

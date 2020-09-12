@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import EventOwnerLayout from "../../../Commons/EventOwnerLayout";
 import styled from "styled-components";
-import FormInput from "../../../Commons/FormInput/Index";
+import FormInput from "../../../Components/FormInput/Index";
 import Button from "../../../Commons/Button";
 import Colors from "../../../Commons/Colors";
 import { Link } from "react-router-dom";
