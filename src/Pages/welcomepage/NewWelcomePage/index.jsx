@@ -1,10 +1,10 @@
-import React from "react";
-import NewDashBoardLayout from "../../../Components/NewDashBoardLayout";
-import Styled from "styled-components";
-import DashBoardHomeCard from "../../../Components/DashBoardHomeCard";
-import DashBoardCardLayout from "../../../Components/DashBoardHomeCard/DashBoardCardLayout"
-import Colors from '../../../Commons/Colors'
-import { Link } from "react-router-dom";
+import React from 'react';
+import NewDashBoardLayout from '../../../Components/NewDashBoardLayout';
+import Styled from 'styled-components';
+import DashBoardHomeCard from '../../../Components/DashBoardHomeCard';
+import DashBoardCardLayout from '../../../Components/DashBoardHomeCard/DashBoardCardLayout';
+import Colors from '../../../Commons/Colors';
+import { Link } from 'react-router-dom';
 
 const NewWelcomePage = () => {
   return (
@@ -13,28 +13,26 @@ const NewWelcomePage = () => {
       <DashBoardCardLayout>
         <DashBoardHomeCard>
           <img src="/assets/greenLayers.svg" alt="Create" />
-          
           <span>
-              <Link to="/createEvent" style={{color: `${Colors.defaultGreen}`}}>
+            <Link to="/createevent" style={{ color: `${Colors.defaultGreen}` }}>
               Create Event
-              </Link>
-              </span>
-          
+            </Link>
+          </span>
         </DashBoardHomeCard>
         <DashBoardHomeCard>
           <img src="/assets/greenVector.svg" alt="Join" />
           <span>
-              <Link to="/events" style={{color: `${Colors.defaultGreen}`}}>
+            <Link to="/owner/event" style={{ color: `${Colors.defaultGreen}` }}>
               Join Event
-              </Link>
-              </span>
+            </Link>
+          </span>
         </DashBoardHomeCard>
         <DashBoardHomeCard>
           <img src="/assets/images/icons/unlock.png" alt="wallet" />
           <span>
-          <Link to="/walletbal" style={{color: `${Colors.defaultGreen}`}}>
+            <Link to="/walletbal" style={{ color: `${Colors.defaultGreen}` }}>
               Wallet
-              </Link>
+            </Link>
           </span>
         </DashBoardHomeCard>
       </DashBoardCardLayout>
@@ -48,7 +46,5 @@ const OptionHeader = Styled.h3`
   letter-spacing: 0.8px;
   text-align: center;
 `;
-
-
 
 export default NewWelcomePage;

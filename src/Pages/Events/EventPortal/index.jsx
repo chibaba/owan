@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import generateAppDateFormat from "../../../Utils/currentDay";
+import generateAppDateFormat from '../../../Utils/currentDay';
 
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import Colors from "../../../Commons/Colors";
-import Button from "../../../Commons/Button";
-import DashBoardHomeCard from "../../../Components/DashBoardHomeCard";
-import DashBoardCardLayout from "../../../Components/DashBoardHomeCard/DashBoardCardLayout";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import Colors from '../../../Commons/Colors';
+import Button from '../../../Commons/Button';
+import DashBoardHomeCard from '../../../Components/DashBoardHomeCard';
+import DashBoardCardLayout from '../../../Components/DashBoardHomeCard/DashBoardCardLayout';
 
 const EventPortal = ({ currentEvent, imageUrl, time }) => {
   return (
@@ -23,25 +23,36 @@ const EventPortal = ({ currentEvent, imageUrl, time }) => {
             </Link>
 
             <CurrentEvent>
-              {(currentEvent = "Pride at the Disco!")}
+              {(currentEvent = 'Pride at the Disco!')}
             </CurrentEvent>
           </NavEvent>
           <ProfileImage>
-            <img src={(imageUrl = "/assets/images/myk.jpg")} alt="profileImg" />
+            <img src={(imageUrl = '/assets/images/myk.jpg')} alt="profileImg" />
           </ProfileImage>
         </EventDetails>
         <Calender>
           <img src="/assets/calender.svg" alt="celender" />
           <div>
             <span className="date">{generateAppDateFormat()}</span>
-            <span className="time">{(time = "5:00PM-8:00 GMT-1")}</span>
-            <Link  to="" style={{ color: `${Colors.defaultGreen}` }}>Add to calender</Link>
+            <span className="time">{(time = '5:00PM-8:00 GMT-1')}</span>
+            <Link to="" style={{ color: `${Colors.defaultGreen}` }}>
+              Add to calender
+            </Link>
           </div>
         </Calender>
         <ButtonDiv>
-          <Button text="View Event Details" />
+          <Link
+            to="/owner/event/details"
+            style={{
+              width: '100%',
+              margin: 'auto',
+              textDecoration: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            <Button text="View Event Details" />
+          </Link>
         </ButtonDiv>
-
         <DashBoardCardLayout>
           <DashBoardHomeCard>
             <img src="/assets/greenLayers.svg" alt="Create" />
@@ -57,12 +68,12 @@ const EventPortal = ({ currentEvent, imageUrl, time }) => {
           </DashBoardHomeCard>
           <DashBoardHomeCard>
             <img src="/assets/images/icons/unlock.png" alt="Create" />
-            
+
             <span>
               <Link to="walletbal" style={{ color: `${Colors.defaultGreen}` }}>
-              Wallet
+                Wallet
               </Link>
-              </span>
+            </span>
           </DashBoardHomeCard>
         </DashBoardCardLayout>
       </EventPortalHeader>
@@ -113,18 +124,17 @@ const Calender = styled.div`
   width: 90%;
   margin: auto;
   display: flex;
-  
+
   div {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     font-size: 10px;
     margin-left: 0.8rem;
-    color:  #999999;
-    span.date{
+    color: #999999;
+    span.date {
       font-weight: bold;
       margin-bottom: 3px;
     }
-    
   }
 `;
 
