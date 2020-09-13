@@ -20,7 +20,7 @@ const LoginTitle = styled.span`
 `;
 
 const EventOwnerAuthLayout = styled.section`
-  width: 80%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   margin: auto;
