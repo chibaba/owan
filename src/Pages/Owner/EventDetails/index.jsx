@@ -3,8 +3,8 @@ import Styled from 'styled-components';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import OwnerLayout from '../../../Commons/OwnerLayout';
 import Colors from '../../../Commons/Colors';
-import Report from '../../Reports/Report';
-import RegsisteredUsers from '../../Reports/RegisteredUsers';
+import Report from './Reports/Report';
+import RegsisteredUsers from './Reports/RegisteredUsers';
 
 const EventDetail = () => {
   return (

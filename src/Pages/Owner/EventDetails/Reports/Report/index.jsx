@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Colors from '../../../Commons/Colors';
+import Colors from '../../../../../Commons/Colors';
 
 const Report = () => {
   const Report = {
