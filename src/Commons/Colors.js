@@ -8,4 +8,6 @@ export default {
   alertSuccessDarkGreen: '#22A900',
   dangerRed: '#f9393b',
   textColor: '#999999',
+  lighterGreen: '#edfae8',
+  lightTextColor: '#222222',
 };

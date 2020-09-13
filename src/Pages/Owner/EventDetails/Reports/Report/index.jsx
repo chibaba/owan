@@ -1,8 +1,6 @@
-import React from "react";
-import ReportLayout from "../../../Components/ReportLayout";
-import styled from "styled-components";
-import ReportNavBtn from "../../../Components/ReportNavBtn";
-import Colors from '../../../Commons/Colors'
+import React from 'react';
+import styled from 'styled-components';
+import Colors from '../../../Commons/Colors';
 
 const Report = () => {
   const Report = {
@@ -13,12 +11,7 @@ const Report = () => {
     views: 548,
   };
   return (
-    <ReportLayout>
-      <NavBtns>
-        <ReportNavBtn text="Event Details" />
-        <ReportNavBtn active={true} text="Report" />
-        <ReportNavBtn text="Registered Users" />
-      </NavBtns>
+    <>
       <ReportItem Report={Report}>
         <h4>Total Attendees</h4>
         <div>
@@ -29,7 +22,7 @@ const Report = () => {
       <ReportItem Report={Report}>
         <h4>Revenue</h4>
         <div>
-          <img src="/assets/images/icons/naira.svg" alt="user" />
+          <span className="icon">&#8358;</span>
           <span className="figures">{Report.Revenue}</span>
         </div>
       </ReportItem>
@@ -55,51 +48,49 @@ const Report = () => {
         </div>
       </ReportItem>
       <LocationDiv>
-      <h4>Locations</h4>
-      
-      <li><span>1</span>Nigeria</li>
-      <li><span>2</span>South African</li>
-      <li><span>3</span>China</li>
-      <li><span>4</span>Trinidad & Tobago</li>
-
-      
-      
-
+        <h4>Locations</h4>
+        <li>
+          <span>1</span>Nigeria
+        </li>
+        <li>
+          <span>2</span>South African
+        </li>
+        <li>
+          <span>3</span>China
+        </li>
+        <li>
+          <span>4</span>Trinidad & Tobago
+        </li>
       </LocationDiv>
-    </ReportLayout>
-
+    </>
   );
 };
-const NavBtns = styled.div`
-  display: flex;
 
-  justify-content: space-between;
-  margin-bottom: 1.2rem;
-  margin:auto;
-`;
 const ReportItem = styled.div`
-
   display: flex;
   flex-direction: column;
-  padding:0.6rem 1.2rem;
-  border-bottom: 1px solid #C4C4C4;
-span.figures{
+  padding: 0.6rem 1.2rem;
+  border-bottom: 1px solid #c4c4c4;
+  span.figures {
     margin-left: 0.5rem;
-}
+    color: ${Colors.lightTextColor};
+    font-weight: 100;
+  }
+  span.icon {
+    color: ${Colors.defaultGreen};
+    font-size: 18px;
+  }
 `;
 const LocationDiv = styled.div`
- padding-left: 1.2rem;
- li{
-    
-     list-style:none;
-     margin-bottom: 10px;
-     font-size: 18px;
-
- }span{
-   color: ${Colors.defaultGreen};
-   margin-right: 10px;
- }
-
-
-`
+  padding-left: 1.2rem;
+  li {
+    list-style: none;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  span {
+    color: ${Colors.defaultGreen};
+    margin-right: 10px;
+  }
+`;
 export default Report;

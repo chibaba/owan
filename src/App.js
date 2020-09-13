@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AppContextWrapper from './Context/AppContext';
 import UserRegistration from './Pages/auth/UserRegistration';
 import WalletBalance from './Pages/wallet/WalletBalance';
-import Report from './Pages/Reports/Report';
-import RegsisteredUsers from './Pages/Reports/RegisteredUsers';
 import FundForm from './Pages/wallet/FundForm';
 import WalletCredited from './Pages/wallet/WalletCredited';
 
@@ -80,12 +78,6 @@ function App() {
             </Route>
             <Route path="/fundres">
               <WalletCredited />
-            </Route>
-            <Route path="/users">
-              <RegsisteredUsers />
-            </Route>
-            <Route path="/report">
-              <Report />
             </Route>
           </AppContextWrapper>
         </Router>

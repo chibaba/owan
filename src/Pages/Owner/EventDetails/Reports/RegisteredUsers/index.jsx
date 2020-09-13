@@ -1,8 +1,4 @@
 import React from 'react';
-import ReportLayout from '../../../Components/ReportLayout';
-import styled from 'styled-components';
-import ReportNavBtn from '../../../Components/ReportNavBtn';
-
 import UserList from '../../../Components/UserList';
 
 const RegsisteredUsers = ({ users }) => {
@@ -15,24 +11,8 @@ const RegsisteredUsers = ({ users }) => {
     );
   };
 
-  return (
-    <ReportLayout>
-      <NavBtns>
-        <ReportNavBtn text="Event Details" />
-        <ReportNavBtn text="Report" />
-        <ReportNavBtn active={true} text="Registered Users" />
-      </NavBtns>
-      {renderUsers()}
-    </ReportLayout>
-  );
+  return <>{renderUsers()}</>;
 };
-const NavBtns = styled.div`
-  display: flex;
-
-  justify-content: space-between;
-  margin-bottom: 1.2rem;
-  margin: auto;
-`;
 
 RegsisteredUsers.defaultProps = {
   users: [

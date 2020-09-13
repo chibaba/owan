@@ -52,9 +52,6 @@ const DashboardContent = Styled.main`
   justify-content: space-between; 
   overflow: scroll;
   margin-bottom: 80px;
-  @media (min-width: 768px) {
-    width: 40%;
-  }
 `;
 
 const DashboardHomeCard = Styled(Link)`
