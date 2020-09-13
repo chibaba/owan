@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import EventOwnerLayout from "../../../Commons/EventOwnerLayout";
-import styled from "styled-components";
-import FormInput from "../../../Components/FormInput/Index";
-import Button from "../../../Commons/Button";
-import Colors from "../../../Commons/Colors";
-import { Link } from "react-router-dom";
+import EventOwnerLayout from '../../../Commons/EventOwnerLayout';
+import styled from 'styled-components';
+import FormInput from '../../../Components/FormInput/Index';
+import Button from '../../../Commons/Button';
+import Colors from '../../../Commons/Colors';
+import { Link } from 'react-router-dom';
 
 import axios from 'axios';
+import { Label } from '../EventOwnerRegister';
 
 const EventOwnerLogin = () => {
   const [formValues, setFormValues] = useState({
@@ -71,24 +72,26 @@ const EventOwnerLogin = () => {
     <EventOwnerLayout createAcc={false} title="Log in into your account">
       <EventOwnerLoginForm>
         <div>
-          <LabelText>
+          <Label>
+            Email
             <FormInput
               name="email"
               type="email"
               onChange={inputChangeHandler}
               required
             />
-          </LabelText>
+          </Label>
         </div>
         <div>
-          <LabelText>
+          <Label>
+            Password
             <FormInput
               name="password"
               type="password"
               onChange={inputChangeHandler}
               required
             />
-          </LabelText>
+          </Label>
         </div>
         <ForgotPassword>Forgot Password</ForgotPassword>
 
@@ -107,10 +110,7 @@ const EventOwnerLoginForm = styled.form`
   display: flex;
   flex-direction: column;
 `;
-const LabelText = styled.label`
-  font-weight: 600;
-  font-size: 13px;
-`;
+
 const ForgotPassword = styled.span`
   margin-top: 0.6rem;
   margin-bottom: 2.5rem;

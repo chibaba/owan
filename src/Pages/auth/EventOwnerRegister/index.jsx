@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import EventOnwerLayout from '../../../Commons/EventOwnerLayout';
 import FormInput from '../../../Components/FormInput/Index';
 import styled from 'styled-components';
-import CheckBox from '../../../Commons/CheckBox';
+import CheckBox from '../../../Components/CheckBox';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 
@@ -122,7 +122,7 @@ const EventOwnerRegister = () => {
           </Label>
         </div>
         <Terms>
-          <CheckBox square={true} name="checkbox" type="checkbox" />
+          <CheckBox name="terms" style={{ marginBottom: '0' }} />
           <TermInstru>
             {' '}
             I agree to LinkUp <LoginLink>Terms & Condition</LoginLink>
@@ -139,7 +139,7 @@ const EventOwnerRegister = () => {
     </EventOnwerLayout>
   );
 };
-const Label = styled.label`
+export const Label = styled.label`
   font-weight: 600;
   font-size: 13px;
 `;
@@ -148,6 +148,7 @@ const Terms = styled.div`
   font-size: 10px;
   margin-top: 0.6rem;
   margin-bottom: 2rem;
+  align-items: center;
 `;
 const TermInstru = styled.span`
   margin-left: 8px;

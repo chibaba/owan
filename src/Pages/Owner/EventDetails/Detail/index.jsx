@@ -2,15 +2,13 @@ import React from 'react';
 import Styled from 'styled-components';
 import Colors from '../../../../Commons/Colors';
 import AddToCalendar from 'react-add-to-calendar';
+import EventDetailBanner from '../../../../Commons/EventDetailBanner';
 
 const Detail = ({ event }) => {
+  const image = '/assets/images/wedding-demo.jpg';
   return (
     <>
-      <EventBanner>
-        <div className="overlay"></div>
-        <p>Upcoming Event</p>
-        <img src="/assets/images/wedding-demo.jpg" alt="banner" />
-      </EventBanner>
+      <EventDetailBanner imageURL={image} text="Upcoming Event" />
       <ContentWrapper>
         <ContentSection>
           <EventTitle>Pride at the Disco!</EventTitle>
@@ -51,34 +49,6 @@ const Detail = ({ event }) => {
     </>
   );
 };
-
-const EventBanner = Styled.div`
-  width: "100%";
-  height: 220px;
-  overflow: hidden;
-  position: relative;
-  .overlay {
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    position: absolute;
-    z-index: 99;
-  }
-  img {
-    width: 100%;
-  }
-  p {
-    position: absolute;
-    bottom: 0;
-    padding: 15px 5%;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    width: 100%;
-    z-index: 999;
-    margin: 0;
-    font-size: 12px;
-  }
-`;
 
 const ContentWrapper = Styled.main`
   width: 90%;

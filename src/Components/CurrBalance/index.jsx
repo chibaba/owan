@@ -18,7 +18,7 @@ const CurrBalance = ({ currentBal }) => {
 };
 const CurBalance = styled.div`
   div {
-    width: 90%;
+    width: 100%;
     background: rgba(40, 193, 1, 0.1);
     height: 157px;
     border-radius: 5px;

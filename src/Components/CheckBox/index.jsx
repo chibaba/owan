@@ -2,9 +2,9 @@ import React from 'react';
 import Styled from 'styled-components';
 import Colors from '../../Commons/Colors';
 
-const CheckBox = ({ name, label, onChange }) => {
+const CheckBox = ({ name, label, onChange, style }) => {
   return (
-    <CheckboxWrapper>
+    <CheckboxWrapper style={style}>
       <p>{label}</p>
       <input type="checkbox" onChange={onChange} name={name} />
       <span className="checkmark"></span>

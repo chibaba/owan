@@ -10,20 +10,18 @@ import WalletCredited from './Pages/wallet/WalletCredited';
 import VideoCallContextWrapper from './Context/VideoCallContext';
 // import ProtectedRoutes from './Commons/Auth/ProtectedRoutes';
 import Styled from 'styled-components';
+import Wallet from './Pages/Owner/Wallet';
 
 const HomePage = lazy(() => import('./Pages/Home'));
 const EventPage = lazy(() => import('./Pages/Events'));
 const EventStatus = lazy(() => import('./Pages/Events/EventStatus'));
-const CreateEvent = lazy(() =>
-  import('./Pages/StepToCreateEvent/CreateEvent/index'),
-);
+const CreateEvent = lazy(() => import('./Pages/StepToCreateEvent/CreateEvent'));
 const EventOwnerLogin = lazy(() => import('./Pages/auth/EventOwnerLogin'));
 const EventOwnerRegister = lazy(() =>
   import('./Pages/auth/EventOwnerRegister'),
 );
 const EmailVerification = lazy(() => import('./Pages/auth/EmailVerification'));
 const OwnerPage = lazy(() => import('./Pages/Owner'));
-const EventPortal = lazy(() => import('./Pages/Events/EventPortal'));
 const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 
 function App() {
@@ -34,6 +32,12 @@ function App() {
           <AppContextWrapper>
             <Route path="/" exact>
               <HomePage />
+            </Route>
+            <Route path="/login">
+              <EventOwnerLogin />
+            </Route>
+            <Route path="/signup">
+              <EventOwnerRegister />
             </Route>
             {/* <ProtectedRoutes> */}
             <VideoCallContextWrapper>
@@ -52,23 +56,18 @@ function App() {
             <Route path="/owner">
               <OwnerPage />
             </Route>
+            <Route path="/owner/walet">
+              <Wallet />
+            </Route>
+            <Route path="/owner/createevent">
+              <CreateEvent />
+            </Route>
             <Route path="/status">
               <EventStatus />
             </Route>
-            <Route path="/createevent">
-              <CreateEvent />
-            </Route>
-            <Route path="/login">
-              <EventOwnerLogin />
-            </Route>
-            <Route path="/signup">
-              <EventOwnerRegister />
-            </Route>
+
             <Route path="/emailverify">
               <EmailVerification />
-            </Route>
-            <Route path="/portal">
-              <EventPortal />
             </Route>
             <Route path="/wallet">
               <WalletBalance />
