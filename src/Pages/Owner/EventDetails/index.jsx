@@ -5,6 +5,7 @@ import OwnerLayout from '../../../Commons/OwnerLayout';
 import Colors from '../../../Commons/Colors';
 import Report from './Reports/Report';
 import RegsisteredUsers from './Reports/RegisteredUsers';
+import Detail from './Detail';
 
 const EventDetail = () => {
   return (
@@ -33,6 +34,9 @@ const EventDetail = () => {
         </PageLink>
       </PageLinks>
       <Switch>
+        <Route path={`/owner/event/details`} exact>
+          <Detail />
+        </Route>
         <Route path={`/owner/event/details/report`} exact>
           <Report />
         </Route>
@@ -48,7 +52,7 @@ const PageLinks = Styled.div`
   width: 90%;
   display: flex;
   justify-content: space-between;
-  margin: 15px auto;
+  margin: 15px auto 30px auto;
 `;
 
 const PageLink = Styled(NavLink)`
