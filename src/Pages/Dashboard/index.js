@@ -20,7 +20,7 @@ function Dashboard() {
             <span>Create Event</span>
           </div>
         </DashboardHomeCard>
-        <DashboardHomeCard to="/events">
+        <DashboardHomeCard to="/events/video">
           <div>
             <img src="/assets/images/icons/tag.png" alt="Join" />
             <span>Join Event</span>
@@ -52,9 +52,6 @@ const DashboardContent = Styled.main`
   justify-content: space-between; 
   overflow: scroll;
   margin-bottom: 80px;
-  @media (min-width: 768px) {
-    width: 40%;
-  }
 `;
 
 const DashboardHomeCard = Styled(Link)`

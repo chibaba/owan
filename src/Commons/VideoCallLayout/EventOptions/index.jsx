@@ -1,7 +1,12 @@
 import React from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
-import { mdiBullseye, mdiCardsHeart, mdiRadioboxMarked } from '@mdi/js';
+import {
+  mdiBullseye,
+  mdiCardsHeart,
+  mdiRadioboxMarked,
+  mdiMessageReply,
+} from '@mdi/js';
 import Colors from '../../Colors';
 import { useAppContext } from '../../../Context/AppContext';
 import { useVideoCallContext } from '../../../Context/VideoCallContext';
@@ -38,11 +43,16 @@ function EventOptions() {
         </SingleOption>
         <SingleOption>
           <CommentNotification />
-          <img src="/assets/images/icons/comment.png" alt="cash" />
+          <Icon
+            path={mdiMessageReply}
+            size={0.8}
+            color="#fff"
+            style={{ rotate: 'y 180deg' }}
+          />
           <span>2.6k</span>
         </SingleOption>
         <SingleOption>
-          <img src="/assets/images/icons/cash.png" alt="cash" />
+          <img src="/assets/images/icons/cashspray.svg" alt="cash" />
           <span>Spray Cash</span>
         </SingleOption>
       </OptionItems>
@@ -51,7 +61,7 @@ function EventOptions() {
 }
 
 const OptionsWrapper = Styled.nav`
-  position: fixed;
+  position: absolute;
   bottom: 80px;
   right: 0;
   width: 70px;

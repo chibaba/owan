@@ -8,6 +8,7 @@ import { useVideoCallContext } from '../../../Context/VideoCallContext';
 function Video() {
   const { showDrawer } = useAppContext();
   const { showTables, showSideDrawer } = useVideoCallContext();
+
   return (
     <VideoCallLayout>
       {showDrawer && showSideDrawer ? (

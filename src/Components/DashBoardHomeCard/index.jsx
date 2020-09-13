@@ -1,34 +1,25 @@
 import React from 'react';
-import styled from "styled-components"
-import Colors from '../../Commons/Colors'
+import styled from 'styled-components';
+import Colors from '../../Commons/Colors';
 
-
-
-
-const DashBoardHomeCard=({children})=>{
-    return(
-
-        <DashboardHomeCardContainer>
-            <div>
-                {children}
-
-            </div>
-
-        </DashboardHomeCardContainer>
-
-    )
-}
+const DashBoardHomeCard = ({ children }) => {
+  return (
+    <DashboardHomeCardContainer>
+      <div>{children}</div>
+    </DashboardHomeCardContainer>
+  );
+};
 const DashboardHomeCardContainer = styled.a`
   display: flex;
-  height: 130px;
-  background:${Colors.lightDefaultGreen};
+  height: 138px;
+  background: ${Colors.lightDefaultGreen};
   width: 47.25%;
   margin-bottom: 10px;
   border-radius: 4px;
-  box-shadow: 0px 19.0769px 42.9231px rgba(0, 0, 0, 0.07);
   justify-content: flex-end;
   flex-direction: column;
   align-items: baseline;
+  padding: 10px 2px;
   @media (min-width: 768px) {
     margin-bottom: 40px;
   }
@@ -39,15 +30,15 @@ const DashboardHomeCardContainer = styled.a`
     align-items: baseline;
     justify-content: flex-end;
     span {
-      color:${Colors.defaultGreen} ;
+      color: ${Colors.defaultGreen};
       font-size: 14px;
       font-weight: 900;
       margin-top: 20px;
     }
-    
-   
+    span.amount {
+      font-size: 24px;
+    }
   }
 `;
 
-
-export default DashBoardHomeCard
+export default DashBoardHomeCard;

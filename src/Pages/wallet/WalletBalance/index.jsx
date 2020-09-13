@@ -1,56 +1,44 @@
-import React from "react";
-import HamburgerHeader from "../../../Components/HamburgerHeader";
+import React from 'react';
+import HamburgerHeader from '../../../Components/HamburgerHeader';
 
-import styled from "styled-components";
-import DashBoardCardLayout from "../../../Components/DashBoardHomeCard/DashBoardCardLayout";
-import DashBoardHomeCard from "../../../Components/DashBoardHomeCard";
-import CurrBalance from "../../../Components/CurrBalance"
-import Button from "../../../Commons/Button";
-
+import styled from 'styled-components';
+import DashBoardCardLayout from '../../../Components/DashBoardHomeCard/DashBoardCardLayout';
+import DashBoardHomeCard from '../../../Components/DashBoardHomeCard';
+import CurrBalance from '../../../Components/CurrBalance';
+import Button from '../../../Commons/Button';
+import Colors from '../../../Commons/Colors';
 
 const WalletBalance = ({ currentBal }) => {
   return (
     <WalletLayout>
       <HamburgerHeader title="Wallet Balance" />
-      <CurrBalance/>
+      <CurrBalance />
       <DashBoardCardLayout>
-          <DashBoardHomeCard>
+        <DashBoardHomeCard>
           <img src="/assets/images/icons/balance.svg" alt="icon" />
-          <span>N20,000</span>
+          <span className="amount">N20,000</span>
           <span>Cash gifts</span>
-
-          </DashBoardHomeCard>
-          <DashBoardHomeCard>
+        </DashBoardHomeCard>
+        <DashBoardHomeCard>
           <img src="/assets/images/icons/balance.svg" alt="icon" />
-          <span>N20,000</span>
+          <span className="amount">N20,000</span>
           <span>Spray Balance</span>
-
-          </DashBoardHomeCard>
+        </DashBoardHomeCard>
       </DashBoardCardLayout>
-
-      <Button text="Withdraw Funds" />
-      
-
-     
-      
+      <Button text="Withdraw Funds" style={{ width: '90%', margin: 'auto' }} />
     </WalletLayout>
   );
 };
-const WalletLayout= styled.div`
-
-width: 90%;
-display:flex;
-flex-direction: column;
-margin: auto;
-h4.moneyfor{
-    color: #999999;
-    font-size: 10px;
-    text-align:center;
-
-   
-}
-
-`
-
+const WalletLayout = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  h4.moneyfor {
+    color: ${Colors.textColor};
+    font-size: 12px;
+    text-align: center;
+  }
+`;
 
 export default WalletBalance;

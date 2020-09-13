@@ -3,6 +3,7 @@
 html,
 body {
   scroll-behavior: smooth;
+  height: max-content;
 }
 
 body {
@@ -15,4 +16,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.event-details-active {
+  background: #28c101 !important;
+  color: #fff !important;
 }

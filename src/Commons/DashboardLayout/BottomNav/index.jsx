@@ -24,6 +24,7 @@ const NavWrapper = Styled.nav`
   position: fixed;
   bottom: 0;
   width: 100%;
+  max-width: 480px;
   height: 80px;
   box-shadow: 0px -1px 4px rgba(0, 0, 0, 0.08);
   border-top-right-radius: 15px;
