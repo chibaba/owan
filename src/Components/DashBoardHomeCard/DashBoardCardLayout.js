@@ -6,7 +6,7 @@ const DashBoardCardLayout = ({ children }) => {
 };
 
 const DashboardContent = Styled.main`
-  width: 100%;
+  width: 90%;
   margin: auto;
   padding: 10px 0; 
   display: flex;

@@ -1,10 +1,10 @@
 import React from 'react';
 import Styled from 'styled-components';
-import Colors from '../../../../Commons/Colors';
-import EventDetailBanner from '../../../../Commons/EventDetailBanner';
-import EventDate from '../../../../Commons/EventDate';
+import Colors from '../../../Commons/Colors';
+import EventDetailBanner from '../../../Commons/EventDetailBanner';
+import EventDate from '../../../Commons/EventDate';
 
-const Detail = () => {
+const DashboardDetail = () => {
   const image = '/assets/images/wedding-demo.jpg';
   return (
     <>
@@ -76,7 +76,7 @@ const MapArea = Styled.div`
   background: ${Colors.textColor};
 `;
 
-Detail.defaultProps = {
+DashboardDetail.defaultProps = {
   event: {
     title: 'Pride at the Disco',
     description: 'This is link up reminder',
@@ -86,4 +86,4 @@ Detail.defaultProps = {
   },
 };
 
-export default Detail;
+export default DashboardDetail;
