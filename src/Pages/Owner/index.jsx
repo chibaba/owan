@@ -13,7 +13,7 @@ const Owner = () => {
       <Route path="/owner/event" exact>
         <Event />
       </Route>
-      <Route path="/owner/event/details" exact>
+      <Route path="/owner/event/details">
         <EventDetail />
       </Route>
     </Switch>
