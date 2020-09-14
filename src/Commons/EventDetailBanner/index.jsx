@@ -1,9 +1,9 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-const EventDetailBanner = ({ imageURL, text }) => {
+const EventDetailBanner = ({ imageURL, text, style }) => {
   return (
-    <EventBanner>
+    <EventBanner style={style}>
       <div className="overlay"></div>
       <p>{text}</p>
       <img src={imageURL} alt="banner" />

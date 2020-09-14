@@ -7,13 +7,13 @@ import JoinIn from './JoinIn';
 function Event() {
   return (
     <>
-      <Route path="/events" exact>
+      <Route path="/event" exact>
         <EventsListing />
       </Route>
-      <Route path="/events/video" exact>
+      <Route path="/event/video" exact>
         <Video />
       </Route>
-      <Route path="/events/join" exact>
+      <Route path="/event/join" exact>
         <JoinIn />
       </Route>
     </>

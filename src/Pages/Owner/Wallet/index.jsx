@@ -5,7 +5,7 @@ import WalletBalance from '../../wallet/WalletBalance';
 const Wallet = () => {
   return (
     <OwnerLayout pageTitle="Wallet Balance">
-      <WalletBalance />
+      <WalletBalance isOwner={true} />
     </OwnerLayout>
   );
 };

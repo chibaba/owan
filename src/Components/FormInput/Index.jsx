@@ -2,7 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import PropType from 'prop-types';
 
-const FormInput = ({ name, label, onChange, type, value, placeholder }) => {
+const FormInput = ({
+  name,
+  label,
+  onChange,
+  type,
+  value,
+  placeholder,
+  inputStyle,
+}) => {
   return (
     <InputWrapper>
       <label htmlFor={name}>{label}</label>
@@ -12,6 +20,7 @@ const FormInput = ({ name, label, onChange, type, value, placeholder }) => {
         type={type}
         value={value}
         placeholder={placeholder}
+        style={inputStyle}
       />
     </InputWrapper>
   );
