@@ -1,11 +1,15 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-const TitleBar = ({ page, children }) => {
+const TitleBar = ({ page, toggleDrawer }) => {
   return (
     <HeaderWrapper>
       <div>
-        <img src="/assets/images/icons/menu.svg" alt="menu" />
+        <img
+          src="/assets/images/icons/menu.svg"
+          alt="menu"
+          onClick={toggleDrawer}
+        />
         <h2>{page}</h2>
         <span></span>
       </div>

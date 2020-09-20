@@ -1,13 +1,21 @@
 import axios from 'axios';
+import cookie from 'js-cookie';
 
-const URI = process.env.REACT_APP_EVENT_API;
+const token = cookie.get('uid') || '';
+const clientID = process.env.REACT_APP_CLIENT_ID || '';
+
+let header = {
+  'Content-Type': 'application/json',
+  authorization: `Bearer ${token}`,
+  'client-id': clientID,
+};
 
 export const postCall = async (url, data, headers) => {
   return await axios({
     method: 'POST',
-    url: `${URI}${url}`,
+    url: `${url}`,
     data,
-    headers,
+    headers: { ...header, ...headers },
   })
     .then((response) => response.data)
     .catch((error) => {
@@ -18,8 +26,8 @@ export const postCall = async (url, data, headers) => {
 export const getCall = async (url, headers) => {
   return await axios({
     method: 'GET',
-    url: `${URI}${url}`,
-    headers,
+    url: `${url}`,
+    headers: { ...header, ...headers },
   })
     .then((response) => response.data)
     .catch((error) => {
@@ -30,9 +38,9 @@ export const getCall = async (url, headers) => {
 export const putCall = async (url, data, headers) => {
   return await axios({
     method: 'PUT',
-    url: `${URI}${url}`,
+    url: `${url}`,
     data,
-    headers,
+    headers: { ...header, ...headers },
   })
     .then((response) => response.data)
     .catch((error) => {

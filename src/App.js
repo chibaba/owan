@@ -1,10 +1,11 @@
 import React, { Suspense, lazy } from 'react';
 import './App.scss';
+import 'toasted-notes/src/styles.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppContextWrapper from './Context/AppContext';
-import UserRegistration from './Pages/auth/UserRegistration';
+// import UserRegistration from './Pages/auth/UserRegistration';
 import VideoCallContextWrapper from './Context/VideoCallContext';
-// import ProtectedRoutes from './Commons/Auth/ProtectedRoutes';
+import ProtectedRoutes from './Commons/Auth/ProtectedRoutes';
 import Styled from 'styled-components';
 import Wallet from './Pages/Owner/Wallet';
 import SuspenseLoader from './Commons/SuspenseLoader';
@@ -43,28 +44,25 @@ function App() {
                 <Route path="/verify">
                   <EmailVerification />
                 </Route>
-                {/* <ProtectedRoutes> */}
                 <VideoCallContextWrapper>
-                  <Route path="/event">
-                    <EventPage />
-                  </Route>
+                  <ProtectedRoutes>
+                    <Route path="/event">
+                      <EventPage />
+                    </Route>
+                    <Route path="/dashboard">
+                      <DashboardPage />
+                    </Route>
+                    <Route path="/owner">
+                      <OwnerPage />
+                    </Route>
+                    <Route path="/owner/wallet">
+                      <Wallet />
+                    </Route>
+                    <Route path="/owner/createevent">
+                      <CreateEvent />
+                    </Route>
+                  </ProtectedRoutes>
                 </VideoCallContextWrapper>
-                <Route path="/dashboard">
-                  <DashboardPage />
-                </Route>
-                {/* </ProtectedRoutes> */}
-                <Route path="/userReg">
-                  <UserRegistration />
-                </Route>
-                <Route path="/owner">
-                  <OwnerPage />
-                </Route>
-                <Route path="/owner/wallet">
-                  <Wallet />
-                </Route>
-                <Route path="/owner/createevent">
-                  <CreateEvent />
-                </Route>
                 <Route path="/status">
                   <EventStatus />
                 </Route>

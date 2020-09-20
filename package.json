@@ -12,6 +12,8 @@
     "animate.css": "^4.1.0",
     "axios": "^0.20.0",
     "eyeson": "^1.5.1",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^3.0.0-beta.2",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-add-to-calendar": "^0.1.5",
@@ -20,7 +22,9 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "styled-components": "^5.1.1"
+    "react-spring": "^8.0.27",
+    "styled-components": "^5.1.1",
+    "toasted-notes": "^3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

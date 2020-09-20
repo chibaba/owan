@@ -6,28 +6,28 @@ import { Link } from 'react-router-dom';
 import EventDetailBanner from '../../../Commons/EventDetailBanner';
 import EventDate from '../../../Commons/EventDate';
 
-function DashboardHome() {
+function DashboardHome({ event }) {
   const image = '/assets/images/wedding-demo.jpg';
   return (
     <DashboardLayout>
       <EventTitleHead>
-        <h3>Pride at the Disco!</h3>
+        <h3>{event && event.name}</h3>
         <span>by Tunji Obaoye</span>
       </EventTitleHead>
       <EventDetailBanner
         text="Upcoming Event"
-        imageURL={image}
+        imageURL={(event && event.images[0]) || image}
         style={{ marginBottom: '40px' }}
       />
       <DashboardContent>
         <EventDate
-          date="Fri, 28 Jun 2019"
-          time="5:00PM - 8:00 GMT+1"
+          date={event && new Date(event.event_date).toDateString()}
+          time={event && event.event_time}
           style={{ marginBottom: '40px' }}
         />
-        <DashboardHomeCard to="/dashboard/event/detail">
+        <DashboardHomeCard to={`/dashboard/event/detail/${event && event.id}`}>
           <div>
-            <img src="/assets/images/icons/layers.png" alt="Create" />
+            <img src="/assets/images/icons/layers.png" alt="Details" />
             <span>View Event Details</span>
           </div>
         </DashboardHomeCard>
@@ -39,7 +39,7 @@ function DashboardHome() {
         </DashboardHomeCard>
         <DashboardHomeCard to="/">
           <div>
-            <img src="/assets/images/icons/home.svg" alt="Home" />
+            <img src="/assets/images/icons/home.svg" alt="Video" />
             <span>Watch Video</span>
           </div>
         </DashboardHomeCard>

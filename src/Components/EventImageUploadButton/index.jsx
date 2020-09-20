@@ -4,10 +4,15 @@ import Colors from '../../Commons/Colors';
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 
-const ImageUploadButton = ({ id }) => {
+const ImageUploadButton = ({ id, onChange, name, previewSrc }) => {
   return (
     <ButtonWrapper>
-      <input type="file" id={id} />
+      <img
+        src={previewSrc}
+        alt={id}
+        style={{ display: previewSrc && 'block' }}
+      />
+      <input type="file" id={id} onChange={onChange} name={name} />
       <label htmlFor={id}>
         <Icon path={mdiPlus} size={1} color={Colors.grayBorderColor} />
       </label>
@@ -24,6 +29,17 @@ const ButtonWrapper = Styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  position: relative;
+  label {
+    position: absolute;
+    z-index: 999;
+  }
+  img {
+    display: none;
+    position: absolute;
+    width: 100%;
+  }
   input {
     display: none;
   }
