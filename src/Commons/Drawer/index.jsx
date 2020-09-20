@@ -54,6 +54,9 @@ const DrawerWrapper = Styled.div`
   right: ${(props) =>
     props.position === 'bottom' ? 0 : props.showDrawer ? 0 : '-100%'};
   z-index: 99999999999999;
+  @media(max-width: 768px) {
+    position: fixed;
+  }
 `;
 
 //Default height for bottom drawer can be changed
