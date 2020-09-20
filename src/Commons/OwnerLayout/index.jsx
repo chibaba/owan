@@ -53,8 +53,9 @@ const LayoutWrapper = Styled.div`
 
 const ContentWrapper = Styled.main`
   width: ${({ full }) => (full ? '100%' : '90%')};
-  margin: auto auto 100px auto;
-  height: max-content;
+  margin: auto;
+  height: 100vh;
+  overflow: scroll;
 `;
 
 const DrawerItemWrapper = Styled.div`
