@@ -1,34 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import Colors from '../../../Commons/Colors';
 import EventDetailBanner from '../../../Commons/EventDetailBanner';
 import EventDate from '../../../Commons/EventDate';
+import { getCall } from '../../../APIs/requests';
+import api from '../../../APIs/endpoints';
+import { useLocation } from 'react-router';
+import toast from 'toasted-notes';
 
 const DashboardDetail = () => {
   const image = '/assets/images/wedding-demo.jpg';
+  const { pathname } = useLocation();
+  const [event, setEvent] = useState(null);
+
+  useEffect(() => {
+    const splittedRoutes = pathname.split('/');
+    const id = splittedRoutes[splittedRoutes.length - 1];
+    getCall(api.getEvent(id))
+      .then((response) => {
+        if (response.status === 200 && response.data) {
+          setEvent(response.data);
+        } else {
+          toast.notify('This event was not found or has been deleted', {
+            position: 'bottom',
+            duration: 5000,
+          });
+        }
+      })
+      .catch((error) => {
+        toast.notify(error.message, {
+          position: 'bottom',
+          duration: 5000,
+        });
+      });
+  }, [pathname]);
+
   return (
     <>
-      <EventDetailBanner imageURL={image} text="Upcoming Event" />
+      <EventDetailBanner
+        imageURL={(event && event.images[0]) || image}
+        text="Upcoming Event"
+      />
       <ContentWrapper>
         <ContentSection>
-          <EventTitle>Pride at the Disco!</EventTitle>
+          <EventTitle>{event && event.name}</EventTitle>
           <span className="by-who">by Tinji Obaoye</span>
         </ContentSection>
         <ContentSection>
-          <EventDate date="Fri, 28 Jun 2019" time="5:00PM - 8:00 GMT+1" />
+          <EventDate
+            date={event && new Date(event.event_date).toDateString()}
+            time={event && event.event_time}
+          />
         </ContentSection>
         <ContentSection>
           <SectionTitle>About</SectionTitle>
-          <p>
-            Reduce the thickness of the first and second divider. Ensure the
-            spacing between deal gallery and fix the slider icon underneath.
-            Write N40,000 and N4,000 properly without any space. Make “per
-            night” all caps and make it orange color. Increase the spacing
-            between the items on the header and the form fields. Its “add to
-            cart” and not “add to chart”. Increase the button height of “add to
-            cart”. Change the color of “2 points”. Reduce the thick line that
-            separates “number of guests” and “total amount”
-          </p>
+          <p>{event && event.description}</p>
         </ContentSection>
       </ContentWrapper>
       <ContentSection>

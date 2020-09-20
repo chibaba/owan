@@ -4,21 +4,29 @@ import styled from 'styled-components';
 import FormInput from '../../../Components/FormInput/Index';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
-import { Link } from 'react-router-dom';
-
-import axios from 'axios';
+import { Link, useHistory } from 'react-router-dom';
 import { Label } from '../EventOwnerRegister';
+import { postCall } from '../../../APIs/requests';
+import api from '../../../APIs/endpoints';
+import { useAppContext } from '../../../Context/AppContext';
+import toaster from 'toasted-notes';
+import cookie from 'js-cookie';
 
 const EventOwnerLogin = () => {
+  const history = useHistory();
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState(null);
   const [, setShowError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   function inputChangeHandler(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   }
+
+  const { handleUserState } = useAppContext();
 
   function validateInput(data) {
     try {
@@ -40,36 +48,47 @@ const EventOwnerLogin = () => {
 
     validateInput({ email, password });
 
+    setLoading(true);
+
     if (error) {
       setShowError(true);
       return;
     }
 
-    //Move routes to env
-    axios({
-      method: 'POST',
-      url: `${process.env.REACT_APP_API}/users/v1/auths/login`,
-      headers: {
-        'client-id': process.env.REACT_APP_CLIENT_ID,
-      },
-      data: {
-        email,
-        password,
-      },
-    })
+    const data = { email, password };
+
+    postCall(api.login, data, { 'client-id': process.env.REACT_APP_CLIENT_ID })
       .then((response) => {
-        if (response.status === 200) {
-          const refreshToken = response.data.data.refresh;
-          window.localStorage.setItem('rt', refreshToken);
-          window.location.href = '/dashboard';
+        if (response.data) {
+          const { user, token } = response.data;
+          cookie.set('uid', token);
+          handleUserState(user);
+          toaster.notify('Login Successful. Redirecting...', {
+            position: 'bottom',
+            duration: 5000,
+            type: 'success',
+          });
+          setLoading(false);
+          setTimeout(function () {
+            history.push('/dashboard');
+          }, 5000);
         }
       })
       .catch((error) => {
-        console.log(error.response.data.error);
+        toaster.notify(error.message, {
+          position: 'bottom',
+          duration: 5000,
+        });
+        setLoading(false);
       });
   }
   return (
     <EventOwnerLayout createAcc={false} title="Log in into your account">
+      {loading ? (
+        <LoadingIcon>
+          <img src="/assets/images/icons/loading.svg" alt="Loading..." />
+        </LoadingIcon>
+      ) : null}
       <EventOwnerLoginForm>
         <div>
           <Label>
@@ -126,4 +145,16 @@ const Redirect = styled.span`
 const RegisterLink = styled.span`
   color: ${Colors.defaultGreen};
 `;
+
+export const LoadingIcon = styled.div`
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 60px;
+  }
+`;
+
 export default EventOwnerLogin;

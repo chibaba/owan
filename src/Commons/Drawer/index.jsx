@@ -29,6 +29,8 @@ function Drawer({ drawerPosition, children }) {
         className={
           showDrawer && drawerPosition === 'right'
             ? 'animate__animated animate__fadeInRight animate__delay-0.5s'
+            : drawerPosition === 'left'
+            ? 'animate__animated animate__fadeInLeft animate__delay-0.5s'
             : 'animate__animated animate__fadeInUp animate__delay-0.5s'
         }
       >
@@ -56,7 +58,7 @@ const DrawerWrapper = Styled.div`
 
 //Default height for bottom drawer can be changed
 const DrawerContent = Styled.div`
-  width: ${(props) => (props.position === 'bottom' ? '100%' : '50%')};
+  width: ${(props) => (props.position === 'bottom' ? '100%' : '60%')};
   height: ${(props) => (props.position === 'bottom' ? '200px' : '100vh')};
   border-top-left-radius: ${(props) =>
     props.position === 'bottom' ? '15px' : 0};
@@ -65,7 +67,13 @@ const DrawerContent = Styled.div`
   background: #fff;
   position: absolute;
   right: ${(props) =>
-    props.position === 'bottom' ? 0 : props.showDrawer ? 0 : '-60%'};
+    props.position === 'bottom'
+      ? 0
+      : props.position === 'left'
+      ? '40%'
+      : props.position === 'right'
+      ? 0
+      : '-60%'};
   transition: 0.2s;
 `;
 

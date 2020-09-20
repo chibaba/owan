@@ -4,31 +4,29 @@ import Colors from '../../../../Commons/Colors';
 import EventDetailBanner from '../../../../Commons/EventDetailBanner';
 import EventDate from '../../../../Commons/EventDate';
 
-const Detail = () => {
+const Detail = ({ data }) => {
   const image = '/assets/images/wedding-demo.jpg';
+  console.log(data);
   return (
     <>
-      <EventDetailBanner imageURL={image} text="Upcoming Event" />
+      <EventDetailBanner
+        imageURL={(data && data.images[0]) || image}
+        text="Upcoming Event"
+      />
       <ContentWrapper>
         <ContentSection>
-          <EventTitle>Pride at the Disco!</EventTitle>
+          <EventTitle>{data && data.name}</EventTitle>
           <span className="by-who">by Tinji Obaoye</span>
         </ContentSection>
         <ContentSection>
-          <EventDate date="Fri, 28 Jun 2019" time="5:00PM - 8:00 GMT+1" />
+          <EventDate
+            date={data && new Date(data.event_date).toDateString()}
+            time={data && data.event_time}
+          />
         </ContentSection>
         <ContentSection>
           <SectionTitle>About</SectionTitle>
-          <p>
-            Reduce the thickness of the first and second divider. Ensure the
-            spacing between deal gallery and fix the slider icon underneath.
-            Write N40,000 and N4,000 properly without any space. Make “per
-            night” all caps and make it orange color. Increase the spacing
-            between the items on the header and the form fields. Its “add to
-            cart” and not “add to chart”. Increase the button height of “add to
-            cart”. Change the color of “2 points”. Reduce the thick line that
-            separates “number of guests” and “total amount”
-          </p>
+          <p>{data && data.description}</p>
         </ContentSection>
       </ContentWrapper>
       <ContentSection>

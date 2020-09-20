@@ -13,17 +13,20 @@ import RadioButton from '../../../Components/RadioButton';
 import ImageUploadButton from '../../../Components/EventImageUploadButton';
 import CheckBox from '../../../Components/CheckBox';
 import FormAlert from '../../../Components/FormAlert';
+import { postCall } from '../../../APIs/requests';
+import api from '../../../APIs/endpoints';
+import toaster from 'toasted-notes';
 
 const CreateEvent = () => {
   const initialState = {
-    eventType: '',
+    name: '',
     description: '',
-    eventPassword: '',
-    location: '',
-    eventDate: '',
-    eventTime: '',
-    cashGiftEnable: false,
-    sendReminder: false,
+    location: 'online',
+    event_date: '',
+    event_time: '',
+    cashgifts: false,
+    reminder: false,
+    hashtag: '',
   };
   const [data, setData] = useState(initialState);
   const [modalState, setModalState] = useState({
@@ -31,12 +34,27 @@ const CreateEvent = () => {
     message: null,
     type: null,
   });
+  const [imageData, setImageData] = useState({
+    image1: { result: null, file: null },
+    image2: { result: null, file: null },
+    image3: { result: null, file: null },
+    image4: { result: null, file: null },
+    image5: { result: null, file: null },
+    image6: { result: null, file: null },
+  });
 
   const handleInputChange = (event) => {
-    setData({
-      ...data,
-      [event.target.name]: event.target.value,
-    });
+    if (event.target.type === 'checkbox') {
+      setData({
+        ...data,
+        [event.target.name]: event.target.checked,
+      });
+    } else {
+      setData({
+        ...data,
+        [event.target.name]: event.target.value,
+      });
+    }
   };
   const handleInputCancel = (event) => {
     event.preventDefault();
@@ -46,8 +64,53 @@ const CreateEvent = () => {
     });
   };
 
+  const resetFormState = () => {
+    setData({
+      name: '',
+      description: '',
+      location: 'online',
+      event_date: '',
+      event_time: '',
+      cashgifts: false,
+      reminder: false,
+      hashtag: '',
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    let formData = new FormData();
+
+    for (let i in data) {
+      formData.append(i, data[i]);
+    }
+
+    for (let image in imageData) {
+      if (!imageData[image].file) {
+        continue;
+      }
+      formData.append('imageUpload', imageData[image].file);
+    }
+
+    postCall(api.createEvent, formData, {
+      user_id: 2,
+      'Content-Type': 'multipart/form-data',
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          toaster.notify(response.message, {
+            position: 'bottom',
+            duration: 5000,
+          });
+          resetFormState();
+        }
+      })
+      .catch((error) => {
+        toaster.notify(error.message, {
+          position: 'bottom',
+          duration: 5000,
+        });
+      });
     setModalState({
       type: 'success',
       show: true,
@@ -63,14 +126,19 @@ const CreateEvent = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleCheckbox = (e) => {
-    setData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.checked,
-    }));
-  };
+  const handleImageUpload = (e) => {
+    e.persist();
 
-  console.log(data);
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onloadend = () => {
+      setImageData((prevState) => ({
+        ...prevState,
+        [e.target.name]: { file: e.target.files[0], result: reader.result },
+      }));
+    };
+  };
 
   return (
     <>
@@ -86,15 +154,23 @@ const CreateEvent = () => {
         <EventForm onSubmit={handleSubmit}>
           <FormInput
             type="text"
-            name="eventType"
-            value={data.eventType}
+            name="name"
+            value={data.name}
             onChange={handleInputChange}
             required={true}
             label="Event Name"
           />
+          <FormInput
+            type="text"
+            name="hashtag"
+            value={data.hashtag}
+            onChange={handleInputChange}
+            required={true}
+            label="Event #hashtag"
+          />
           <FormTextarea
             name="description"
-            value={data.descriptio}
+            value={data.description}
             onChange={handleInputChange}
             required
             label="Event description"
@@ -102,16 +178,16 @@ const CreateEvent = () => {
           <div className="multiple-inputs">
             <DateInput
               className="half"
-              name="eventDate"
+              name="event_date"
               label="Date"
               placeholder="Date"
-              value={data.eventDate}
+              value={data.event_date}
               onChange={handleInputChange}
             />
             <TimeInput
               className="half"
-              name="eventTime"
-              value={data.eventTime}
+              name="event_time"
+              value={data.event_time}
               onChange={handleInputChange}
             />
           </div>
@@ -132,8 +208,8 @@ const CreateEvent = () => {
           </div>
           <FormInput
             type="text"
-            name="eventType"
-            value={data.eventType}
+            name="location"
+            value={data.location}
             onChange={handleInputChange}
             required={true}
             placeholder="Event venue location"
@@ -143,28 +219,58 @@ const CreateEvent = () => {
             <div className="checklist">
               <span>Enable cash gifts</span>
               <CheckBox
-                name="cashGiftEnable"
-                onChange={handleCheckbox}
-                checked={data.cashGiftEnable}
+                name="cashgifts"
+                onChange={handleInputChange}
+                checked={data.cashgifts}
               />
             </div>
             <div className="checklist">
               <span>Enable send event reminder</span>
               <CheckBox
-                name="sendReminder"
-                onChange={handleCheckbox}
-                checked={data.sendReminder}
+                name="reminder"
+                onChange={handleInputChange}
+                checked={data.reminder}
               />
             </div>
           </div>
           <h4 className="title">Add Images (max of 20mb for each)</h4>
           <ImageButtonsArea>
-            <ImageUploadButton id="image1" />
-            <ImageUploadButton id="image2" />
-            <ImageUploadButton id="image3" />
-            <ImageUploadButton id="image4" />
-            <ImageUploadButton id="image5" />
-            <ImageUploadButton id="image6" />
+            <ImageUploadButton
+              id="image1"
+              name="image1"
+              onChange={handleImageUpload}
+              previewSrc={imageData.image1.result}
+            />
+            <ImageUploadButton
+              id="image2"
+              name="image2"
+              onChange={handleImageUpload}
+              previewSrc={imageData.image2.result}
+            />
+            <ImageUploadButton
+              id="image3"
+              name="image3"
+              onChange={handleImageUpload}
+              previewSrc={imageData.image3.result}
+            />
+            <ImageUploadButton
+              id="image4"
+              name="image4"
+              onChange={handleImageUpload}
+              previewSrc={imageData.image4.result}
+            />
+            <ImageUploadButton
+              id="image5"
+              name="image5"
+              onChange={handleImageUpload}
+              previewSrc={imageData.image5.result}
+            />
+            <ImageUploadButton
+              id="image6"
+              name="image6"
+              onChange={handleImageUpload}
+              previewSrc={imageData.image6.result}
+            />
           </ImageButtonsArea>
           <Button cancelbtn={false} text="Create Event" />
           <Button
