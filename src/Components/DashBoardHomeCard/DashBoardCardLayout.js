@@ -6,14 +6,14 @@ const DashBoardCardLayout = ({ children }) => {
 };
 
 const DashboardContent = Styled.main`
-  width: 90%;
+  width: 100%;
   margin: auto;
   padding: 10px 0; 
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between; 
   overflow: scroll;
-  margin-bottom: 80px;
+  margin-bottom: 30px;
 `;
 
 export default DashBoardCardLayout;

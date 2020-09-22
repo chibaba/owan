@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Colors from '../../Commons/Colors';
 
-const CurrBalance = ({ currentBal }) => {
+const CurrBalance = ({ balance }) => {
   return (
     <CurBalance>
       <div>
         <img src="/assets/images/icons/balance.svg" alt="icon" />
-        <span className="acctBalance">{(currentBal = 'N20,000')}</span>
+        <span className="acctBalance">{balance || 'N0'}</span>
         <span className="bal">Current Balance</span>
       </div>
       <h4 className="moneyfor">

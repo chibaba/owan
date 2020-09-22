@@ -8,6 +8,7 @@ import EventDate from '../../../Commons/EventDate';
 
 function DashboardHome({ event }) {
   const image = '/assets/images/wedding-demo.jpg';
+
   return (
     <DashboardLayout>
       <EventTitleHead>
@@ -31,7 +32,7 @@ function DashboardHome({ event }) {
             <span>View Event Details</span>
           </div>
         </DashboardHomeCard>
-        <DashboardHomeCard to="/event">
+        <DashboardHomeCard to={{ pathname: '/event', state: { event } }}>
           <div>
             <img src="/assets/images/icons/tag.png" alt="Join" />
             <span>Join Event</span>

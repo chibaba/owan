@@ -1,14 +1,39 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Styled from 'styled-components';
 import { useAppContext } from '../../Context/AppContext';
 import Drawer from '../Drawer';
 import TitleBar from './TitleBat';
 import Icon from '@mdi/react';
-import { mdiCalendar, mdiWallet, mdiWrench } from '@mdi/js';
+import { mdiCalendar, mdiWallet, mdiWrench, mdiLogout } from '@mdi/js';
 import Colors from '../Colors';
+import 'animate.css';
+import cookie from 'js-cookie';
 
 const OwnerLayout = ({ children, pageTitle, fullWidth }) => {
   const { showDrawer, handleDrawerState } = useAppContext();
+  const itemRef = useRef(null);
+  const walletRef = useRef(null);
+  const settingsRef = useRef(null);
+
+  function dropDownHandler(ref) {
+    console.log(ref.current.parentNode.style);
+    if (
+      !ref.current.parentNode.style.height ||
+      ref.current.parentNode.style.height === '30px'
+    ) {
+      ref.current.parentNode.style.height = 'max-content';
+      ref.current.parentNode.style.transition = '0.2s';
+    } else {
+      ref.current.parentNode.style.height = '30px';
+    }
+  }
+
+  function handleLogout() {
+    cookie.remove('uid');
+    cookie.remove('auid');
+    window.location.href = '/';
+  }
+
   return (
     <LayoutWrapper>
       {showDrawer ? (
@@ -17,26 +42,57 @@ const OwnerLayout = ({ children, pageTitle, fullWidth }) => {
             <DrawerLogo>LinkUp</DrawerLogo>
             <DrawerAvatar></DrawerAvatar>
             <DrawerItem>
-              <DrawerHead>
+              <DrawerHead
+                ref={itemRef}
+                onClick={() => dropDownHandler(itemRef)}
+              >
                 <Icon
                   path={mdiCalendar}
                   size={0.9}
-                  color={Colors.defaultGreen}
+                  color={Colors.grayBorderColor}
                 />
                 <span>Event</span>
               </DrawerHead>
+              <DrawerItemDropdown></DrawerItemDropdown>
             </DrawerItem>
             <DrawerItem>
-              <DrawerHead>
-                <Icon path={mdiWallet} size={0.9} color={Colors.defaultGreen} />
+              <DrawerHead
+                ref={walletRef}
+                onClick={() => dropDownHandler(walletRef)}
+              >
+                <Icon
+                  path={mdiWallet}
+                  size={0.9}
+                  color={Colors.grayBorderColor}
+                />
                 <span>Wallet</span>
               </DrawerHead>
+              <DrawerItemDropdown></DrawerItemDropdown>
             </DrawerItem>
             <DrawerItem>
-              <DrawerHead>
-                <Icon path={mdiWrench} size={0.9} color={Colors.defaultGreen} />
+              <DrawerHead
+                ref={settingsRef}
+                onClick={() => dropDownHandler(settingsRef)}
+              >
+                <Icon
+                  path={mdiWrench}
+                  size={0.9}
+                  color={Colors.grayBorderColor}
+                />
                 <span>Account Settings</span>
               </DrawerHead>
+              <DrawerItemDropdown></DrawerItemDropdown>
+            </DrawerItem>
+            <DrawerItem>
+              <DrawerHead onClick={handleLogout}>
+                <Icon
+                  path={mdiLogout}
+                  size={0.9}
+                  color={Colors.grayBorderColor}
+                />
+                <span>Logout</span>
+              </DrawerHead>
+              <DrawerItemDropdown></DrawerItemDropdown>
             </DrawerItem>
           </DrawerItemWrapper>
         </Drawer>
@@ -81,17 +137,26 @@ const DrawerAvatar = Styled.div`
 const DrawerItem = Styled.div`
   width: 100%;
   margin-bottom: 20px;
+  height: 30px;
+  overflow: hidden;
 `;
 
 const DrawerHead = Styled.div`
   display: flex;
   align-items: center;
+  height: 30px;
   span {
     margin-left: 10px;
     opacity: 0.8;
     font-size: 0.9rem;
     padding-top: 5px;
   }
+`;
+
+const DrawerItemDropdown = Styled.div`
+  width: 100%;
+  height: 100px;
+  background: #000;
 `;
 
 export default OwnerLayout;

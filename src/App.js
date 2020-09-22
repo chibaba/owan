@@ -23,6 +23,7 @@ const EventOwnerRegister = lazy(() =>
 const EmailVerification = lazy(() => import('./Pages/auth/EmailVerification'));
 const OwnerPage = lazy(() => import('./Pages/Owner'));
 const DashboardPage = lazy(() => import('./Pages/Dashboard'));
+const WelcomePage = lazy(() => import('./Pages/welcomepage'));
 
 function App() {
   return (
@@ -51,6 +52,9 @@ function App() {
                     </Route>
                     <Route path="/dashboard">
                       <DashboardPage />
+                    </Route>
+                    <Route path="/welcome">
+                      <WelcomePage />
                     </Route>
                     <Route path="/owner">
                       <OwnerPage />

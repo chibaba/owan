@@ -7,13 +7,13 @@ function EventsCarousel({ data }) {
   function renderEvents() {
     return (
       data &&
-      data.map((event) => {
+      data.images.map((image, index) => {
         return (
           <CarouselItem
-            key={event.id}
-            id={event.id}
+            key={index}
+            id={index}
             style={{
-              background: `url('${event.image}') no-repeat`,
+              background: `url('${image}') no-repeat`,
               backgroundSize: 'cover',
             }}
           ></CarouselItem>
@@ -25,8 +25,8 @@ function EventsCarousel({ data }) {
   function renderDots() {
     return (
       data &&
-      data.map((event) => {
-        return <SingleDot key={event.id} />;
+      data.images.map((event, index) => {
+        return <SingleDot key={index} />;
       })
     );
   }

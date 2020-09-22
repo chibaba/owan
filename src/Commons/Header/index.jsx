@@ -2,18 +2,18 @@ import React from 'react';
 import Styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function Header({ bordered, title }) {
+  const history = useHistory();
   return (
     <MainHeader bordered={bordered}>
-      <NavIcons>
+      <NavIcons onClick={history.goBack}>
         <img src="/assets/images/glyphiconLeft.png" alt="Back" />
       </NavIcons>
       <HeaderTitle>
-      <Link to="/">
-        {title}
-        </Link>
-        </HeaderTitle>
+        <Link to="/">{title}</Link>
+      </HeaderTitle>
     </MainHeader>
   );
 }

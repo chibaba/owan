@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import EventOnwerLayout from '../../../Commons/EventOwnerLayout';
 import FormInput from '../../../Components/FormInput/Index';
 import styled from 'styled-components';
 import CheckBox from '../../../Components/CheckBox';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
-
+import toast from 'toasted-notes';
 import axios from 'axios';
 
 //Request call should be refactored later
@@ -20,6 +20,8 @@ const EventOwnerRegister = () => {
   });
   const [error, setError] = useState(null);
   const [, setShowError] = useState(false);
+  const history = useHistory();
+
   function inputChangeHandler(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   }
@@ -66,11 +68,21 @@ const EventOwnerRegister = () => {
     })
       .then((response) => {
         if (response.status === 201) {
-          window.location.href = '/login';
+          toast.notify('Account created successfully', {
+            position: 'bottom',
+            duration: 5000,
+            type: 'success',
+          });
+          setTimeout(() => {
+            history.push('/login');
+          }, 3000);
         }
       })
       .catch((error) => {
-        console.log(error.response.data.error);
+        toast.notify(error.response.data.error, {
+          position: 'bottom',
+          duration: 5000,
+        });
       });
   }
 
