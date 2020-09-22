@@ -33,6 +33,7 @@ const CreateEvent = () => {
   };
   const [data, setData] = useState(initialState);
   const [eventURL, setEventURL] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [modalState, setModalState] = useState({
     show: false,
@@ -88,6 +89,7 @@ const CreateEvent = () => {
   };
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     let formData = new FormData();
 
@@ -107,6 +109,7 @@ const CreateEvent = () => {
       'Content-Type': 'multipart/form-data',
     })
       .then((response) => {
+        setLoading(false);
         if (response.status === 200) {
           const eventID = response.data.id;
           setEventURL(
@@ -125,6 +128,7 @@ const CreateEvent = () => {
         }
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error.message);
         toaster.notify(error.message, {
           position: 'bottom',
@@ -287,7 +291,11 @@ const CreateEvent = () => {
               previewSrc={imageData.image6.result}
             />
           </ImageButtonsArea>
-          <Button cancelbtn={false} text="Create Event" />
+          <Button
+            cancelbtn={false}
+            text={loading ? 'Creating your event!...' : 'Create Event'}
+            loading={true}
+          />
           <Button
             cancelbtn={true}
             text="Cancel"
