@@ -15,7 +15,7 @@ function Dashboard() {
     getCall(api.getEvents)
       .then((response) => {
         if (response.status === 200) {
-          setEvents(response.data);
+          setEvents(response.data.reverse());
         }
       })
       .catch((error) => {

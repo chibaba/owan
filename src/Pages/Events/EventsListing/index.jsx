@@ -5,7 +5,7 @@ import Drawer from '../../../Commons/Drawer';
 import { useAppContext } from '../../../Context/AppContext';
 import EventsCarousel from '../../../Components/EventsCarousel';
 import Button from '../../../Commons/Button';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
   ModalContentArea,
   ModalForm,
@@ -15,8 +15,13 @@ import FormInput from '../../../Components/FormInput/Index';
 
 function EventsListing({ events }) {
   const { showDrawer } = useAppContext();
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const history = useHistory();
+  const location = useLocation();
+
+  let event = location.state.event;
+
+  console.log(location);
 
   const handleModal = () => {
     setShowModal((prevState) => !prevState);
@@ -25,6 +30,8 @@ function EventsListing({ events }) {
   const handleRedirect = () => {
     history.push('/dashboard');
   };
+
+  console.log(events);
 
   return (
     <>
@@ -45,15 +52,12 @@ function EventsListing({ events }) {
           </ModalContentArea>
         </WalletModal>
       ) : null}
-      <Layout fullWidth={true}>
-        <EventsCarousel data={events} />
+      <Layout fullWidth={true} hashtag={event.hashtag}>
+        <EventsCarousel data={event} />
         <EventDescriptionWrapper>
           <EventDescription>
-            <h4>#HenryJane2020</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore lorem ipsum dolor sit amet.
-            </p>
+            <h4>#{event.hashtag}</h4>
+            <p>{event.description}</p>
             <Link to="/event/video">
               <Button text="Join In" />
             </Link>

@@ -2,10 +2,10 @@ import React from 'react';
 import Header from '../Header';
 import Styled from 'styled-components';
 
-function Layout({ children, fullWidth }) {
+function Layout({ children, fullWidth, hashtag }) {
   return (
     <>
-      <Header bordered={true} title="#HenryJane2020" />
+      <Header bordered={true} title={`#${hashtag}`} />
       <ContentWrapper fullWidth={fullWidth}>{children}</ContentWrapper>
     </>
   );

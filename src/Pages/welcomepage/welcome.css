@@ -1,66 +1,39 @@
-.welcome-page{
-    
-    padding: 3rem 2rem 2rem 2rem
-}
-.welcome-header{
-    display: flex;
-    flex-direction: column;
-}
-.welcome-user{
-    display: flex;
-    justify-content: space-between
-}
-.user-details{
-    display: flex;
-    flex-direction: column;
-}
-.name{
-    font-weight: bolder;
-    margin-top: 3px;
-}
-.user-img{
-    width: 40px;
-    height: 40px;
-    background-color: black;
-    border-radius: 50%;
-    border: 3px solid #28C101
 
+.welcome-header {
+  display: flex;
+  flex-direction: column;
 }
-.time-date{
-    padding-top: 2rem;
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
+.welcome-user {
+  display: flex;
+  justify-content: space-between;
 }
-.event-directory{
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: start;
-    width: 100%;
-    
+.user-details {
+  display: flex;
+  flex-direction: column;
 }
-.event-directory > div{
-    margin-top: 1rem;
-    
+.name {
+  font-weight: bolder;
+  margin-top: 3px;
 }
-.path{
-    
-    background:#28C101;
-    min-width: 180px;
-    min-height: 240px;
-    padding: 2rem 2rem 0rem 2rem;
-    border-radius: 5px;
-    color: white;
-    
+.user-img {
+  width: 40px;
+  height: 40px;
+  background-color: black;
+  border-radius: 50%;
+  border: 3px solid #28c101;
 }
-.directoryicon{
-    margin-top: 120px;
+.time-date {
+  padding-top: 2rem;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
 }
-
-
-
-
+.event-directory {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: start;
+  width: 100%;
+}

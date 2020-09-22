@@ -1,51 +1,78 @@
-import React from "react";
-import "../welcomepage/welcome.css";
-import Nav from "../../Commons/ButtomNav";
-import UserHeader from "../../Commons/UserHeader/UserHeader";
-
+import React from 'react';
+import '../welcomepage/welcome.css';
+import UserHeader from '../../Commons/UserHeader/UserHeader';
+import Styled from 'styled-components';
+import OwnerLayout from '../../Commons/OwnerLayout';
+import { Link } from 'react-router-dom';
+import Colors from '../../Commons/Colors';
+import { useLocation } from 'react-router-dom';
+import cookie from 'js-cookie';
 
 const WelcomePage = () => {
-  return (
-    <div className="welcome-page">
-      <UserHeader
-       firstName='TamaKloe'
-       time="1:42PM"
-       date="Sunday, 23 August 2020"
-      />
-      <div className="event-directory">
-        <div className="path">
-          <img
-            src="/assets/createEvent.svg"
-            alt="createicon"
-            className="directoryicon"
-          />
-          <h3>Create Event</h3>
-        </div>
-        <div className="path">
-          <img
-            src="/assets/joinlogo.svg"
-            alt="joinicon"
-            className="directoryicon"
-          />
-          <h3>Join Event</h3>
-        </div>
-        <div className="path">
-          <img
-            src="/assets/schedulelogo.svg"
-            alt="scheduleeicon"
-            className="directoryicon"
-          />
-          <h3>Schedule</h3>
-        </div>
-        <div className="path">
-          <img src="/wallet.svg" alt="walleticon" className="directoryicon" />
-          <h3>Fund Wallet</h3>
-        </div>
-      </div>
-      <Nav/>
-      
+  const { state } = useLocation();
+  const today = new Date();
+  const time = `${today.getHours()}:${today.getMinutes()} ${
+    today.getHours() >= 12 ? 'PM' : 'AM'
+  }`;
 
-    </div>
+  const userData = JSON.parse(cookie.get('udt'));
+  console.log(today.getHours());
+
+  return (
+    <OwnerLayout>
+      <PageWrapper>
+        <UserHeader
+          firstName={state?.user.profile.name || userData.profile.name}
+          time={time}
+          date={today.toDateString()}
+        />
+        <div className="event-directory">
+          <Card to="/owner/createevent">
+            <img
+              src="/assets/createEvent.svg"
+              alt="createicon"
+              className="directoryicon"
+            />
+            <p>Create Event</p>
+          </Card>
+          <Card
+            to={{ pathname: '/owner/wallet', state: { user: state?.user } }}
+          >
+            <img
+              src="/assets/wallet.svg"
+              alt="walleticon"
+              className="directoryicon"
+            />
+            <p>Fund Wallet</p>
+          </Card>
+        </div>
+      </PageWrapper>
+    </OwnerLayout>
   );
 };
+
+const PageWrapper = Styled.div`
+  margin-top: 50px;
+`;
+
+const Card = Styled(Link)`
+  background: ${Colors.defaultGreen};
+  width: 36%;
+  height: 138px;
+  border-radius: 5px;
+  color: white;
+  padding: 20px;
+  outline: none;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: flex-end;
+  p {
+    margin: 0;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+`;
+
 export default WelcomePage;

@@ -6,6 +6,10 @@ import CurrBalance from '../../../Components/CurrBalance';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 import FormInput from '../../../Components/FormInput/Index';
+import { PaystackButton, PaystackConsumer } from 'react-paystack';
+import { useLocation } from 'react-router-dom';
+import cookie from 'js-cookie';
+import { postCall } from '../../../APIs/requests';
 
 const WalletBalance = ({ isOwner }) => {
   const [showModal, setShowModal] = useState(false);
@@ -14,6 +18,18 @@ const WalletBalance = ({ isOwner }) => {
     message: null,
     show: false,
   });
+  const [amount, setAmount] = useState(0);
+
+  const userData = JSON.parse(cookie.get('udt'));
+
+  const { state } = useLocation();
+
+  const config = {
+    reference: new Date().getTime(),
+    email: state?.user.email || userData.email,
+    amount,
+    publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
+  };
 
   const handleModal = () => {
     setShowModal((prevState) => !prevState);
@@ -28,6 +44,10 @@ const WalletBalance = ({ isOwner }) => {
     });
   };
 
+  const handleAmountChange = (e) => {
+    setAmount(e.target.value);
+  };
+
   const handleFormAlertReset = () => {
     setFormAlert({
       success: false,
@@ -36,20 +56,54 @@ const WalletBalance = ({ isOwner }) => {
     });
   };
 
+  const onPaySuccess = (response) => {
+    console.log(response);
+    const data = { type: 'credit', amount };
+    if (response.status === 'success') {
+      postCall('https://services-staging.tm30.net/wallets/v1/wallets', data, {
+        'client-id':
+          'development_pjickkIiSAug_sQnGnPdHU593Cnk9xcVtu51qzuft3vI5ab1GgIJNPAEatW_kDxzPXP6gndthu7sNy6Y.WTfUzTaI9FALY-F.rof',
+      }).then((response) => {
+        console.log(response);
+      });
+    }
+  };
+
   return (
     <>
       {showModal ? (
         <WalletModal>
           <ModalContentArea>
             {!formAlert.show ? (
-              <ModalForm>
+              <ModalForm onSubmit={(e) => e.preventDefault()}>
                 <h3>Amount</h3>
                 <FormInput
                   placeholder="Enter amount to fund wallet"
                   name="amount"
+                  type="number"
+                  onChange={handleAmountChange}
                   inputStyle={{ textAlign: 'center', marginBottom: '50px' }}
                 />
                 <Button text="Continue" onClick={handleSuccess} />
+                <PaystackConsumer
+                  reference={config.reference}
+                  email={config.email}
+                  amount={config.amount}
+                  publicKey={config.publicKey}
+                  onSuccess={onPaySuccess}
+                  onClose={() => setAmount(0)}
+                >
+                  {({ initializePayment }) => (
+                    <Button
+                      text="Continue"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        initializePayment();
+                      }}
+                    />
+                  )}
+                </PaystackConsumer>
+                <PaystackButton text="Pay" />
                 <Button text="Cancel" cancelbtn={true} onClick={handleModal} />
               </ModalForm>
             ) : formAlert.show && formAlert.success ? (
@@ -63,30 +117,27 @@ const WalletBalance = ({ isOwner }) => {
         </WalletModal>
       ) : null}
       <WalletLayout>
-        <CurrBalance />
+        <CurrBalance ballance={0} />
         {isOwner ? (
           <DashBoardCardLayout>
             <DashBoardHomeCard>
               <img src="/assets/images/icons/balance.svg" alt="icon" />
-              <span className="amount">N20,000</span>
+              <span className="amount">N0</span>
               <span>Cash gifts</span>
             </DashBoardHomeCard>
             <DashBoardHomeCard>
               <img src="/assets/images/icons/balance.svg" alt="icon" />
-              <span className="amount">N20,000</span>
+              <span className="amount">N0</span>
               <span>Spray Balance</span>
             </DashBoardHomeCard>
           </DashBoardCardLayout>
         ) : null}
-        {isOwner ? (
-          <Button text="Withdraw Funds" />
-        ) : (
-          <Button
-            text="Fund Wallet"
-            style={{ marginTop: '30px' }}
-            onClick={handleModal}
-          />
-        )}
+        <Button text="Withdraw Funds" />
+        <Button
+          text="Fund Wallet"
+          style={{ marginTop: '30px' }}
+          onClick={handleModal}
+        />
       </WalletLayout>
     </>
   );

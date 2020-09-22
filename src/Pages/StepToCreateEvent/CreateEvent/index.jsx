@@ -16,6 +16,7 @@ import FormAlert from '../../../Components/FormAlert';
 import { postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import toaster from 'toasted-notes';
+import cookie from 'js-cookie';
 
 const CreateEvent = () => {
   const initialState = {
@@ -24,11 +25,14 @@ const CreateEvent = () => {
     location: 'online',
     event_date: '',
     event_time: '',
-    cashgifts: false,
-    reminder: false,
+    meta: {
+      cashgifts: false,
+      reminder: false,
+    },
     hashtag: '',
   };
   const [data, setData] = useState(initialState);
+  console.log(data);
   const [modalState, setModalState] = useState({
     show: false,
     message: null,
@@ -47,7 +51,10 @@ const CreateEvent = () => {
     if (event.target.type === 'checkbox') {
       setData({
         ...data,
-        [event.target.name]: event.target.checked,
+        meta: {
+          ...data.meta,
+          [event.target.name]: event.target.checked.toString(),
+        },
       });
     } else {
       setData({
@@ -71,8 +78,10 @@ const CreateEvent = () => {
       location: 'online',
       event_date: '',
       event_time: '',
-      cashgifts: false,
-      reminder: false,
+      meta: {
+        cashgifts: false,
+        reminder: false,
+      },
       hashtag: '',
     });
   };
@@ -93,29 +102,31 @@ const CreateEvent = () => {
     }
 
     postCall(api.createEvent, formData, {
-      user_id: 2,
+      user_id: cookie.get('auid'),
       'Content-Type': 'multipart/form-data',
     })
       .then((response) => {
+        console.log(response);
         if (response.status === 200) {
           toaster.notify(response.message, {
             position: 'bottom',
             duration: 5000,
           });
+          setModalState({
+            type: 'success',
+            show: true,
+            message: 'Successfully created account',
+          });
           resetFormState();
         }
       })
       .catch((error) => {
+        console.log(error.message);
         toaster.notify(error.message, {
           position: 'bottom',
           duration: 5000,
         });
       });
-    setModalState({
-      type: 'success',
-      show: true,
-      message: 'Successfully created account',
-    });
   };
 
   const handleCloseModal = () => {
@@ -221,7 +232,7 @@ const CreateEvent = () => {
               <CheckBox
                 name="cashgifts"
                 onChange={handleInputChange}
-                checked={data.cashgifts}
+                checked={data.meta.cashgifts}
               />
             </div>
             <div className="checklist">
@@ -229,7 +240,7 @@ const CreateEvent = () => {
               <CheckBox
                 name="reminder"
                 onChange={handleInputChange}
-                checked={data.reminder}
+                checked={data.meta.reminder}
               />
             </div>
           </div>
