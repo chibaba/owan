@@ -6,7 +6,7 @@ import CurrBalance from '../../../Components/CurrBalance';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 import FormInput from '../../../Components/FormInput/Index';
-import { PaystackButton, PaystackConsumer } from 'react-paystack';
+import { PaystackConsumer } from 'react-paystack';
 import { useLocation } from 'react-router-dom';
 import cookie from 'js-cookie';
 import { postCall } from '../../../APIs/requests';
@@ -36,13 +36,13 @@ const WalletBalance = ({ isOwner }) => {
   };
 
   //This would later be determined by response from API call
-  const handleSuccess = () => {
-    setFormAlert({
-      success: true,
-      message: 'Your account has been successfully funded',
-      show: true,
-    });
-  };
+  // const handleSuccess = () => {
+  //   setFormAlert({
+  //     success: true,
+  //     message: 'Your account has been successfully funded',
+  //     show: true,
+  //   });
+  // };
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
@@ -84,7 +84,6 @@ const WalletBalance = ({ isOwner }) => {
                   onChange={handleAmountChange}
                   inputStyle={{ textAlign: 'center', marginBottom: '50px' }}
                 />
-                <Button text="Continue" onClick={handleSuccess} />
                 <PaystackConsumer
                   reference={config.reference}
                   email={config.email}
@@ -103,7 +102,6 @@ const WalletBalance = ({ isOwner }) => {
                     />
                   )}
                 </PaystackConsumer>
-                <PaystackButton text="Pay" />
                 <Button text="Cancel" cancelbtn={true} onClick={handleModal} />
               </ModalForm>
             ) : formAlert.show && formAlert.success ? (
