@@ -10,7 +10,6 @@ import { PaystackButton, PaystackConsumer } from 'react-paystack';
 import { useLocation } from 'react-router-dom';
 import cookie from 'js-cookie';
 import { postCall } from '../../../APIs/requests';
-import api from '../../../APIs/endpoints';
 
 const WalletBalance = ({ isOwner }) => {
   const [showModal, setShowModal] = useState(false);
