@@ -32,7 +32,8 @@ const CreateEvent = () => {
     hashtag: '',
   };
   const [data, setData] = useState(initialState);
-  console.log(data);
+  const [eventURL, setEventURL] = useState(null);
+
   const [modalState, setModalState] = useState({
     show: false,
     message: null,
@@ -106,8 +107,11 @@ const CreateEvent = () => {
       'Content-Type': 'multipart/form-data',
     })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
+          const eventID = response.data.id;
+          setEventURL(
+            `${process.env.REACT_APP_APP_LINK}/dashboard/event/detail/${eventID}`,
+          );
           toaster.notify(response.message, {
             position: 'bottom',
             duration: 5000,
@@ -158,7 +162,7 @@ const CreateEvent = () => {
           type={modalState.type}
           message={modalState.message}
           closeModal={handleCloseModal}
-          link="llinkup.com/wqiwuf2423424"
+          link={eventURL}
         />
       ) : null}
       <CreateEventLayout>

@@ -8,7 +8,7 @@ const api = {
   getEvents: `${EVENT_URI}/api/v1/event`,
   createEvent: `${EVENT_URI}/api/v1/event`,
   getEvent: (id) => `${EVENT_URI}/api/v1/event/${id}`,
-  addToWallet: `${APP_URI}/wallets/v1/wallets`,
+  addToWallet: `${APP_URI}/billings/wallet/fund`,
 };
 
 export default api;

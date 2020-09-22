@@ -10,6 +10,7 @@ import { PaystackConsumer } from 'react-paystack';
 import { useLocation } from 'react-router-dom';
 import cookie from 'js-cookie';
 import { postCall } from '../../../APIs/requests';
+import api from '../../../APIs/endpoints';
 
 const WalletBalance = ({ isOwner }) => {
   const [showModal, setShowModal] = useState(false);
@@ -26,7 +27,7 @@ const WalletBalance = ({ isOwner }) => {
 
   const config = {
     reference: new Date().getTime(),
-    email: state?.user.email || userData.email,
+    email: state?.user?.email || userData.email,
     amount,
     publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
   };
@@ -58,14 +59,25 @@ const WalletBalance = ({ isOwner }) => {
 
   const onPaySuccess = (response) => {
     console.log(response);
-    const data = { type: 'credit', amount };
+    const data = {
+      type: 'credit',
+      amount: amount.toString(),
+      narration: 'Payout for TYL',
+      applicationId: '46749f67-0f4c-4dbe-9383-f51f4368f44e',
+      reference: response.reference,
+      productId: '{{test-product-id}}',
+    };
     if (response.status === 'success') {
-      postCall('https://services-staging.tm30.net/wallets/v1/wallets', data, {
+      postCall(api.addToWallet, data, {
         'client-id':
-          'development_pjickkIiSAug_sQnGnPdHU593Cnk9xcVtu51qzuft3vI5ab1GgIJNPAEatW_kDxzPXP6gndthu7sNy6Y.WTfUzTaI9FALY-F.rof',
-      }).then((response) => {
-        console.log(response);
-      });
+          'staging_-.iq2gqPkBwGTYAZnzyIcd5cYA.92Hgq45Xo9XeTuR9ZideZd314OMDf65iQFK2g3i4Z-1WOQlXcJHSoZXcImaB7rMg-9.TGr.au',
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     }
   };
 

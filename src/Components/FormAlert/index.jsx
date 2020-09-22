@@ -1,30 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Styled from 'styled-components';
 import Colors from '../../Commons/Colors';
 import Icon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
+import CopyToClipboard from 'react-copy-to-clipboard';
+import Drawer from '../../Commons/Drawer';
+import { useAppContext } from '../../Context/AppContext';
+import { WhatsappShareButton, WhatsappIcon } from 'react-share';
 
 const FormAlert = ({ type, message, closeModal, link }) => {
+  const [copied, setShowCopied] = useState(false);
+  const { showDrawer, handleDrawerState } = useAppContext();
   if (type === 'success') {
     return (
-      <AlertOverlay>
-        <CloseButton onClick={closeModal}>
-          <Icon path={mdiClose} size={1} color={Colors.white} />
-        </CloseButton>
-        <AlertSuccess>
-          <img src="/assets/images/icons/check.svg" alt="check" />
-          <AlertMessage>{message}</AlertMessage>
-          {link ? <AlertLink>llinkup.com/wqiwuf2423424</AlertLink> : null}
-          <AlertButtonArea>
-            <AlertButtonOutline>Copy</AlertButtonOutline>
-            <AlertButton>Share</AlertButton>
-          </AlertButtonArea>
-        </AlertSuccess>
-      </AlertOverlay>
+      <>
+        {showDrawer ? (
+          <Drawer drawerPosition="bottom">
+            <p style={{ textAlign: 'center' }}>Share event link</p>
+            <ButtonsArea>
+              <WhatsappShareButton
+                url={link}
+                title={'Inviting you to attend my wedding on link up'}
+              >
+                <WhatsappIcon size={35}></WhatsappIcon>
+              </WhatsappShareButton>
+            </ButtonsArea>
+          </Drawer>
+        ) : null}
+        <AlertOverlay>
+          <CloseButton onClick={closeModal}>
+            <Icon path={mdiClose} size={1} color={Colors.white} />
+          </CloseButton>
+          <AlertSuccess>
+            <img src="/assets/images/icons/check.svg" alt="check" />
+            {copied ? (
+              <p style={{ color: '#fff', fontSize: '12px' }}>
+                Link copied to clipboard!.
+              </p>
+            ) : null}
+            <AlertMessage>{message}</AlertMessage>
+            {link ? <AlertLink>{link}</AlertLink> : null}
+            <AlertButtonArea>
+              <CopyToClipboard
+                text={link}
+                onCopy={() => {
+                  setShowCopied(true);
+                }}
+              >
+                <AlertButtonOutline>Copy</AlertButtonOutline>
+              </CopyToClipboard>
+              <AlertButton onClick={handleDrawerState}>Share</AlertButton>
+            </AlertButtonArea>
+          </AlertSuccess>
+        </AlertOverlay>
+      </>
     );
   }
   return <AlertOverlay></AlertOverlay>;
 };
+
+const ButtonsArea = Styled.div`
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  button {
+    outline: none;
+  }
+  svg {
+    border-radius: 50%;
+  }
+`;
 
 const AlertOverlay = Styled.div`
   width: 100%;
@@ -82,6 +128,9 @@ const AlertLink = Styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
 `;
 
 const AlertButtonArea = Styled.div`
