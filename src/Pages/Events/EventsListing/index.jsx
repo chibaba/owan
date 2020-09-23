@@ -12,16 +12,20 @@ import {
   WalletModal,
 } from '../../wallet/WalletBalance';
 import FormInput from '../../../Components/FormInput/Index';
+import cookie from 'js-cookie';
+import { postCall } from '../../../APIs/requests';
+import api from '../../../APIs/endpoints';
+import toast from 'toasted-notes';
 
-function EventsListing({ events }) {
+function EventsListing() {
   const { showDrawer } = useAppContext();
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const location = useLocation();
 
   let event = location.state.event;
-
-  console.log(location);
+  let auid = cookie.get('auid');
 
   const handleModal = () => {
     setShowModal((prevState) => !prevState);
@@ -31,7 +35,25 @@ function EventsListing({ events }) {
     history.push('/dashboard');
   };
 
-  console.log(events);
+  const handleStartEvent = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    postCall(api.startVideo, {}, { event_id: event.id })
+      .then((response) => {
+        if (response.status === 200) {
+          setLoading(false);
+          history.push({
+            pathname: '/event/video',
+            state: { roomID: response.roomId },
+          });
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error.message);
+        toast.notify(error.message, { position: 'bottom', duration: 5000 });
+      });
+  };
 
   return (
     <>
@@ -58,9 +80,17 @@ function EventsListing({ events }) {
           <EventDescription>
             <h4>#{event.hashtag}</h4>
             <p>{event.description}</p>
-            <Link to="/event/video">
-              <Button text="Join In" />
-            </Link>
+            {event?.user_id === auid ? (
+              <Button
+                text="Start Event"
+                onClick={handleStartEvent}
+                loading={loading}
+              />
+            ) : (
+              <Link to="/event/video">
+                <Button text="Join In" />
+              </Link>
+            )}
           </EventDescription>
         </EventDescriptionWrapper>
       </Layout>
@@ -81,13 +111,5 @@ const EventDescription = Styled.article`
     line-height: 1.5;
   }
 `;
-
-EventsListing.defaultProps = {
-  events: [
-    { id: 1, title: '#HenryJane2020', image: '/assets/images/couple1.png' },
-    { id: 2, title: '#JohnJaneDoe2090', image: '/assets/images/couple2.png' },
-    { id: 3, title: '#SimTol2021', image: '/assets/images/couple3.png' },
-  ],
-};
 
 export default EventsListing;
