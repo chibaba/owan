@@ -16,7 +16,6 @@ import FormAlert from '../../../Components/FormAlert';
 import { postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import toaster from 'toasted-notes';
-import cookie from 'js-cookie';
 
 const CreateEvent = () => {
   const initialState = {
@@ -104,10 +103,7 @@ const CreateEvent = () => {
       formData.append('imageUpload', imageData[image].file);
     }
 
-    const userId = cookie.get('auid');
-    console.log(userId);
     postCall(api.createEvent, formData, {
-      user_id: userId,
       'Content-Type': 'multipart/form-data',
     })
       .then((response) => {
