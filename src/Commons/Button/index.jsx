@@ -2,10 +2,14 @@ import React from 'react';
 import Styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function Button({ text, cancelbtn, onClick, style }) {
+function Button({ text, cancelbtn, onClick, style, loading }) {
   return (
     <DefaultButton cancelbtn={cancelbtn} onClick={onClick} style={style}>
-      {text}
+      {!loading ? (
+        text
+      ) : (
+        <img src="/assets/images/icons/white-loader.svg" alt="Loading..." />
+      )}
     </DefaultButton>
   );
 }
@@ -24,6 +28,9 @@ const DefaultButton = Styled.button`
   padding: 15px 0;
   margin-bottom: 10px;
   outline: none;
+  img {
+    width: 30px;
+  }
 `;
 
 Button.propTypes = {

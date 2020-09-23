@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import DashboardLayout from '../../../Commons/DashboardLayout';
 import Colors from '../../../Commons/Colors';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import EventDetailBanner from '../../../Commons/EventDetailBanner';
 import EventDate from '../../../Commons/EventDate';
+import { getCall } from '../../../APIs/requests';
+import api from '../../../APIs/endpoints';
+import toast from 'toasted-notes';
 
-function DashboardHome({ event }) {
+function DashboardHome() {
   const image = '/assets/images/wedding-demo.jpg';
+  const { pathname } = useLocation();
+  const [event, setEvent] = useState(null);
+
+  useEffect(() => {
+    const splittedRoutes = pathname.split('/');
+    const id = splittedRoutes[splittedRoutes.length - 1];
+    getCall(api.getEvent(id))
+      .then((response) => {
+        if (response.status === 200 && response.data) {
+          setEvent(response.data);
+        } else {
+          toast.notify('This event was not found or has been deleted', {
+            position: 'bottom',
+            duration: 5000,
+          });
+        }
+      })
+      .catch((error) => {
+        toast.notify(error.message, {
+          position: 'bottom',
+          duration: 5000,
+        });
+      });
+  }, [pathname]);
 
   return (
     <DashboardLayout>
@@ -44,7 +71,7 @@ function DashboardHome({ event }) {
             <span>Watch Video</span>
           </div>
         </DashboardHomeCard>
-        <DashboardHomeCard to="/dashboard/wallet">
+        <DashboardHomeCard to="/owner/wallet">
           <div>
             <img src="/assets/images/icons/unlock.png" alt="Wallet" />
             <span>Wallet</span>

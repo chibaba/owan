@@ -34,6 +34,9 @@ function Dashboard() {
           <WalletBalance />
         </OwnerLayout>
       </Route>
+      <Route path="/dashboard/event/:id" exact>
+        <DashboardHome event={events && events[0]} />
+      </Route>
       <Route path="/dashboard/event/detail/:id" exact>
         <OwnerLayout pageTitle={events && events[0].name} fullWidth={true}>
           <DashboardDetail id={events && events.id} />
