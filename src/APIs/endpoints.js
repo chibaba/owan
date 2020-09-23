@@ -15,6 +15,9 @@ const api = {
 
   //Video API
   startVideo: `${EVENT_URI}/api/v1/videolink`,
+
+  //Payments
+  initializePayment: `${APP_URI}/payments/v1/paystack/initialize`,
 };
 
 export default api;
