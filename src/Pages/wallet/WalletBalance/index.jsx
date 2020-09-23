@@ -6,11 +6,9 @@ import CurrBalance from '../../../Components/CurrBalance';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 import FormInput from '../../../Components/FormInput/Index';
-import { PaystackConsumer } from 'react-paystack';
-import { useLocation } from 'react-router-dom';
-import cookie from 'js-cookie';
 import { postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
+import toast from 'toasted-notes';
 
 const WalletBalance = ({ isOwner }) => {
   const [showModal, setShowModal] = useState(false);
@@ -21,29 +19,9 @@ const WalletBalance = ({ isOwner }) => {
   });
   const [amount, setAmount] = useState(0);
 
-  const userData = JSON.parse(cookie.get('udt'));
-
-  const { state } = useLocation();
-
-  const config = {
-    reference: new Date().getTime(),
-    email: state?.user?.email || userData.email,
-    amount,
-    publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
-  };
-
   const handleModal = () => {
     setShowModal((prevState) => !prevState);
   };
-
-  //This would later be determined by response from API call
-  // const handleSuccess = () => {
-  //   setFormAlert({
-  //     success: true,
-  //     message: 'Your account has been successfully funded',
-  //     show: true,
-  //   });
-  // };
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
@@ -57,28 +35,23 @@ const WalletBalance = ({ isOwner }) => {
     });
   };
 
-  const onPaySuccess = (response) => {
-    console.log(response);
+  const handleInitializePayment = (e) => {
+    e.preventDefault();
     const data = {
-      type: 'credit',
       amount: amount.toString(),
-      narration: 'Payout for TYL',
-      applicationId: '46749f67-0f4c-4dbe-9383-f51f4368f44e',
-      reference: response.reference,
-      productId: '{{test-product-id}}',
+      redirectUrl: window.location.href,
     };
-    if (response.status === 'success') {
-      postCall(api.addToWallet, data, {
-        'client-id':
-          'staging_-.iq2gqPkBwGTYAZnzyIcd5cYA.92Hgq45Xo9XeTuR9ZideZd314OMDf65iQFK2g3i4Z-1WOQlXcJHSoZXcImaB7rMg-9.TGr.au',
+
+    postCall(api.initializePayment, data, {})
+      .then((response) => {
+        if (response.data) {
+          window.location.href = response.data.url;
+        }
       })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    }
+      .catch((error) => {
+        console.log(error.message);
+        toast.notify(error.message, { position: 'bottom', duration: 5000 });
+      });
   };
 
   return (
@@ -96,24 +69,7 @@ const WalletBalance = ({ isOwner }) => {
                   onChange={handleAmountChange}
                   inputStyle={{ textAlign: 'center', marginBottom: '50px' }}
                 />
-                <PaystackConsumer
-                  reference={config.reference}
-                  email={config.email}
-                  amount={config.amount}
-                  publicKey={config.publicKey}
-                  onSuccess={onPaySuccess}
-                  onClose={() => setAmount(0)}
-                >
-                  {({ initializePayment }) => (
-                    <Button
-                      text="Continue"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        initializePayment();
-                      }}
-                    />
-                  )}
-                </PaystackConsumer>
+                <Button text="Continue" onClick={handleInitializePayment} />
                 <Button text="Cancel" cancelbtn={true} onClick={handleModal} />
               </ModalForm>
             ) : formAlert.show && formAlert.success ? (

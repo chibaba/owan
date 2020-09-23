@@ -11,10 +11,10 @@ let header = {
 export const postCall = async (url, data, headers) => {
   const token = cookie.get('uid');
   const user_id = await cookie.get('auid');
-  console.log('postcall', user_id);
+
   const requestHeader = {
     ...header,
-    headers,
+    ...headers,
     authorization: `Bearer ${token}`,
     user_id,
   };
