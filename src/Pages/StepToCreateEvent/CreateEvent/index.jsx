@@ -113,7 +113,7 @@ const CreateEvent = () => {
         if (response.status === 200) {
           const eventID = response.data.id;
           setEventURL(
-            `${process.env.REACT_APP_APP_LINK}/dashboard/event/detail/${eventID}`,
+            `${process.env.REACT_APP_APP_LINK}/dashboard/event/${eventID}`,
           );
           toaster.notify(response.message, {
             position: 'bottom',
@@ -291,11 +291,7 @@ const CreateEvent = () => {
               previewSrc={imageData.image6.result}
             />
           </ImageButtonsArea>
-          <Button
-            cancelbtn={false}
-            text={loading ? 'Creating your event!...' : 'Create Event'}
-            loading={true}
-          />
+          <Button cancelbtn={false} text={'Create Event'} loading={loading} />
           <Button
             cancelbtn={true}
             text="Cancel"
