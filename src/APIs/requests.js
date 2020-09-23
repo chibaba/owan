@@ -10,13 +10,12 @@ let header = {
 
 export const postCall = async (url, data, headers) => {
   const token = cookie.get('uid');
-  console.log(token);
   const requestHeader = {
     ...header,
     headers,
     authorization: `Bearer ${token}`,
   };
-  console.log(requestHeader);
+
   return await axios({
     method: 'POST',
     url: `${url}`,
