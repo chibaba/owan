@@ -1,17 +1,21 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 
-const token = cookie.get('uid');
 const clientID = process.env.REACT_APP_CLIENT_ID || '';
 
 let header = {
   'Content-Type': 'application/json',
-  authorization: `Bearer ${token}`,
   'client-id': clientID,
 };
 
 export const postCall = async (url, data, headers) => {
-  const requestHeader = { ...header, headers };
+  const token = cookie.get('uid');
+  console.log(token);
+  const requestHeader = {
+    ...header,
+    headers,
+    authorization: `Bearer ${token}`,
+  };
   console.log(requestHeader);
   return await axios({
     method: 'POST',
@@ -26,10 +30,16 @@ export const postCall = async (url, data, headers) => {
 };
 
 export const getCall = async (url, headers) => {
+  const token = cookie.get('uid');
+  const requestHeader = {
+    ...header,
+    headers,
+    authorization: `Bearer ${token}`,
+  };
   return await axios({
     method: 'GET',
     url: `${url}`,
-    headers: { ...header, ...headers },
+    headers: requestHeader,
   })
     .then((response) => response.data)
     .catch((error) => {
@@ -38,11 +48,17 @@ export const getCall = async (url, headers) => {
 };
 
 export const putCall = async (url, data, headers) => {
+  const token = cookie.get('uid');
+  const requestHeader = {
+    ...header,
+    headers,
+    authorization: `Bearer ${token}`,
+  };
   return await axios({
     method: 'PUT',
     url: `${url}`,
     data,
-    headers: { ...header, ...headers },
+    headers: requestHeader,
   })
     .then((response) => response.data)
     .catch((error) => {
