@@ -104,8 +104,10 @@ const CreateEvent = () => {
       formData.append('imageUpload', imageData[image].file);
     }
 
+    const userId = cookie.get('auid');
+    console.log(userId);
     postCall(api.createEvent, formData, {
-      user_id: cookie.get('auid'),
+      user_id: userId,
       'Content-Type': 'multipart/form-data',
     })
       .then((response) => {
