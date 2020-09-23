@@ -1,7 +1,7 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 
-const token = cookie.get('uid') || '';
+const token = cookie.get('uid');
 const clientID = process.env.REACT_APP_CLIENT_ID || '';
 
 let header = {
@@ -11,11 +11,13 @@ let header = {
 };
 
 export const postCall = async (url, data, headers) => {
+  const requestHeader = { ...header, headers };
+  console.log(requestHeader);
   return await axios({
     method: 'POST',
     url: `${url}`,
     data,
-    headers: { ...header, ...headers },
+    headers: requestHeader,
   })
     .then((response) => response.data)
     .catch((error) => {
