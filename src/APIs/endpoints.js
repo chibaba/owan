@@ -21,6 +21,12 @@ const api = {
 
   //Payments
   initializePayment: `${APP_URI}/payments/v1/paystack/initialize`,
+
+  //Eyeson
+  eyeson: {
+    joinRoom: (username, id) =>
+      `https://api.eyeson.team/rooms?user[name]=${username}&id=${id}`,
+  },
 };
 
 export default api;
