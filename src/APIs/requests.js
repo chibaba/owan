@@ -8,16 +8,22 @@ let header = {
   'client-id': clientID,
 };
 
-export const postCall = async (url, data, headers) => {
+export const postCall = async (url, data, headers, noClient) => {
   const token = cookie.get('uid');
   const user_id = await cookie.get('auid');
 
-  const requestHeader = {
-    ...header,
-    ...headers,
-    authorization: `Bearer ${token}`,
-    user_id,
-  };
+  const requestHeader = !noClient
+    ? {
+        ...header,
+        ...headers,
+        authorization: `Bearer ${token}`,
+        user_id,
+      }
+    : {
+        ...headers,
+        authorization: `Bearer ${token}`,
+        user_id,
+      };
 
   return await axios({
     method: 'POST',

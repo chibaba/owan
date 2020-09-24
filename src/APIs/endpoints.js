@@ -16,6 +16,9 @@ const api = {
   //Video API
   startVideo: `${EVENT_URI}/api/v1/videolink`,
 
+  //Attendee
+  createAttendee: `${EVENT_URI}/api/v1/attendee`,
+
   //Payments
   initializePayment: `${APP_URI}/payments/v1/paystack/initialize`,
 };

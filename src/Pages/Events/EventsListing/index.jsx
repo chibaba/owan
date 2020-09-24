@@ -26,6 +26,7 @@ function EventsListing() {
 
   let event = location.state.event;
   let auid = cookie.get('auid');
+  let userData = JSON.parse(cookie.get('udt'));
 
   const handleModal = () => {
     setShowModal((prevState) => !prevState);
@@ -50,6 +51,38 @@ function EventsListing() {
             },
           });
         }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error.message);
+        toast.notify(error.message, { position: 'bottom', duration: 5000 });
+      });
+  };
+
+  const handleJoinEvent = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    postCall(
+      api.createAttendee,
+      {
+        full_name: userData?.profile.name,
+        email: userData?.email,
+        phone_number: userData?.phoneNumber,
+      },
+      { event_id: event.id },
+      true,
+    )
+      .then((response) => {
+        setLoading(false);
+        console.log(response);
+        history.push({
+          pathname: '/event/video',
+          state: {
+            roomID: response.vidlink.room_id,
+            accessKey: response.vidlink.Access_key,
+            joining: true,
+          },
+        });
       })
       .catch((error) => {
         setLoading(false);
@@ -91,7 +124,11 @@ function EventsListing() {
               />
             ) : (
               <Link to="/event/video">
-                <Button text="Join In" />
+                <Button
+                  text="Join In"
+                  onClick={handleJoinEvent}
+                  loading={loading}
+                />
               </Link>
             )}
           </EventDescription>
