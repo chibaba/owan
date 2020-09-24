@@ -70,32 +70,30 @@ function EventsListing() {
         phone_number: userData?.phoneNumber,
       },
       { event_id: event.id },
-      true,
-    ).then((response) => {
-      setLoading(false);
-      // console.log(response);
-      history.push({
-        pathname: '/event/video',
-        state: {
-          roomID: response.vidlink.room_id,
-          accessKey: response.vidlink.Access_key,
-          joining: true,
-        },
+    )
+      .then((response) => {
+        setLoading(false);
+        if (response.status === 200) {
+          toast.notify(response.message, {
+            position: 'bottom',
+            duration: 5000,
+          });
+          setTimeout(() => {
+            history.push({
+              pathname: '/event/video',
+              state: {
+                roomID: response.vidlink.room_id,
+                accessKey: response.vidlink.Access_key,
+                joining: true,
+              },
+            });
+          }, 3000);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        toast.notify(error.message, { position: 'bottom', duration: 5000 });
       });
-    });
-    // .catch((error) => {
-    //   setLoading(false);
-    //   console.log(error.message);
-    //   history.push({
-    //     pathname: '/event/video',
-    //     state: {
-    //       roomID: response.vidlink.room_id,
-    //       accessKey: response.vidlink.Access_key,
-    //       joining: true,
-    //     },
-    //   });
-    //   toast.notify(error.message, { position: 'bottom', duration: 5000 });
-    // });
   };
 
   return (
