@@ -16,7 +16,6 @@ const WelcomePage = () => {
   }`;
 
   const userData = JSON.parse(cookie.get('udt'));
-  console.log(today.getHours());
 
   return (
     <OwnerLayout>

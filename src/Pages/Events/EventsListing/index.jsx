@@ -92,7 +92,6 @@ function EventsListing() {
                 position: 'bottom',
                 duration: 5000,
               });
-              console.log(response);
               setTimeout(() => {
                 history.push({
                   pathname: '/event/video',
@@ -139,7 +138,6 @@ function EventsListing() {
                       position: 'bottom',
                       duration: 5000,
                     });
-                    console.log(response);
                     setTimeout(() => {
                       history.push({
                         pathname: '/event/video',
