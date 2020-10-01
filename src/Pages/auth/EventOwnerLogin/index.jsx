@@ -62,7 +62,7 @@ const EventOwnerLogin = () => {
         if (response.data) {
           const { user, token } = response.data;
           cookie.set('uid', token);
-          cookie.set('auid', user.id);
+          cookie.set('auid', user.userId);
           cookie.set('udt', JSON.stringify(user));
           handleUserState(user);
           toaster.notify('Login Successful. Redirecting...', {

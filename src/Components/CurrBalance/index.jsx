@@ -7,7 +7,7 @@ const CurrBalance = ({ balance }) => {
     <CurBalance>
       <div>
         <img src="/assets/images/icons/balance.svg" alt="icon" />
-        <span className="acctBalance">{balance || 'N0'}</span>
+        <span className="acctBalance">&#8358;{balance / 100 || '0'}</span>
         <span className="bal">Current Balance</span>
       </div>
       <h4 className="moneyfor">

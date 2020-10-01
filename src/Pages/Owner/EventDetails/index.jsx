@@ -15,7 +15,6 @@ const EventDetail = () => {
   useEffect(() => {
     getCall(api.getEvents)
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           setEvents(response.data);
           toaster.notify(response.message, {
@@ -33,7 +32,6 @@ const EventDetail = () => {
       });
   }, []);
 
-  console.log(events, 'events');
   return (
     <OwnerLayout pageTitle={events && events[0].hashtag} fullWidth={true}>
       <PageLinks>

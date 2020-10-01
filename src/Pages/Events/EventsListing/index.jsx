@@ -60,26 +60,6 @@ function EventsListing() {
       });
   };
 
-  //   {data: {…}, status: 201, statusText: "", headers: {…}, config: {…}, …}
-  // config: {url: "https://api.eyeson.team/rooms?user[name]=Tega Oke", method: "post", headers: {…}, transformRequest: Array(1), transformResponse: Array(1), …}
-  // data:
-  // access_key: "Eki6GWGG2lmYm8kfePFqT55N"
-  // broadcasts: []
-  // links: {self: "https://api.eyeson.team/rooms/Eki6GWGG2lmYm8kfePFqT55N", gui: "https://app.eyeson.team/?Eki6GWGG2lmYm8kfePFqT55N", guest_join: "https://app.eyeson.team/?guest=iscBHkl8TOoMWNorf1d0JCFb", websocket: "https://api.eyeson.team/rt?access_key=Eki6GWGG2lmYm8kfePFqT55N"}
-  // locked: false
-  // options: {show_names: true, show_label: true, exit_url: null, recording_available: true, broadcast_available: true, …}
-  // presentation: null
-  // ready: false
-  // recording: null
-  // room: {id: "5f6d0e6d4742e00012df2fd5", name: "Olatunji Kayode", ready: false, started_at: "2020-09-24T21:23:57.067Z", shutdown: false, …}
-  // snapshots: []
-  // team: {name: "Olatunji Kayode"}
-  // user: {id: "5f6d0e6d4742e00012df2fd7", name: "Tega Oke", avatar: null, guest: false, blocked: false, …}
-  // __proto__: Object
-  // headers: {cache-control: "max-age=0, private, must-revalidate", content-type: "application/json; charset=utf-8"}
-  // request: XMLHttpRequest {requestHeaders: {…}, requestData: null, readyState: 4, timeout: 0, onreadystatechange: ƒ, …}
-  // status: 201
-  // statusText: ""
   const handleJoinEvent = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -112,7 +92,6 @@ function EventsListing() {
                 position: 'bottom',
                 duration: 5000,
               });
-              console.log(response);
               setTimeout(() => {
                 history.push({
                   pathname: '/event/video',
@@ -159,7 +138,6 @@ function EventsListing() {
                       position: 'bottom',
                       duration: 5000,
                     });
-                    console.log(response);
                     setTimeout(() => {
                       history.push({
                         pathname: '/event/video',

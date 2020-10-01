@@ -16,7 +16,6 @@ const OwnerLayout = ({ children, pageTitle, fullWidth }) => {
   const settingsRef = useRef(null);
 
   function dropDownHandler(ref) {
-    console.log(ref.current.parentNode.style);
     if (
       !ref.current.parentNode.style.height ||
       ref.current.parentNode.style.height === '30px'
