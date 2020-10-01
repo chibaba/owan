@@ -12,6 +12,8 @@ const api = {
 
   //Wallet APIs
   addToWallet: `${APP_URI}/billings/wallet/fund`,
+  getWalletBalance: (customerid) =>
+    `${APP_URI}/billings/wallets?customerId=${customerid}`,
 
   //Video API
   startVideo: `${EVENT_URI}/api/v1/videolink`,

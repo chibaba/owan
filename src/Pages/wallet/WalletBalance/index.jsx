@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import DashBoardCardLayout from '../../../Components/DashBoardHomeCard/DashBoardCardLayout';
 import DashBoardHomeCard from '../../../Components/DashBoardHomeCard';
@@ -6,9 +6,14 @@ import CurrBalance from '../../../Components/CurrBalance';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 import FormInput from '../../../Components/FormInput/Index';
-import { postCall } from '../../../APIs/requests';
+import {
+  postCallTransactions,
+  getCallTransactions,
+} from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import toast from 'toasted-notes';
+import cookie from 'js-cookie';
+import { useLocation } from 'react-router-dom';
 
 const WalletBalance = ({ isOwner }) => {
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +23,18 @@ const WalletBalance = ({ isOwner }) => {
     show: false,
   });
   const [amount, setAmount] = useState(0);
+  const [balance, setBalance] = useState(0);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const customerid = cookie.get('auid');
+
+    getCallTransactions(api.getWalletBalance(customerid), {}).then(
+      (response) => {
+        setBalance(response._embedded?.wallets[0]?.balance);
+      },
+    );
+  }, []);
 
   const handleModal = () => {
     setShowModal((prevState) => !prevState);
@@ -38,11 +55,11 @@ const WalletBalance = ({ isOwner }) => {
   const handleInitializePayment = (e) => {
     e.preventDefault();
     const data = {
-      amount: amount.toString(),
-      redirectUrl: window.location.href,
+      amount: (amount * 100).toString(),
+      redirectUrl: `${process.env.REACT_APP_APP_URI}${pathname}`,
     };
 
-    postCall(api.initializePayment, data, {})
+    postCallTransactions(api.initializePayment, data, {})
       .then((response) => {
         if (response.data) {
           window.location.href = response.data.url;
@@ -83,7 +100,7 @@ const WalletBalance = ({ isOwner }) => {
         </WalletModal>
       ) : null}
       <WalletLayout>
-        <CurrBalance ballance={0} />
+        <CurrBalance balance={balance} />
         {isOwner ? (
           <DashBoardCardLayout>
             <DashBoardHomeCard>
