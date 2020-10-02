@@ -1,4 +1,3 @@
-
 .welcome-header {
   display: flex;
   flex-direction: column;
@@ -29,11 +28,11 @@
   flex-direction: column;
 }
 .event-directory {
-  padding-top: 3rem;
   padding-bottom: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: start;
   width: 100%;
+  flex-wrap: wrap;
 }

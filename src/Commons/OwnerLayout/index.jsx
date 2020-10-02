@@ -9,7 +9,7 @@ import Colors from '../Colors';
 import 'animate.css';
 import cookie from 'js-cookie';
 
-const OwnerLayout = ({ children, pageTitle, fullWidth }) => {
+const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
   const { showDrawer, handleDrawerState } = useAppContext();
   const itemRef = useRef(null);
   const walletRef = useRef(null);
@@ -96,7 +96,9 @@ const OwnerLayout = ({ children, pageTitle, fullWidth }) => {
           </DrawerItemWrapper>
         </Drawer>
       ) : null}
-      <TitleBar page={pageTitle} toggleDrawer={handleDrawerState}></TitleBar>
+      {nav ? (
+        <TitleBar page={pageTitle} toggleDrawer={handleDrawerState}></TitleBar>
+      ) : null}
       <ContentWrapper full={fullWidth}>{children}</ContentWrapper>
     </LayoutWrapper>
   );
