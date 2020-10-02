@@ -1,43 +1,95 @@
-import React from 'react';
-
-import generateAppDateFormat from '../../../Utils/currentDay';
-
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import Colors from '../../../Commons/Colors';
 import Button from '../../../Commons/Button';
-import DashBoardHomeCard from '../../../Components/DashBoardHomeCard';
 import DashBoardCardLayout from '../../../Components/DashBoardHomeCard/DashBoardCardLayout';
+import { Card } from '../../welcomepage';
+import { AddToCalendarButton } from '../../../Commons/EventDate';
+import AddToCalendar from 'react-add-to-calendar';
+import { postCall } from '../../../APIs/requests';
+import api from '../../../APIs/endpoints';
+import toast from 'toasted-notes';
 
-const EventPortal = ({ currentEvent, imageUrl, time }) => {
+const EventPortal = ({ imageUrl }) => {
+  const { state } = useLocation();
+  const history = useHistory();
+  const [calendarData, setCalendarData] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const event = state.latestEvent;
+    let date = event.event_date.split('T')[0];
+
+    const splitStart = event.event_time.split(':');
+
+    const startOneHourBehind = parseInt(splitStart[0]) - 2;
+    const mainStart = `${
+      startOneHourBehind > 9 ? startOneHourBehind : `0${startOneHourBehind}`
+    }:${splitStart[1]}`;
+
+    let startTime = `${date}T${mainStart}:00-00:00`;
+    let endTime = `${date}T${mainStart}:00-00:00`;
+    const calendarData = {
+      title: `Link up event reminder for ${event.hashtag}`,
+      description: 'This is a reminder for an event happening on link up',
+      location: `https://linkup-app.netlify.app/dashboard/event/${event.id}`,
+      startTime,
+      endTime,
+    };
+    setCalendarData(calendarData);
+  }, [state.latestEvent]);
+  console.log(state);
+
+  const handleStartEvent = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    postCall(api.startVideo, {}, { event_id: state.latestEvent.id })
+      .then((response) => {
+        if (response.status === 200) {
+          setLoading(false);
+          history.push({
+            pathname: '/event/video',
+            state: {
+              roomID: response.vidlink.room_id,
+              accessKey: response.vidlink.Access_key,
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error.message);
+        toast.notify(error.message, { position: 'bottom', duration: 5000 });
+      });
+  };
+
   return (
     <>
       <EventPortalHeader>
         <EventDetails>
           <NavEvent>
-            <Link to="" style={{ color: `${Colors.defaultGreen}` }}>
-              Your Next/
-            </Link>
-            <Link to="" style={{ color: `${Colors.defaultGreen}` }}>
-              Last Event
-            </Link>
-
+            Your Next/ Last Event
             <CurrentEvent>
-              {(currentEvent = 'Pride at the Disco!')}
+              #{state.latestEvent.hashtag || 'Pride at the Disco!'}
             </CurrentEvent>
           </NavEvent>
           <ProfileImage>
-            <img src={(imageUrl = '/assets/images/me.jpeg')} alt="profileImg" />
+            <img src={imageUrl || '/assets/images/av.jpg'} alt="profileImg" />
           </ProfileImage>
         </EventDetails>
         <Calender>
           <img src="/assets/calender.svg" alt="celender" />
-          <div>
-            <span className="date">{generateAppDateFormat()}</span>
-            <span className="time">{(time = '5:00PM-8:00 GMT-1')}</span>
-            <Link to="" style={{ color: `${Colors.defaultGreen}` }}>
-              Add to calender
-            </Link>
+          <div style={{ marginLeft: '0.8rem' }}>
+            <span className="date">
+              {new Date(state.latestEvent.event_date).toDateString()}
+            </span>
+            <span className="time">
+              {state.latestEvent.event_time || '5:00PM-8:00 GMT-1'}
+            </span>
+            <AddToCalendarButton style={{ marginLeft: 0, marginTop: '5px' }}>
+              <AddToCalendar event={calendarData} displayItemIcons={true} />
+            </AddToCalendarButton>
           </div>
         </Calender>
         <ButtonDiv>
@@ -50,31 +102,32 @@ const EventPortal = ({ currentEvent, imageUrl, time }) => {
               cursor: 'pointer',
             }}
           >
-            <Button text="Start Event" />
-            <Button text="View Event Details" borderedBtn={true} />
+            <Button
+              text="Start Event"
+              loading={loading}
+              onClick={handleStartEvent}
+            />
+            <Button
+              text="View Event Details"
+              borderedBtn={true}
+              onClick={() =>
+                history.push({
+                  pathname: '/owner/event/details',
+                  state: { h: 'kljskhkdjkshkds' },
+                })
+              }
+            />
           </Link>
         </ButtonDiv>
         <DashBoardCardLayout notFull={true}>
-          <DashBoardHomeCard>
-            <img src="/assets/greenLayers.svg" alt="Create" />
-            <span>
-              <Link
-                to="/createEvent"
-                style={{ color: `${Colors.defaultGreen}` }}
-              >
-                Create Event
-              </Link>
-            </span>
-          </DashBoardHomeCard>
-          <DashBoardHomeCard>
-            <img src="/assets/images/icons/unlock.png" alt="Create" />
-
-            <span>
-              <Link to="walletbal" style={{ color: `${Colors.defaultGreen}` }}>
-                Wallet
-              </Link>
-            </span>
-          </DashBoardHomeCard>
+          <Card to={{ pathname: '/owner/createEvent' }}>
+            <img src="/assets/createEventGreen.svg" alt="Create" />
+            <p>Create Event</p>
+          </Card>
+          <Card to={{ pathname: '/owner/wallet' }}>
+            <img src="/assets/walletgreen.svg" alt="Create" />
+            <p>Wallet</p>
+          </Card>
         </DashBoardCardLayout>
       </EventPortalHeader>
     </>
@@ -118,7 +171,6 @@ const ButtonDiv = styled.div`
   padding: 10px 0;
   display: flex;
   margin-top: 1.5rem;
-  margin-bottom: 3rem;
 `;
 const Calender = styled.div`
   width: 90%;
@@ -129,7 +181,6 @@ const Calender = styled.div`
     display: flex;
     flex-direction: column;
     font-size: 12px;
-    margin-left: 0.8rem;
     color: #999999;
     span.date {
       font-weight: bold;

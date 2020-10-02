@@ -173,27 +173,6 @@ function EventsListing() {
       });
   };
 
-  // created_at: '2020-09-24T19:48:11.441Z';
-  // description: 'We are inviting you to the wedding between Kri and Kome. As you come, kindly come with gifts and goodies. There would be small chops available';
-  // event_date: '2020-09-30T00:00:00.000Z';
-  // event_time: '20:52';
-  // hashtag: 'krikome';
-  // id: '5f6cf7fb35455c0025af2ca8';
-  // images: (3)[
-  //   ('https://res.cloudinary.com/seymaster/image/upload/v1600976889/jjohy1h47wejoqahblc0.jpg',
-  //   'https://res.cloudinary.com/seymaster/image/upload/v1600976890/cum5hfwsphsnbdjyjqjt.jpg',
-  //   'https://res.cloudinary.com/seymaster/image/upload/v1600976890/qdtoh9jeewhawj1po3hs.jpg')
-  // ];
-  // location: 'online';
-  // meta: {
-  //   meta: '[object Object]';
-  // }
-  // name: 'Love In Paradise';
-  // room_id: Access_key: 'yHdkaJsrb50BYeaoV0ejY9Ju';
-  // room_id: '5f6d00304742e00012df2f9e';
-  // __proto__: Object;
-  // user_id: '5f69ed269ec292001b28c9ec';
-
   return (
     <>
       {showDrawer ? <Drawer drawerPosition="right"></Drawer> : null}

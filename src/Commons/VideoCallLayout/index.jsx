@@ -3,12 +3,12 @@ import Header from './Header';
 import EventOptions from './EventOptions';
 import EventComments from './EventComments';
 
-function VideoCallLayout({ children }) {
+function VideoCallLayout({ children, showSpray }) {
   return (
     <>
       <Header />
       {children}
-      <EventOptions />
+      <EventOptions showSpray={showSpray} />
       <EventComments />
     </>
   );

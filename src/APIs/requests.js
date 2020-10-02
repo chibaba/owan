@@ -76,6 +76,25 @@ export const getCall = async (url, headers) => {
     });
 };
 
+export const getCallTransaction = async (url, headers) => {
+  const token = cookie.get('uid');
+  const requestHeader = {
+    headers,
+    authorization: `Bearer ${token}`,
+    'client-id': `${process.env.REACT_APP_PAYMENT_CLIENT_ID}`,
+    'Content-Type': 'application/json',
+  };
+  return await axios({
+    method: 'GET',
+    url: `${url}`,
+    headers: requestHeader,
+  })
+    .then((response) => response.data)
+    .catch((error) => {
+      throw new Error(error);
+    });
+};
+
 export const getCallTransactions = async (url, headers) => {
   const token = cookie.get('uid');
   const requestHeader = {

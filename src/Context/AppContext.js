@@ -5,11 +5,16 @@ export const AppContext = React.createContext(null);
 function AppContextWrapper(props) {
   //Handles global app drawer
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showSpray, setShowSpray] = useState(false);
   const [user, setUser] = useState(null);
 
   //Global toggle for app drawer
   function handleDrawerState() {
     setShowDrawer((prevState) => !prevState);
+  }
+
+  function handleSprayState() {
+    setShowSpray((prevState) => !prevState);
   }
 
   function handleUserState(user) {
@@ -18,8 +23,15 @@ function AppContextWrapper(props) {
 
   //Memoize context values
   const viewValue = useMemo(
-    () => ({ showDrawer, handleDrawerState, user, handleUserState }),
-    [showDrawer, user],
+    () => ({
+      showDrawer,
+      handleDrawerState,
+      user,
+      handleUserState,
+      showSpray,
+      handleSprayState,
+    }),
+    [showDrawer, user, showSpray],
   );
 
   return (

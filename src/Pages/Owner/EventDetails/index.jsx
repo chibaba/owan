@@ -33,7 +33,11 @@ const EventDetail = () => {
   }, []);
 
   return (
-    <OwnerLayout pageTitle={events && events[0].hashtag} fullWidth={true}>
+    <OwnerLayout
+      pageTitle={events && events[0].hashtag}
+      fullWidth={true}
+      nav={true}
+    >
       <PageLinks>
         <PageLink
           to={`/owner/event/details`}
