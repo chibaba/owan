@@ -27,7 +27,7 @@ const EventPortal = ({ currentEvent, imageUrl, time }) => {
             </CurrentEvent>
           </NavEvent>
           <ProfileImage>
-            <img src={(imageUrl = '/assets/images/myk.jpg')} alt="profileImg" />
+            <img src={(imageUrl = '/assets/images/me.jpeg')} alt="profileImg" />
           </ProfileImage>
         </EventDetails>
         <Calender>
@@ -50,13 +50,13 @@ const EventPortal = ({ currentEvent, imageUrl, time }) => {
               cursor: 'pointer',
             }}
           >
-            <Button text="View Event Details" />
+            <Button text="Start Event" />
+            <Button text="View Event Details" borderedBtn={true} />
           </Link>
         </ButtonDiv>
-        <DashBoardCardLayout>
+        <DashBoardCardLayout notFull={true}>
           <DashBoardHomeCard>
             <img src="/assets/greenLayers.svg" alt="Create" />
-
             <span>
               <Link
                 to="/createEvent"
@@ -82,11 +82,10 @@ const EventPortal = ({ currentEvent, imageUrl, time }) => {
 };
 
 const EventPortalHeader = styled.header`
-  padding-top: 3rem;
+  padding-top: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   width: 100%;
 `;
 const EventDetails = styled.div`
@@ -96,7 +95,8 @@ const EventDetails = styled.div`
   margin: auto;
 `;
 const NavEvent = styled.div`
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bold;
 `;
 const CurrentEvent = styled.h1`
   font-size: 20px;
@@ -105,7 +105,7 @@ const ProfileImage = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 5px solid ${Colors.defaultGreen};
+  border: 3px solid ${Colors.defaultGreen};
   overflow: hidden;
   img {
     width: 100%;
@@ -124,11 +124,11 @@ const Calender = styled.div`
   width: 90%;
   margin: auto;
   display: flex;
-
+  align-items: flex-start;
   div {
     display: flex;
     flex-direction: column;
-    font-size: 10px;
+    font-size: 12px;
     margin-left: 0.8rem;
     color: #999999;
     span.date {
