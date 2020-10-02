@@ -18,7 +18,7 @@ const WelcomePage = () => {
   const userData = JSON.parse(cookie.get('udt'));
 
   return (
-    <OwnerLayout>
+    <OwnerLayout nav={false}>
       <PageWrapper>
         <UserHeader
           firstName={state?.user.profile.name || userData.profile.name}
@@ -28,17 +28,25 @@ const WelcomePage = () => {
         <div className="event-directory">
           <Card to="/owner/createevent">
             <img
-              src="/assets/createEvent.svg"
+              src="/assets/createEventGreen.svg"
               alt="createicon"
               className="directoryicon"
             />
             <p>Create Event</p>
           </Card>
+          <Card to="/owner/createevent">
+            <img
+              src="/assets/images/icons/tag.svg"
+              alt="createicon"
+              className="directoryicon"
+            />
+            <p>Join Event</p>
+          </Card>
           <Card
             to={{ pathname: '/owner/wallet', state: { user: state?.user } }}
           >
             <img
-              src="/assets/wallet.svg"
+              src="/assets/walletgreen.svg"
               alt="walleticon"
               className="directoryicon"
             />
@@ -51,15 +59,14 @@ const WelcomePage = () => {
 };
 
 const PageWrapper = Styled.div`
-  margin-top: 50px;
 `;
 
 const Card = Styled(Link)`
-  background: ${Colors.defaultGreen};
+  background: ${Colors.lightDefaultGreen};
   width: 36%;
   height: 138px;
   border-radius: 5px;
-  color: white;
+  color: ${Colors.defaultGreen};
   padding: 20px;
   outline: none;
   text-decoration: none;
@@ -67,6 +74,7 @@ const Card = Styled(Link)`
   flex-direction: column;
   align-items: baseline;
   justify-content: flex-end;
+  margin-bottom: 15px;
   p {
     margin: 0;
     margin-top: 10px;
