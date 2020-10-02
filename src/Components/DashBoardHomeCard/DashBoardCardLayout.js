@@ -1,12 +1,12 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-const DashBoardCardLayout = ({ children }) => {
-  return <DashboardContent>{children}</DashboardContent>;
+const DashBoardCardLayout = ({ children, notFull }) => {
+  return <DashboardContent notFull={notFull}>{children}</DashboardContent>;
 };
 
 const DashboardContent = Styled.main`
-  width: 100%;
+  width: ${({ notFull }) => (notFull ? '90%' : '100%')};
   margin: auto;
   padding: 10px 0; 
   display: flex;

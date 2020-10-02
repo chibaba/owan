@@ -34,7 +34,7 @@ const WelcomePage = () => {
             />
             <p>Create Event</p>
           </Card>
-          <Card to="/owner/createevent">
+          <Card to="/owner/event">
             <img
               src="/assets/images/icons/tag.svg"
               alt="createicon"
