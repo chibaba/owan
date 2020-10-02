@@ -43,7 +43,7 @@ const EventDates = Styled.div`
   }
 `;
 
-const AddToCalendarButton = Styled.div`
+export const AddToCalendarButton = Styled.div`
   a {
     background: none;
     border: none;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../welcomepage/welcome.css';
 import UserHeader from '../../Commons/UserHeader/UserHeader';
 import Styled from 'styled-components';
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import Colors from '../../Commons/Colors';
 import { useLocation } from 'react-router-dom';
 import cookie from 'js-cookie';
+import { getCall } from '../../APIs/requests';
+import api from '../../APIs/endpoints';
 
 const WelcomePage = () => {
   const { state } = useLocation();
@@ -14,8 +16,20 @@ const WelcomePage = () => {
   const time = `${today.getHours()}:${today.getMinutes()} ${
     today.getHours() >= 12 ? 'PM' : 'AM'
   }`;
+  const [latestEvent, setLatestEvent] = useState(null);
 
   const userData = JSON.parse(cookie.get('udt'));
+
+  useEffect(() => {
+    const id = cookie.get('auid');
+    getCall(api.getUserEvents(id))
+      .then((response) => {
+        setLatestEvent(response.event[0]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <OwnerLayout nav={false}>
@@ -34,13 +48,13 @@ const WelcomePage = () => {
             />
             <p>Create Event</p>
           </Card>
-          <Card to="/owner/event">
+          <Card to={{ pathname: '/owner/event', state: { latestEvent } }}>
             <img
               src="/assets/images/icons/tag.svg"
               alt="createicon"
               className="directoryicon"
             />
-            <p>Join Event</p>
+            <p>Start Event</p>
           </Card>
           <Card
             to={{ pathname: '/owner/wallet', state: { user: state?.user } }}
@@ -50,7 +64,7 @@ const WelcomePage = () => {
               alt="walleticon"
               className="directoryicon"
             />
-            <p>Fund Wallet</p>
+            <p>Wallet</p>
           </Card>
         </div>
       </PageWrapper>
@@ -61,7 +75,7 @@ const WelcomePage = () => {
 const PageWrapper = Styled.div`
 `;
 
-const Card = Styled(Link)`
+export const Card = Styled(Link)`
   background: ${Colors.lightDefaultGreen};
   width: 36%;
   height: 138px;
@@ -77,7 +91,7 @@ const Card = Styled(Link)`
   margin-bottom: 15px;
   p {
     margin: 0;
-    margin-top: 10px;
+    margin-top: 30px;
     font-size: 14px;
   }
 `;

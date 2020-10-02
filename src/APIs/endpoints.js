@@ -9,11 +9,13 @@ const api = {
   getEvents: `${EVENT_URI}/api/v1/event`,
   createEvent: `${EVENT_URI}/api/v1/event`,
   getEvent: (id) => `${EVENT_URI}/api/v1/event/${id}`,
+  getUserEvents: (id) => `${EVENT_URI}/api/v1/events/${id}`,
 
   //Wallet APIs
   addToWallet: `${APP_URI}/billings/wallet/fund`,
   getWalletBalance: (customerid) =>
     `${APP_URI}/billings/wallets?customerId=${customerid}`,
+  withdrawFunds: `${APP_URI}/billings/withdraw`,
 
   //Video API
   startVideo: `${EVENT_URI}/api/v1/videolink`,

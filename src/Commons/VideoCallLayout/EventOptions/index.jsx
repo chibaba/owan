@@ -12,7 +12,7 @@ import { useAppContext } from '../../../Context/AppContext';
 import { useVideoCallContext } from '../../../Context/VideoCallContext';
 
 function EventOptions() {
-  const { handleDrawerState } = useAppContext();
+  const { handleDrawerState, handleSprayState } = useAppContext();
   const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
 
   function showTablesHandler() {
@@ -51,7 +51,7 @@ function EventOptions() {
           />
           <span>2.6k</span>
         </SingleOption>
-        <SingleOption>
+        <SingleOption onClick={handleSprayState}>
           <img src="/assets/images/icons/cashspray.svg" alt="cash" />
           <span>Spray Cash</span>
         </SingleOption>
@@ -65,6 +65,7 @@ const OptionsWrapper = Styled.nav`
   bottom: 80px;
   right: 0;
   width: 70px;
+  z-index: 999999;
 `;
 
 const OptionItems = Styled.ul`

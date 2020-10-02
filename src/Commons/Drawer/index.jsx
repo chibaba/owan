@@ -61,7 +61,12 @@ const DrawerWrapper = Styled.div`
 
 //Default height for bottom drawer can be changed
 const DrawerContent = Styled.div`
-  width: ${(props) => (props.position === 'bottom' ? '100%' : '80%')};
+  width: ${(props) =>
+    props.position === 'bottom'
+      ? '100%'
+      : props.position === 'left'
+      ? '80%'
+      : '50%'};
   height: ${(props) => (props.position === 'bottom' ? '200px' : '100vh')};
   border-top-left-radius: ${(props) =>
     props.position === 'bottom' ? '15px' : 0};
