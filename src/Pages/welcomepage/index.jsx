@@ -48,14 +48,16 @@ const WelcomePage = () => {
             />
             <p>Create Event</p>
           </Card>
-          <Card to={{ pathname: '/owner/event', state: { latestEvent } }}>
-            <img
-              src="/assets/images/icons/tag.svg"
-              alt="createicon"
-              className="directoryicon"
-            />
-            <p>Start Event</p>
-          </Card>
+          {latestEvent ? (
+            <Card to={{ pathname: '/owner/event', state: { latestEvent } }}>
+              <img
+                src="/assets/images/icons/tag.svg"
+                alt="createicon"
+                className="directoryicon"
+              />
+              <p>Start Event</p>
+            </Card>
+          ) : null}
           <Card
             to={{ pathname: '/owner/wallet', state: { user: state?.user } }}
           >

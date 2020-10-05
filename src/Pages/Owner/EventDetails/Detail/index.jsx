@@ -6,7 +6,7 @@ import EventDate from '../../../../Commons/EventDate';
 
 const Detail = ({ data }) => {
   const image = '/assets/images/wedding-demo.jpg';
-
+  console.log(data);
   return (
     <>
       <EventDetailBanner
