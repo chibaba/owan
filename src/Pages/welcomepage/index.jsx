@@ -30,6 +30,7 @@ const WelcomePage = () => {
         console.log(error);
       });
   }, []);
+  console.log(latestEvent);
 
   return (
     <OwnerLayout nav={false}>

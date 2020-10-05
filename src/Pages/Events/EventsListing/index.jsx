@@ -40,6 +40,7 @@ function EventsListing() {
   const handleStartEvent = (e) => {
     e.preventDefault();
     setLoading(true);
+    cookie.set('eid', event.id);
     postCall(api.startVideo, {}, { event_id: event.id })
       .then((response) => {
         if (response.status === 200) {
