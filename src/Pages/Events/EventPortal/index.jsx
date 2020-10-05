@@ -20,6 +20,7 @@ const EventPortal = ({ imageUrl }) => {
   useEffect(() => {
     const event = state.latestEvent;
     let date = event.event_date.split('T')[0];
+    window.localStorage.setItem('event', JSON.stringify(state.latestEvent));
 
     const splitStart = event.event_time.split(':');
 
@@ -39,7 +40,6 @@ const EventPortal = ({ imageUrl }) => {
     };
     setCalendarData(calendarData);
   }, [state.latestEvent]);
-  console.log(state);
 
   const handleStartEvent = (e) => {
     e.preventDefault();
@@ -113,7 +113,7 @@ const EventPortal = ({ imageUrl }) => {
               onClick={() =>
                 history.push({
                   pathname: '/owner/event/details',
-                  state: { h: 'kljskhkdjkshkds' },
+                  state: { event: state.latestEvent },
                 })
               }
             />

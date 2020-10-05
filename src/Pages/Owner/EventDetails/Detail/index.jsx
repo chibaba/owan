@@ -3,13 +3,10 @@ import Styled from 'styled-components';
 import Colors from '../../../../Commons/Colors';
 import EventDetailBanner from '../../../../Commons/EventDetailBanner';
 import EventDate from '../../../../Commons/EventDate';
-import { useLocation } from 'react-router';
 
 const Detail = ({ data }) => {
-  const { state } = useLocation();
   const image = '/assets/images/wedding-demo.jpg';
-
-  console.log(state);
+  console.log(data);
   return (
     <>
       <EventDetailBanner

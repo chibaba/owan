@@ -16,6 +16,7 @@ const api = {
   getWalletBalance: (customerid) =>
     `${APP_URI}/billings/wallets?customerId=${customerid}`,
   withdrawFunds: `${APP_URI}/billings/withdraw`,
+  addTransferAuth: `${APP_URI}/3ps/v2/transferauth/paystack`,
 
   //Video API
   startVideo: `${EVENT_URI}/api/v1/videolink`,
@@ -31,6 +32,9 @@ const api = {
     joinRoom: (username, id) =>
       `https://api.eyeson.team/rooms?user[name]=${username}&id=${id}`,
   },
+
+  //Bank
+  fetchBankList: (provider) => `${APP_URI}/3ps/v1/banks?provider=${provider}`,
 };
 
 export default api;

@@ -54,7 +54,11 @@ export const postCallTransactions = async (url, data, headers) => {
   })
     .then((response) => response.data)
     .catch((error) => {
-      throw new Error(error.response.data.message);
+      console.log(error.response.data);
+      throw new Error(
+        error.response.data.error.responseMessage ||
+          error.response.data.message,
+      );
     });
 };
 
@@ -128,6 +132,6 @@ export const putCall = async (url, data, headers) => {
   })
     .then((response) => response.data)
     .catch((error) => {
-      throw new Error(error);
+      throw new Error(error.response.data.message);
     });
 };
