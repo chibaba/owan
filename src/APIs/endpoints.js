@@ -10,6 +10,8 @@ const api = {
   createEvent: `${EVENT_URI}/api/v1/event`,
   getEvent: (id) => `${EVENT_URI}/api/v1/event/${id}`,
   getUserEvents: (id) => `${EVENT_URI}/api/v1/events/${id}`,
+  postEventLike: `${EVENT_URI}/api/v1/event/like`,
+  getEventLikes: (eventId) => `${EVENT_URI}/api/v1/event/like/${eventId}`,
 
   //Wallet APIs
   addToWallet: `${APP_URI}/billings/wallet/fund`,
