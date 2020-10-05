@@ -10,6 +10,7 @@ const FormInput = ({
   value,
   placeholder,
   inputStyle,
+  loading,
 }) => {
   return (
     <InputWrapper>
@@ -21,6 +22,7 @@ const FormInput = ({
         value={value}
         placeholder={placeholder}
         style={inputStyle}
+        disabled={loading}
       />
     </InputWrapper>
   );

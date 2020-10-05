@@ -6,38 +6,17 @@ import Colors from '../../../Commons/Colors';
 import Report from './Reports/Report';
 import RegsisteredUsers from './Reports/RegisteredUsers';
 import Detail from './Detail';
-import { getCall } from '../../../APIs/requests';
-import api from '../../../APIs/endpoints';
-import toaster from 'toasted-notes';
 
 const EventDetail = () => {
   const [events, setEvents] = useState(null);
+
   useEffect(() => {
-    getCall(api.getEvents)
-      .then((response) => {
-        if (response.status === 200) {
-          setEvents(response.data);
-          toaster.notify(response.message, {
-            duration: 5000,
-            position: 'bottom',
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error.message);
-        toaster.notify('Oops!. Something went wrong. Please try again later', {
-          duration: 5000,
-          position: 'bottom',
-        });
-      });
+    const event = JSON.parse(window.localStorage.getItem('event'));
+    setEvents(event);
   }, []);
 
   return (
-    <OwnerLayout
-      pageTitle={events && events[0].hashtag}
-      fullWidth={true}
-      nav={true}
-    >
+    <OwnerLayout pageTitle={events?.hashtag} fullWidth={true} nav={true}>
       <PageLinks>
         <PageLink
           to={`/owner/event/details`}
@@ -63,7 +42,7 @@ const EventDetail = () => {
       </PageLinks>
       <Switch>
         <Route path={`/owner/event/details`} exact>
-          <Detail data={events && events[0]} />
+          <Detail data={events} />
         </Route>
         <Route path={`/owner/event/details/report`} exact>
           <Report />
