@@ -15,20 +15,20 @@ function Video() {
   const { showTables, showSideDrawer } = useVideoCallContext();
   const { state } = useLocation();
 
-  // useEffect(() => {
-  //   window.localStorage.setItem('vak', state.accessKey);
-  //   let accessKey = state.accessKey || window.localStorage.getItem('vak');
-  //   eyeson.onEvent((event) => {
-  //     if (event.type !== 'accept') {
-  //       return;
-  //     }
-  //     // Note: Some iOS devices might require video to have autoplay attribute set.
-  //     let video = document.querySelector('video');
-  //     video.srcObject = event.remoteStream;
-  //     video.play();
-  //   });
-  //   eyeson.start(accessKey);
-  // }, [state]);
+  useEffect(() => {
+    window.localStorage.setItem('vak', state.accessKey);
+    let accessKey = state.accessKey || window.localStorage.getItem('vak');
+    eyeson.onEvent((event) => {
+      if (event.type !== 'accept') {
+        return;
+      }
+      // Note: Some iOS devices might require video to have autoplay attribute set.
+      let video = document.querySelector('video');
+      video.srcObject = event.remoteStream;
+      video.play();
+    });
+    eyeson.start(accessKey);
+  }, [state]);
 
   function closeModal(e) {
     if (e.target.id === 'modalss') {
