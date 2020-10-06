@@ -33,7 +33,7 @@ const EventDetail = () => {
           Reports
         </PageLink>
         <PageLink
-          to={`/owner/event/details/users`}
+          to={`/owner/event/details/attendees`}
           activeClassName="event-details-active"
           exact
         >
@@ -47,8 +47,8 @@ const EventDetail = () => {
         <Route path={`/owner/event/details/report`} exact>
           <Report />
         </Route>
-        <Route path={`/owner/event/details/users`} exact>
-          <RegsisteredUsers />
+        <Route path={`/owner/event/details/attendees`} exact>
+          <RegsisteredUsers data={events} />
         </Route>
       </Switch>
     </OwnerLayout>

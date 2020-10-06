@@ -3,22 +3,24 @@ import Colors from '../../Commons/Colors';
 import styled from 'styled-components';
 
 const UserList = ({ users }) => {
-  const { id, Name, Email, Number, date, time } = users;
+  const { id, full_name, email, created_at } = users;
 
   return (
     <UserListWrapper>
       <ContactDetails>
         <h4>
           <span>{id}.</span>
-          {Name}
+          {full_name}
         </h4>
-        <span className="contact">
-          {Email} | {Number}
-        </span>
+        <span className="contact">{email}</span>
       </ContactDetails>
       <DateTime>
-        <span className="date">{date}</span>
-        <span className="time">{time}</span>
+        <span className="date">
+          {new Date(created_at).toLocaleDateString()}
+        </span>
+        <span className="time">
+          {new Date(created_at).toLocaleTimeString()}
+        </span>
       </DateTime>
     </UserListWrapper>
   );
