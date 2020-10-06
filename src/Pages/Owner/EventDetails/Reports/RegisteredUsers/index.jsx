@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import api from '../../../../../APIs/endpoints';
+import { getCall } from '../../../../../APIs/requests';
 import UserList from '../../../../../Components/UserList';
 
-const RegsisteredUsers = ({ users }) => {
+const RegsisteredUsers = ({ users, data }) => {
+  const [attendees, setAttendees] = useState(null);
+
+  useEffect(() => {
+    if (data) {
+      getCall(api.getEventAttendee(data.id), { event_id: data.id })
+        .then((response) => {
+          setAttendees(response.attendee);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [data]);
+
   const renderUsers = () => {
-    return (
-      users &&
-      users.map((user) => {
-        return <UserList key={user.id} users={user} />;
-      })
-    );
+    return attendees?.map((user) => {
+      return <UserList key={user.id} users={user} />;
+    });
   };
 
-  return <>{renderUsers()}</>;
+  return (
+    <>
+      {attendees?.length ? (
+        renderUsers()
+      ) : (
+        <p style={{ textAlign: 'center' }}>
+          No one as registered to attend this event
+        </p>
+      )}
+    </>
+  );
 };
 
 RegsisteredUsers.defaultProps = {

@@ -25,6 +25,7 @@ const api = {
 
   //Attendee
   createAttendee: `${EVENT_URI}/api/v1/attendee`,
+  getEventAttendee: (eventId) => `${EVENT_URI}/api/v1/attendee/${eventId}`,
 
   //Payments
   initializePayment: `${APP_URI}/payments/v1/paystack/initialize`,
