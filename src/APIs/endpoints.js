@@ -38,6 +38,10 @@ const api = {
 
   //Bank
   fetchBankList: (provider) => `${APP_URI}/3ps/v1/banks?provider=${provider}`,
+
+  //Transactions
+  instantCharge: `${APP_URI}/billings/charge`,
+  sprayLogs: `${EVENT_URI}/api/v1/event/spray-logs`,
 };
 
 export default api;

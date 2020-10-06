@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Styled from 'styled-components';
 import VideoCallLayout from '../../../Commons/VideoCallLayout';
 import Drawer from '../../../Commons/Drawer';
@@ -9,11 +9,22 @@ import eyeson from 'eyeson';
 import Button from '../../../Commons/Button';
 import FormInput from '../../../Components/FormInput/Index';
 import Colors from '../../../Commons/Colors';
+import cookie from 'js-cookie';
+import {
+  getCallTransactions,
+  postCallTransactions,
+} from '../../../APIs/requests';
+import api from '../../../APIs/endpoints';
+import toast from 'toasted-notes';
 
 function Video() {
   const { showDrawer, showSpray, handleSprayState } = useAppContext();
   const { showTables, showSideDrawer } = useVideoCallContext();
   const { state } = useLocation();
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [sprayAmount, setSprayAmount] = useState(0);
+  const dinominationRef = useRef(null);
+  const [denomination, setDenomination] = useState(0);
 
   useEffect(() => {
     window.localStorage.setItem('vak', state.accessKey);
@@ -30,10 +41,68 @@ function Video() {
     eyeson.start(accessKey);
   }, [state]);
 
+  useEffect(() => {
+    const customerid = cookie.get('auid');
+
+    getCallTransactions(api.getWalletBalance(customerid), {}).then(
+      (response) => {
+        setWalletBalance(response._embedded?.wallets[0]?.balance / 100);
+      },
+    );
+  }, [showSpray]);
+
   function closeModal(e) {
     if (e.target.id === 'modalss') {
       handleSprayState();
     }
+  }
+
+  function spray(e) {
+    e.preventDefault();
+    const event = JSON.parse(window.localStorage.getItem('event'));
+    postCallTransactions(
+      api.instantCharge,
+      {
+        amount: sprayAmount * 100,
+        clientId: process.env.REACT_APP_PAYMENT_CLIENT_ID,
+        productId: event.product_id,
+        userId: cookie.get('auid'),
+      },
+      {},
+    )
+      .then((response) => {
+        if (response.status) {
+          handleSprayState();
+          postCallTransactions(
+            api.sprayLogs,
+            {
+              transaction_ref: response.reference,
+              amount: sprayAmount,
+            },
+            { user_id: cookie.get('auid'), event_id: event.id },
+          )
+            .then((response) => {})
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      })
+      .catch((error) => {
+        toast.notify(error.message, { position: 'bottom', duration: 5000 });
+      });
+  }
+
+  function handleDenominationClick(e) {
+    const denomination = dinominationRef.current.querySelectorAll(
+      '.single-domination',
+    );
+    [...denomination].forEach((d) => {
+      if (d.classList.contains('active')) {
+        d.classList.remove('active');
+      }
+    });
+    e.target.classList.add('active');
+    setDenomination(e.target.innerText);
   }
 
   return (
@@ -48,22 +117,41 @@ function Video() {
         <CashModal onClick={closeModal} id="modalss">
           <CashModalWrapper>
             <h3>Wallet Balance</h3>
-            <p className="balance">40,000</p>
+            <p className="balance">{walletBalance}</p>
             <AmountToSpray>
               <p>How much do you want to spray</p>
-              <FormInput inputStyle={{ textAlign: 'center' }} />
+              <FormInput
+                inputStyle={{ textAlign: 'center' }}
+                onChange={(e) => setSprayAmount(e.target.value)}
+              />
             </AmountToSpray>
             <SelectDomination>
               <p>Select Domination</p>
-              <DinominationWrapper>
-                <div className="single-domination">100</div>
-                <div className="single-domination">200</div>
-                <div className="single-domination">500</div>
-                <div className="single-domination">1000</div>
+              <DinominationWrapper ref={dinominationRef}>
+                <div
+                  className="single-domination"
+                  onClick={handleDenominationClick}
+                >
+                  200
+                </div>
+                <div
+                  className="single-domination"
+                  onClick={handleDenominationClick}
+                >
+                  500
+                </div>
+                <div
+                  className="single-domination"
+                  onClick={handleDenominationClick}
+                >
+                  1000
+                </div>
               </DinominationWrapper>
             </SelectDomination>
-            <span>You’re spraying N20,000 in N200 denominations</span>
-            <Button text="Spray" />
+            <span>
+              You’re spraying N{sprayAmount} in N{denomination} denominations
+            </span>
+            <Button text="Spray" onClick={spray} />
             <Button text="Fund Wallet" cancelbtn={true} />
           </CashModalWrapper>
         </CashModal>
@@ -155,6 +243,10 @@ const DinominationWrapper = Styled.div`
     justify-content: center;
     color: rgba(0,0,0,0.2);
     padding-top: 5px;
+  }
+  .active {
+    background: ${Colors.defaultGreen};
+    color: #fff;
   }
 `;
 
