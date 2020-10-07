@@ -125,6 +125,7 @@ const WalletBalance = ({ isOwner }) => {
 
   const handleInitializePayment = (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = {
       amount: (amount * 100).toString(),
       redirectUrl: `${process.env.REACT_APP_APP_URI}${pathname}`,
@@ -163,6 +164,14 @@ const WalletBalance = ({ isOwner }) => {
             <ModalContentArea>
               {!formAlert.show ? (
                 <ModalForm onSubmit={(e) => e.preventDefault()}>
+                  {loading ? (
+                    <LoadingDiv>
+                      <img
+                        src="/assets/images/icons/loading.svg"
+                        alt="Loading..."
+                      />
+                    </LoadingDiv>
+                  ) : null}
                   <h3>Amount</h3>
                   <FormInput
                     placeholder="Enter amount to fund wallet"
@@ -274,6 +283,21 @@ const WalletBalance = ({ isOwner }) => {
     </>
   );
 };
+
+const LoadingDiv = Styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    widht: 50px;
+    height: 50px;
+  }
+`;
+
 const WalletLayout = Styled.div`
   width: 100%;
   display: flex;
@@ -312,6 +336,7 @@ export const ModalForm = Styled.form`
     width: 90%;
     margin: auto;
     text-align: center;
+    position: relative;
     select {
       width: 100%;
       box-sizing: border-box;
