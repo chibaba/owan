@@ -4,14 +4,14 @@ import { useEffect } from 'react';
 import cookie from 'js-cookie';
 
 function ProtectedRoutes({ children }) {
-  const history = useHistory();
+  const { push, location } = useHistory();
 
   useEffect(() => {
     const token = cookie.get('uid');
     if (!token) {
-      history.push('/');
+      push({ pathname: '/login', state: { returnTo: location.pathname } });
     }
-  }, [history]);
+  }, [push, location.pathname]);
 
   return <>{children}</>;
 }
