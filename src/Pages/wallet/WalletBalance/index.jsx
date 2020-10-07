@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
-import DashBoardCardLayout from '../../../Components/DashBoardHomeCard/DashBoardCardLayout';
-import DashBoardHomeCard from '../../../Components/DashBoardHomeCard';
+// import DashBoardCardLayout from '../../../Components/DashBoardHomeCard/DashBoardCardLayout';
+// import DashBoardHomeCard from '../../../Components/DashBoardHomeCard';
 import CurrBalance from '../../../Components/CurrBalance';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
@@ -250,7 +250,7 @@ const WalletBalance = ({ isOwner }) => {
       ) : null}
       <WalletLayout>
         <CurrBalance balance={balance} />
-        {isOwner ? (
+        {/* {isOwner ? (
           <DashBoardCardLayout>
             <DashBoardHomeCard>
               <img src="/assets/images/icons/balance.svg" alt="icon" />
@@ -263,7 +263,7 @@ const WalletBalance = ({ isOwner }) => {
               <span>Spray Balance</span>
             </DashBoardHomeCard>
           </DashBoardCardLayout>
-        ) : null}
+        ) : null} */}
         {/* <Button text="Withdraw Funds" onClick={handleWithdrawModal} /> */}
         <Button
           text="Fund Wallet"

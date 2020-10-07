@@ -10,6 +10,8 @@ function ProtectedRoutes({ children }) {
     const token = cookie.get('uid');
     if (!token) {
       push({ pathname: '/login', state: { returnTo: location.pathname } });
+    } else {
+      push('/welcome');
     }
   }, [push, location.pathname]);
 

@@ -74,7 +74,7 @@ const EventOwnerRegister = () => {
             type: 'success',
           });
           setTimeout(() => {
-            history.push('/login');
+            history.push('/welcome');
           }, 3000);
         }
       })
