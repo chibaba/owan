@@ -34,7 +34,7 @@ const EventPortal = ({ imageUrl }) => {
     const calendarData = {
       title: `Link up event reminder for ${event.hashtag}`,
       description: 'This is a reminder for an event happening on link up',
-      location: `https://linkup-app.netlify.app/dashboard/event/${event.id}`,
+      location: `https://linkup-app.netlify.app/event/detail/${event.id}`,
       startTime,
       endTime,
     };

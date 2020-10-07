@@ -25,7 +25,6 @@ const OwnerPage = lazy(() => import('./Pages/Owner'));
 const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 const WelcomePage = lazy(() => import('./Pages/welcomepage'));
 const TransactionPage = lazy(() => import('./Pages/Owner/Transactions'));
-const DashboardDetail = lazy(() => import('./Pages/Dashboard/Details'));
 const ProfilePage = lazy(() => import('./Pages/Owner/Profile'));
 
 function App() {
@@ -75,9 +74,6 @@ function App() {
                       <ProfilePage />
                     </Route>
                   </ProtectedRoutes>
-                  <Route path="/event/:id" exact>
-                    <DashboardDetail />
-                  </Route>
                 </VideoCallContextWrapper>
                 <Route path="/status">
                   <EventStatus />
