@@ -4,6 +4,7 @@ import EventsListing from './EventsListing';
 import Video from './Video';
 import JoinIn from './JoinIn';
 import VideoCallContextWrapper from '../../Context/VideoCallContext';
+import DashboardDetail from '../Dashboard/Details';
 
 function Event() {
   return (
@@ -16,6 +17,9 @@ function Event() {
       </Route>
       <Route path="/event/join" exact>
         <JoinIn />
+      </Route>
+      <Route path="/event/detail/:id" exact>
+        <DashboardDetail />
       </Route>
     </VideoCallContextWrapper>
   );

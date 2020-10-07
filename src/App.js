@@ -75,9 +75,6 @@ function App() {
                       <ProfilePage />
                     </Route>
                   </ProtectedRoutes>
-                  <Route path="/event/:id" exact>
-                    <DashboardDetail />
-                  </Route>
                 </VideoCallContextWrapper>
                 <Route path="/status">
                   <EventStatus />

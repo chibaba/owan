@@ -8,7 +8,10 @@ function ProtectedRoutes({ children }) {
 
   useEffect(() => {
     const token = cookie.get('uid');
-    if (!token && !location.pathname.match(/\/event\/[a-z0-9]{24}/g)?.length) {
+    if (
+      !token &&
+      !location.pathname.match(/\/event\/detail\/[a-z0-9]{24}/g)?.length
+    ) {
       push({ pathname: '/login', state: { returnTo: location.pathname } });
     } else if (
       location.pathname.match(/\/event\/[a-z0-9]{24}/g)?.length &&

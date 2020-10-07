@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
-import { mdiCardsHeart, mdiMessageReply } from '@mdi/js';
+import { mdiCardsHeart, mdiMessageReply, mdiAccountGroup } from '@mdi/js';
 import Colors from '../../Colors';
 import { useAppContext } from '../../../Context/AppContext';
 // import { useVideoCallContext } from '../../../Context/VideoCallContext';
@@ -14,6 +14,8 @@ function EventOptions() {
   // const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [attendee, setAttendees] = useState(0);
+  const [showLikeBubbles, setShowLikeBubbles] = useState(false);
 
   useEffect(() => {
     getCall(api.getEventLikes(cookie.get('eid')), {})
@@ -25,6 +27,20 @@ function EventOptions() {
       });
   }, [liked]);
 
+  useEffect(() => {
+    setInterval(() => {
+      getCall(api.getEventAttendee(cookie.get('eid')))
+        .then((response) => {
+          if (response.status === 200) {
+            setAttendees(response.attendee.length);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, 30000);
+  }, []);
+
   // function showTablesHandler() {
   //   handleDrawerState();
   //   handleTablesState(true);
@@ -33,6 +49,18 @@ function EventOptions() {
 
   function handleLikeEvent(e) {
     setLiked((prevState) => !prevState);
+    setShowLikeBubbles(false);
+    setShowLikeBubbles(true);
+    let time = 4000;
+
+    if (showLikeBubbles) {
+      setTimeout(() => {
+        setShowLikeBubbles(false);
+      }, time);
+    }
+
+    clearTimeout(time);
+
     const target = e.target;
 
     target.classList.add('heartbeat');
@@ -51,10 +79,11 @@ function EventOptions() {
   return (
     <OptionsWrapper>
       <OptionItems>
-        {/* <SingleOption onClick={showTablesHandler}>
-          <Icon path={mdiBullseye} size={1} color="#fff" />
-          <span>Join Table</span>
-        </SingleOption> */}
+        <SingleOption>
+          <Icon path={mdiAccountGroup} size={1} color="#fff" />
+          <span>{attendee}</span>
+          <span>Attendees</span>
+        </SingleOption>
         {/* <SingleOption>
           <Icon path={mdiRadioboxMarked} size={0.8} color="#fff" />
           <span>Record</span>
@@ -63,9 +92,16 @@ function EventOptions() {
           <Icon
             path={mdiCardsHeart}
             size={0.8}
-            color={!liked ? '#fff' : '#dd0d0d'}
+            color={!showLikeBubbles ? '#fff' : '#dd0d0d'}
             style={{ rotate: 'y 180deg' }}
           />
+          {showLikeBubbles ? (
+            <img
+              src="/assets/images/icons/heartbubble.gif"
+              alt="Like"
+              className="likebubble"
+            />
+          ) : null}
           <span>{likeCount}</span>
         </SingleOption>
         <SingleOption>
@@ -93,6 +129,7 @@ const OptionsWrapper = Styled.nav`
   right: 0;
   width: 70px;
   z-index: 999999;
+  overflow: hidden;
 `;
 
 const OptionItems = Styled.ul`
@@ -115,6 +152,11 @@ const SingleOption = Styled.li`
     svg.flip {
       transform: rotateY(180deg);
     }
+  }
+  img.likebubble {
+    width: 6rem;
+    position: absolute;
+    top: -97%;
   }
   span {
     font-size: 10px;
