@@ -44,6 +44,21 @@ const Report = ({ data }) => {
             duration: 5000,
           });
         });
+
+      //GET Amount Sprayed
+      getCall(api.getTotalAmountSprayedAtEvent(data.id))
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            // setLikes(response.all_likes);
+          }
+        })
+        .catch((error) => {
+          toast.notify('Oops!. Something went wrong. Try again later', {
+            position: 'bottom',
+            duration: 5000,
+          });
+        });
     }
   }, [data]);
 

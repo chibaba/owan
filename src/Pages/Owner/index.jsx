@@ -4,6 +4,7 @@ import Welcome from '../welcomepage/NewWelcomePage';
 import Event from '../Events/EventPortal';
 import EventDetail from './EventDetails';
 import OwnerEvents from '../Events/OwnerEvents';
+import UpcomingEvents from '../Events/UpcomingEvents';
 
 const Owner = () => {
   return (
@@ -16,6 +17,9 @@ const Owner = () => {
       </Route>
       <Route path="/owner/events" exact>
         <OwnerEvents />
+      </Route>
+      <Route path="/owner/upcoming" exact>
+        <UpcomingEvents />
       </Route>
       <Route path="/owner/event/details">
         <EventDetail />

@@ -12,6 +12,9 @@ const api = {
   getUserEvents: (id) => `${EVENT_URI}/api/v1/events/${id}`,
   postEventLike: `${EVENT_URI}/api/v1/event/like`,
   getEventLikes: (eventId) => `${EVENT_URI}/api/v1/event/like/${eventId}`,
+  getTotalAmountSprayedAtEvent: (eventId) =>
+    `${EVENT_URI}/api/v1/all-total?eventId=${eventId}`,
+  getUpcomingEvents: (userId) => `${EVENT_URI}/api/v1/attendee/event/${userId}`,
 
   //Wallet APIs
   addToWallet: `${APP_URI}/billings/wallet/fund`,
@@ -42,6 +45,7 @@ const api = {
   //Transactions
   instantCharge: `${APP_URI}/billings/charge`,
   sprayLogs: `${EVENT_URI}/api/v1/event/spray-logs`,
+  getUserTransactionLogs: ``,
 };
 
 export default api;
