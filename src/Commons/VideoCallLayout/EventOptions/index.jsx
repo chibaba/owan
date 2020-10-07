@@ -56,14 +56,14 @@ function EventOptions() {
   return (
     <OptionsWrapper>
       <OptionItems>
-        <SingleOption onClick={showTablesHandler}>
+        {/* <SingleOption onClick={showTablesHandler}>
           <Icon path={mdiBullseye} size={1} color="#fff" />
           <span>Join Table</span>
-        </SingleOption>
-        <SingleOption>
+        </SingleOption> */}
+        {/* <SingleOption>
           <Icon path={mdiRadioboxMarked} size={0.8} color="#fff" />
           <span>Record</span>
-        </SingleOption>
+        </SingleOption> */}
         <SingleOption onClick={handleLikeEvent}>
           <Icon
             path={mdiCardsHeart}

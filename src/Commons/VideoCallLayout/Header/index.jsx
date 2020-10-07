@@ -18,9 +18,9 @@ function Header() {
     <HeaderWrapper>
       <HeaderNav>
         <VideoStats>
-          <RecordButton>
+          {/* <RecordButton>
             <Icon path={mdiRadioboxMarked} color="#fff" size={0.6} />
-          </RecordButton>
+          </RecordButton> */}
           <VideoAttendees>
             <img src="/assets/images/icons/users.png" alt="users" />
             <span>496</span>
