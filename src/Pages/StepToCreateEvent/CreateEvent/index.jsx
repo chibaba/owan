@@ -110,9 +110,7 @@ const CreateEvent = () => {
         setLoading(false);
         if (response.status === 200) {
           const eventID = response.data.id;
-          setEventURL(
-            `${process.env.REACT_APP_APP_LINK}/dashboard/event/${eventID}`,
-          );
+          setEventURL(`${process.env.REACT_APP_APP_LINK}/event/${eventID}`);
           toaster.notify(response.message, {
             position: 'bottom',
             duration: 5000,
