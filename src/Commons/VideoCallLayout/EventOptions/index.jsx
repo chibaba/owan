@@ -2,21 +2,19 @@ import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
 import {
-  mdiBullseye,
   mdiCardsHeart,
-  mdiRadioboxMarked,
   mdiMessageReply,
 } from '@mdi/js';
 import Colors from '../../Colors';
 import { useAppContext } from '../../../Context/AppContext';
-import { useVideoCallContext } from '../../../Context/VideoCallContext';
+// import { useVideoCallContext } from '../../../Context/VideoCallContext';
 import { getCall, postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import cookie from 'js-cookie';
 
 function EventOptions() {
-  const { handleDrawerState, handleSprayState } = useAppContext();
-  const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
+  const { handleSprayState } = useAppContext();
+  // const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
@@ -30,11 +28,11 @@ function EventOptions() {
       });
   }, [liked]);
 
-  function showTablesHandler() {
-    handleDrawerState();
-    handleTablesState(true);
-    handleSideDrawerState(false);
-  }
+  // function showTablesHandler() {
+  //   handleDrawerState();
+  //   handleTablesState(true);
+  //   handleSideDrawerState(false);
+  // }
 
   function handleLikeEvent(e) {
     setLiked((prevState) => !prevState);
