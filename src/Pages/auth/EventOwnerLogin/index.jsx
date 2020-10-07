@@ -26,7 +26,6 @@ const EventOwnerLogin = () => {
   function inputChangeHandler(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   }
-  console.log(state);
   const { handleUserState } = useAppContext();
 
   function validateInput(data) {
@@ -74,7 +73,7 @@ const EventOwnerLogin = () => {
           setLoading(false);
           setTimeout(function () {
             history.push({
-              pathname: state.returnTo ? state.returnTo : '/welcome',
+              pathname: state?.returnTo ? state?.returnTo : '/welcome',
               state: { user },
             });
           }, 5000);

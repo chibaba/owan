@@ -4,7 +4,6 @@ import api from '../../APIs/endpoints';
 import { getCall } from '../../APIs/requests';
 import OwnerLayout from '../../Commons/OwnerLayout';
 import WalletBalance from '../wallet/WalletBalance';
-import DashboardDetail from './Details';
 import DashboardHome from './Home';
 import toaster from 'toasted-notes';
 
@@ -36,11 +35,6 @@ function Dashboard() {
       </Route>
       <Route path="/dashboard/event/:id" exact>
         <DashboardHome event={events && events[0]} />
-      </Route>
-      <Route path="/dashboard/event/detail/:id" exact>
-        <OwnerLayout pageTitle={events && events[0].name} fullWidth={true}>
-          <DashboardDetail id={events && events.id} />
-        </OwnerLayout>
       </Route>
     </Switch>
   );

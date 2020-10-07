@@ -5,13 +5,17 @@ import EventDetailBanner from '../../../Commons/EventDetailBanner';
 import EventDate from '../../../Commons/EventDate';
 import { getCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import toast from 'toasted-notes';
+import Button from '../../../Commons/Button';
+import cookie from 'js-cookie';
 
 const DashboardDetail = () => {
   const image = '/assets/images/wedding-demo.jpg';
   const { pathname } = useLocation();
   const [event, setEvent] = useState(null);
+  const history = useHistory();
+  const auid = cookie.get('uid');
 
   useEffect(() => {
     const splittedRoutes = pathname.split('/');
@@ -56,11 +60,29 @@ const DashboardDetail = () => {
           <SectionTitle>About</SectionTitle>
           <p>{event && event.description}</p>
         </ContentSection>
+        {auid ? (
+          <Button
+            text="Join Event"
+            onClick={() =>
+              history.push({ pathname: '/event', state: { event } })
+            }
+          />
+        ) : (
+          <Button
+            text="Login To Join Event"
+            onClick={() =>
+              history.push({
+                pathname: '/login',
+                state: { returnTo: pathname },
+              })
+            }
+          />
+        )}
       </ContentWrapper>
       <ContentSection>
-        <SectionTitle style={{ width: '90%', margin: '15px auto' }}>
+        {/* <SectionTitle style={{ width: '90%', margin: '15px auto' }}>
           Location on Map
-        </SectionTitle>
+        </SectionTitle> */}
         <MapArea></MapArea>
       </ContentSection>
     </>
