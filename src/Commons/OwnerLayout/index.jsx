@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import Styled from 'styled-components';
 import { useAppContext } from '../../Context/AppContext';
 import Drawer from '../Drawer';
@@ -14,6 +15,7 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
   const itemRef = useRef(null);
   const walletRef = useRef(null);
   const settingsRef = useRef(null);
+  const history = useHistory();
 
   function dropDownHandler(ref) {
     if (
@@ -52,12 +54,17 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
                 />
                 <span>Event</span>
               </DrawerHead>
-              <DrawerItemDropdown></DrawerItemDropdown>
+              <DrawerItemDropdown>
+                <Link to="/owner/createevent">Create Event</Link>
+              </DrawerItemDropdown>
             </DrawerItem>
             <DrawerItem>
               <DrawerHead
                 ref={walletRef}
-                onClick={() => dropDownHandler(walletRef)}
+                onClick={() => {
+                  history.push('/owner/wallet');
+                  handleDrawerState();
+                }}
               >
                 <Icon
                   path={mdiWallet}
@@ -140,6 +147,7 @@ const DrawerItem = Styled.div`
   margin-bottom: 20px;
   height: 30px;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const DrawerHead = Styled.div`
@@ -156,8 +164,12 @@ const DrawerHead = Styled.div`
 
 const DrawerItemDropdown = Styled.div`
   width: 100%;
-  height: 100px;
-  background: #000;
+  height: max-content;
+  padding: 5px 30px;
+  a {
+    font-weight: 300;
+    font-size: 14px;
+  }
 `;
 
 export default OwnerLayout;

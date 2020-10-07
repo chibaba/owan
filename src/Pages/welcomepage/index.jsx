@@ -17,6 +17,7 @@ const WelcomePage = () => {
     today.getHours() >= 12 ? 'PM' : 'AM'
   }`;
   const [latestEvent, setLatestEvent] = useState(null);
+  const [userEvents, setUserEvents] = useState(null);
 
   const userData = JSON.parse(cookie.get('udt'));
 
@@ -25,6 +26,7 @@ const WelcomePage = () => {
     getCall(api.getUserEvents(id))
       .then((response) => {
         setLatestEvent(response.event[0]);
+        setUserEvents(response.event);
       })
       .catch((error) => {
         console.log(error);
@@ -49,14 +51,24 @@ const WelcomePage = () => {
             <p>Create Event</p>
           </Card>
           {latestEvent ? (
-            <Card to={{ pathname: '/owner/event', state: { latestEvent } }}>
-              <img
-                src="/assets/images/icons/tag.svg"
-                alt="createicon"
-                className="directoryicon"
-              />
-              <p>Start Event</p>
-            </Card>
+            <>
+              <Card to={{ pathname: '/owner/event', state: { latestEvent } }}>
+                <img
+                  src="/assets/images/icons/tag.svg"
+                  alt="createicon"
+                  className="directoryicon"
+                />
+                <p>Start Event</p>
+              </Card>
+              <Card to={{ pathname: '/owner/events', state: { userEvents } }}>
+                <img
+                  src="/assets/images/icons/tag.svg"
+                  alt="createicon"
+                  className="directoryicon"
+                />
+                <p>Your Events</p>
+              </Card>
+            </>
           ) : null}
           <Card
             to={{ pathname: '/owner/wallet', state: { user: state?.user } }}
