@@ -5,7 +5,13 @@ import { useAppContext } from '../../Context/AppContext';
 import Drawer from '../Drawer';
 import TitleBar from './TitleBat';
 import Icon from '@mdi/react';
-import { mdiCalendar, mdiWallet, mdiWrench, mdiLogout } from '@mdi/js';
+import {
+  mdiCalendar,
+  mdiWallet,
+  mdiWrench,
+  mdiLogout,
+  mdiPiggyBank,
+} from '@mdi/js';
 import Colors from '../Colors';
 import 'animate.css';
 import cookie from 'js-cookie';
@@ -73,7 +79,22 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
                 />
                 <span>Wallet</span>
               </DrawerHead>
-              <DrawerItemDropdown></DrawerItemDropdown>
+            </DrawerItem>
+            <DrawerItem>
+              <DrawerHead
+                ref={walletRef}
+                onClick={() => {
+                  history.push('/owner/transactions');
+                  handleDrawerState();
+                }}
+              >
+                <Icon
+                  path={mdiPiggyBank}
+                  size={0.9}
+                  color={Colors.grayBorderColor}
+                />
+                <span>Transactions</span>
+              </DrawerHead>
             </DrawerItem>
             <DrawerItem>
               <DrawerHead
