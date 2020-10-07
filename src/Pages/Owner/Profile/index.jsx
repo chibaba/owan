@@ -1,5 +1,4 @@
 import React from 'react';
-import Styled from 'styled-components';
 import OwnerLayout from '../../../Commons/OwnerLayout';
 import cookie from 'js-cookie';
 import FormInput from '../../../Components/FormInput/Index';
