@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import { useLocation, Link } from 'react-router-dom';
 import OwnerLayout from '../../../Commons/OwnerLayout';
+import { getCall } from '../../../APIs/requests';
+import api from '../../../APIs/endpoints';
+import cookie from 'js-cookie';
 
 const OwnerEvents = () => {
   const { state } = useLocation();
 
+  const [userEvents, setUserEvents] = useState(null);
+
+  useEffect(() => {
+    const id = cookie.get('auid');
+    if (state.userEvents) {
+      setUserEvents(state.userEvents);
+    } else {
+      getCall(api.getUserEvents(id))
+        .then((response) => {
+          setUserEvents(response.event);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [state.userEvents]);
+
   const renderUserEvents = () => {
-    return state?.userEvents?.map((event) => {
+    return userEvents?.map((event) => {
       return (
         <Link
           to={{ pathname: '/owner/event', state: { latestEvent: event } }}

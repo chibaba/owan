@@ -62,6 +62,8 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
               </DrawerHead>
               <DrawerItemDropdown>
                 <Link to="/owner/createevent">Create Event</Link>
+                <Link to="/owner/events">My Events</Link>
+                <Link to="/owner/upcoming">Upcoming Events</Link>
               </DrawerItemDropdown>
             </DrawerItem>
             <DrawerItem>
@@ -187,9 +189,12 @@ const DrawerItemDropdown = Styled.div`
   width: 100%;
   height: max-content;
   padding: 5px 30px;
+  display: flex;
+  flex-direction: column;
   a {
     font-weight: 300;
     font-size: 14px;
+    margin-bottom: 13px;
   }
 `;
 
