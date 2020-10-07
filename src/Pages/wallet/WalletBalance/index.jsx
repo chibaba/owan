@@ -25,7 +25,7 @@ const WalletBalance = ({ isOwner }) => {
     show: false,
   });
   const [showFundWallet, setShowFundWallet] = useState(false);
-  const [showWithdraw, setShowWithdraw] = useState(false);
+  const [showWithdraw] = useState(false);
   const [amount, setAmount] = useState(0);
   const [balance, setBalance] = useState(0);
   const [banks, setBanks] = useState(null);
@@ -106,10 +106,10 @@ const WalletBalance = ({ isOwner }) => {
     setShowFundWallet(!showFundWallet);
   };
 
-  const handleWithdrawModal = () => {
-    setShowModal((prevState) => !prevState);
-    setShowWithdraw(!showWithdraw);
-  };
+  // const handleWithdrawModal = () => {
+  //   setShowModal((prevState) => !prevState);
+  //   setShowWithdraw(!showWithdraw);
+  // };
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
@@ -264,7 +264,7 @@ const WalletBalance = ({ isOwner }) => {
             </DashBoardHomeCard>
           </DashBoardCardLayout>
         ) : null}
-        <Button text="Withdraw Funds" onClick={handleWithdrawModal} />
+        {/* <Button text="Withdraw Funds" onClick={handleWithdrawModal} /> */}
         <Button
           text="Fund Wallet"
           style={{ marginTop: '30px' }}
