@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import FormInput from '../../../Components/FormInput/Index';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Label } from '../EventOwnerRegister';
 import { postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
@@ -14,6 +14,7 @@ import cookie from 'js-cookie';
 
 const EventOwnerLogin = () => {
   const history = useHistory();
+  const { state } = useLocation();
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -25,7 +26,7 @@ const EventOwnerLogin = () => {
   function inputChangeHandler(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   }
-
+  console.log(state);
   const { handleUserState } = useAppContext();
 
   function validateInput(data) {
@@ -72,7 +73,10 @@ const EventOwnerLogin = () => {
           });
           setLoading(false);
           setTimeout(function () {
-            history.push({ pathname: '/welcome', state: { user } });
+            history.push({
+              pathname: state.returnTo ? state.returnTo : '/welcome',
+              state: { user },
+            });
           }, 5000);
         }
       })
