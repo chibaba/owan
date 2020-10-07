@@ -26,6 +26,7 @@ const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 const WelcomePage = lazy(() => import('./Pages/welcomepage'));
 const TransactionPage = lazy(() => import('./Pages/Owner/Transactions'));
 const DashboardDetail = lazy(() => import('./Pages/Dashboard/Details'));
+const ProfilePage = lazy(() => import('./Pages/Owner/Profile'));
 
 function App() {
   return (
@@ -69,6 +70,9 @@ function App() {
                     </Route>
                     <Route path="/owner/transactions">
                       <TransactionPage />
+                    </Route>
+                    <Route path="/owner/profile">
+                      <ProfilePage />
                     </Route>
                   </ProtectedRoutes>
                   <Route path="/event/:id" exact>

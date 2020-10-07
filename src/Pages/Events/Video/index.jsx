@@ -148,9 +148,7 @@ function Video() {
                 </div>
               </DinominationWrapper>
             </SelectDomination>
-            <span>
-              You’re spraying N{sprayAmount} in N{denomination} denominations
-            </span>
+            <span>You’re spraying &#8358;{denomination} denominations</span>
             <Button text="Spray" onClick={spray} />
             <Button text="Fund Wallet" cancelbtn={true} />
           </CashModalWrapper>
