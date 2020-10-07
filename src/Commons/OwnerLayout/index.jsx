@@ -101,14 +101,17 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
             <DrawerItem>
               <DrawerHead
                 ref={settingsRef}
-                onClick={() => dropDownHandler(settingsRef)}
+                onClick={() => {
+                  history.push('/owner/profile');
+                  handleDrawerState();
+                }}
               >
                 <Icon
                   path={mdiWrench}
                   size={0.9}
                   color={Colors.grayBorderColor}
                 />
-                <span>Account Settings</span>
+                <span>Profile</span>
               </DrawerHead>
               <DrawerItemDropdown></DrawerItemDropdown>
             </DrawerItem>

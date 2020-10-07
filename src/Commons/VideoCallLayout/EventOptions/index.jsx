@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
-import {
-  mdiCardsHeart,
-  mdiMessageReply,
-} from '@mdi/js';
+import { mdiCardsHeart, mdiMessageReply } from '@mdi/js';
 import Colors from '../../Colors';
 import { useAppContext } from '../../../Context/AppContext';
 // import { useVideoCallContext } from '../../../Context/VideoCallContext';
