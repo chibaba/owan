@@ -45,7 +45,7 @@ const EventDetail = () => {
           <Detail data={events} />
         </Route>
         <Route path={`/owner/event/details/report`} exact>
-          <Report />
+          <Report data={events} />
         </Route>
         <Route path={`/owner/event/details/attendees`} exact>
           <RegsisteredUsers data={events} />

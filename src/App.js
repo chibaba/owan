@@ -24,6 +24,7 @@ const EmailVerification = lazy(() => import('./Pages/auth/EmailVerification'));
 const OwnerPage = lazy(() => import('./Pages/Owner'));
 const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 const WelcomePage = lazy(() => import('./Pages/welcomepage'));
+const TransactionPage = lazy(() => import('./Pages/Owner/Transactions'));
 
 function App() {
   return (
@@ -64,6 +65,9 @@ function App() {
                     </Route>
                     <Route path="/owner/createevent">
                       <CreateEvent />
+                    </Route>
+                    <Route path="/owner/transactions">
+                      <TransactionPage />
                     </Route>
                   </ProtectedRoutes>
                 </VideoCallContextWrapper>
