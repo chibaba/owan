@@ -2,21 +2,19 @@ import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
 import {
-  mdiBullseye,
   mdiCardsHeart,
-  mdiRadioboxMarked,
   mdiMessageReply,
 } from '@mdi/js';
 import Colors from '../../Colors';
 import { useAppContext } from '../../../Context/AppContext';
-import { useVideoCallContext } from '../../../Context/VideoCallContext';
+// import { useVideoCallContext } from '../../../Context/VideoCallContext';
 import { getCall, postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import cookie from 'js-cookie';
 
 function EventOptions() {
-  const { handleDrawerState, handleSprayState } = useAppContext();
-  const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
+  const { handleSprayState } = useAppContext();
+  // const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
@@ -30,11 +28,11 @@ function EventOptions() {
       });
   }, [liked]);
 
-  function showTablesHandler() {
-    handleDrawerState();
-    handleTablesState(true);
-    handleSideDrawerState(false);
-  }
+  // function showTablesHandler() {
+  //   handleDrawerState();
+  //   handleTablesState(true);
+  //   handleSideDrawerState(false);
+  // }
 
   function handleLikeEvent(e) {
     setLiked((prevState) => !prevState);
@@ -56,14 +54,14 @@ function EventOptions() {
   return (
     <OptionsWrapper>
       <OptionItems>
-        <SingleOption onClick={showTablesHandler}>
+        {/* <SingleOption onClick={showTablesHandler}>
           <Icon path={mdiBullseye} size={1} color="#fff" />
           <span>Join Table</span>
-        </SingleOption>
-        <SingleOption>
+        </SingleOption> */}
+        {/* <SingleOption>
           <Icon path={mdiRadioboxMarked} size={0.8} color="#fff" />
           <span>Record</span>
-        </SingleOption>
+        </SingleOption> */}
         <SingleOption onClick={handleLikeEvent}>
           <Icon
             path={mdiCardsHeart}

@@ -1,8 +1,8 @@
 import React from 'react';
 import Styled from 'styled-components';
-import Colors from '../../Colors';
+// import Colors from '../../Colors';
 import Icon from '@mdi/react';
-import { mdiRadioboxMarked, mdiDotsVertical } from '@mdi/js';
+import { mdiDotsVertical } from '@mdi/js';
 import { useAppContext } from '../../../Context/AppContext';
 import { useVideoCallContext } from '../../../Context/VideoCallContext';
 
@@ -18,9 +18,9 @@ function Header() {
     <HeaderWrapper>
       <HeaderNav>
         <VideoStats>
-          <RecordButton>
+          {/* <RecordButton>
             <Icon path={mdiRadioboxMarked} color="#fff" size={0.6} />
-          </RecordButton>
+          </RecordButton> */}
           <VideoAttendees>
             <img src="/assets/images/icons/users.png" alt="users" />
             <span>496</span>
@@ -63,15 +63,15 @@ const VideoStats = Styled.ul`
   }
 `;
 
-const RecordButton = Styled.li`
-  width: 25px;
-  height: 21px;
-  background: ${Colors.red};
-  border-radius: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+// const RecordButton = Styled.li`
+//   width: 25px;
+//   height: 21px;
+//   background: ${Colors.red};
+//   border-radius: 3px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
 const VideoAttendees = Styled.li`
   display: flex;
   justify-content: center;
