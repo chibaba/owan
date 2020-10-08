@@ -9,6 +9,7 @@ import { useHistory, useLocation } from 'react-router';
 import toast from 'toasted-notes';
 import Button from '../../../Commons/Button';
 import cookie from 'js-cookie';
+import OwnerLayout from '../../../Commons/OwnerLayout';
 
 const DashboardDetail = () => {
   const image = '/assets/images/wedding-demo.jpg';
@@ -40,7 +41,7 @@ const DashboardDetail = () => {
   }, [pathname]);
 
   return (
-    <>
+    <OwnerLayout nav={auid ? true : false}>
       <EventDetailBanner
         imageURL={(event && event.images[0]) || image}
         text="Upcoming Event"
@@ -85,7 +86,7 @@ const DashboardDetail = () => {
         </SectionTitle> */}
         <MapArea></MapArea>
       </ContentSection>
-    </>
+    </OwnerLayout>
   );
 };
 
