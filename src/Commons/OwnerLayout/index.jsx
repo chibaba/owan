@@ -10,7 +10,7 @@ import {
   mdiWallet,
   mdiWrench,
   mdiLogout,
-  mdiPiggyBank,
+  mdiGauge,
 } from '@mdi/js';
 import Colors from '../Colors';
 import 'animate.css';
@@ -50,6 +50,21 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
             <DrawerAvatar></DrawerAvatar>
             <DrawerItem>
               <DrawerHead
+                onClick={() => {
+                  history.push('/dashboard');
+                  handleDrawerState();
+                }}
+              >
+                <Icon
+                  path={mdiGauge}
+                  size={0.9}
+                  color={Colors.grayBorderColor}
+                />
+                <span>Dashboard</span>
+              </DrawerHead>
+            </DrawerItem>
+            <DrawerItem>
+              <DrawerHead
                 ref={itemRef}
                 onClick={() => dropDownHandler(itemRef)}
               >
@@ -82,7 +97,7 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
                 <span>Wallet</span>
               </DrawerHead>
             </DrawerItem>
-            <DrawerItem>
+            {/* <DrawerItem>
               <DrawerHead
                 ref={walletRef}
                 onClick={() => {
@@ -97,7 +112,7 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
                 />
                 <span>Transactions</span>
               </DrawerHead>
-            </DrawerItem>
+            </DrawerItem> */}
             <DrawerItem>
               <DrawerHead
                 ref={settingsRef}
