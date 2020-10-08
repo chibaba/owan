@@ -12,6 +12,8 @@ const api = {
   getUserEvents: (id) => `${EVENT_URI}/api/v1/events/${id}`,
   postEventLike: `${EVENT_URI}/api/v1/event/like`,
   getEventLikes: (eventId) => `${EVENT_URI}/api/v1/event/like/${eventId}`,
+  getEventLikeCount: (eventId) =>
+    `${EVENT_URI}/api/v1/event/like-count/${eventId}`,
   getTotalAmountSprayedAtEvent: (eventId) =>
     `${EVENT_URI}/api/v1/all-total?eventId=${eventId}`,
   getUpcomingEvents: (userId) => `${EVENT_URI}/api/v1/attendee/event/${userId}`,

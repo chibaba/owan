@@ -7,28 +7,29 @@ import { useVideoCallContext } from '../../../Context/VideoCallContext';
 import { useLocation } from 'react-router-dom';
 import eyeson from 'eyeson';
 import Button from '../../../Commons/Button';
-import FormInput from '../../../Components/FormInput/Index';
 import Colors from '../../../Commons/Colors';
 import cookie from 'js-cookie';
-import {
-  getCallTransactions,
-  postCallTransactions,
-} from '../../../APIs/requests';
+import { getCallTransactions } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
-import toast from 'toasted-notes';
 
 function Video() {
-  const { showDrawer, showSpray, handleSprayState } = useAppContext();
+  const {
+    showDrawer,
+    showSpray,
+    handleSprayState,
+    handleDenom,
+  } = useAppContext();
   const { showTables, showSideDrawer } = useVideoCallContext();
   const { state } = useLocation();
   const [walletBalance, setWalletBalance] = useState(0);
-  const [sprayAmount, setSprayAmount] = useState(0);
   const dinominationRef = useRef(null);
   const [denomination, setDenomination] = useState(0);
 
   useEffect(() => {
-    window.localStorage.setItem('vak', state.accessKey);
-    let accessKey = state.accessKey || window.localStorage.getItem('vak');
+    if (state) {
+      window.localStorage.setItem('vak', state.accessKey);
+    }
+    let accessKey = state?.accessKey || window.localStorage.getItem('vak');
     eyeson.onEvent((event) => {
       if (event.type !== 'accept') {
         return;
@@ -40,6 +41,10 @@ function Video() {
     });
     eyeson.start(accessKey);
   }, [state]);
+
+  useEffect(() => {
+    handleDenom(window.localStorage.getItem('denom') || 200);
+  }, [handleDenom]);
 
   useEffect(() => {
     const customerid = cookie.get('auid');
@@ -57,40 +62,40 @@ function Video() {
     }
   }
 
-  function spray(e) {
-    e.preventDefault();
-    const event = JSON.parse(window.localStorage.getItem('event'));
-    postCallTransactions(
-      api.instantCharge,
-      {
-        amount: sprayAmount * 100,
-        clientId: process.env.REACT_APP_PAYMENT_CLIENT_ID,
-        productId: event.product_id,
-        userId: cookie.get('auid'),
-      },
-      {},
-    )
-      .then((response) => {
-        if (response.status) {
-          handleSprayState();
-          postCallTransactions(
-            api.sprayLogs,
-            {
-              transaction_ref: response.reference,
-              amount: sprayAmount,
-            },
-            { user_id: cookie.get('auid'), event_id: event.id },
-          )
-            .then((response) => {})
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-      })
-      .catch((error) => {
-        toast.notify(error.message, { position: 'bottom', duration: 5000 });
-      });
-  }
+  // function spray(e) {
+  //   e.preventDefault();
+  //   const event = JSON.parse(window.localStorage.getItem('event'));
+  //   postCallTransactions(
+  //     api.instantCharge,
+  //     {
+  //       amount: sprayAmount * 100,
+  //       clientId: process.env.REACT_APP_PAYMENT_CLIENT_ID,
+  //       productId: event.product_id,
+  //       userId: cookie.get('auid'),
+  //     },
+  //     {},
+  //   )
+  //     .then((response) => {
+  //       if (response.status) {
+  //         handleSprayState();
+  //         postCallTransactions(
+  //           api.sprayLogs,
+  //           {
+  //             transaction_ref: response.reference,
+  //             amount: sprayAmount,
+  //           },
+  //           { user_id: cookie.get('auid'), event_id: event.id },
+  //         )
+  //           .then((response) => {})
+  //           .catch((error) => {
+  //             console.log(error);
+  //           });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       toast.notify(error.message, { position: 'bottom', duration: 5000 });
+  //     });
+  // }
 
   function handleDenominationClick(e) {
     const denomination = dinominationRef.current.querySelectorAll(
@@ -103,6 +108,8 @@ function Video() {
     });
     e.target.classList.add('active');
     setDenomination(e.target.innerText);
+    handleDenom(e.target.innerText);
+    window.localStorage.setItem('denom', e.target.innerText);
   }
 
   return (
@@ -118,13 +125,13 @@ function Video() {
           <CashModalWrapper>
             <h3>Wallet Balance</h3>
             <p className="balance">{walletBalance}</p>
-            <AmountToSpray>
+            {/* <AmountToSpray>
               <p>How much do you want to spray</p>
               <FormInput
                 inputStyle={{ textAlign: 'center' }}
                 onChange={(e) => setSprayAmount(e.target.value)}
               />
-            </AmountToSpray>
+            </AmountToSpray> */}
             <SelectDomination>
               <p>Select Domination</p>
               <DinominationWrapper ref={dinominationRef}>
@@ -149,7 +156,7 @@ function Video() {
               </DinominationWrapper>
             </SelectDomination>
             <span>You’re spraying &#8358;{denomination} denominations</span>
-            <Button text="Spray" onClick={spray} />
+            <Button text="Change" onClick={handleSprayState} />
             <Button text="Fund Wallet" cancelbtn={true} />
           </CashModalWrapper>
         </CashModal>
@@ -212,12 +219,12 @@ const CashModalWrapper = Styled.div`
   }
 `;
 
-const AmountToSpray = Styled.div`
-  margin-bottom: 20px;
-  p {
-    font-size: 14px;
-  }
-`;
+// const AmountToSpray = Styled.div`
+//   margin-bottom: 20px;
+//   p {
+//     font-size: 14px;
+//   }
+// `;
 
 const SelectDomination = Styled.div`
   p {
