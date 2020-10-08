@@ -7,6 +7,7 @@ function AppContextWrapper(props) {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showSpray, setShowSpray] = useState(false);
   const [user, setUser] = useState(null);
+  const [denom, setDenom] = useState(null);
 
   //Global toggle for app drawer
   function handleDrawerState() {
@@ -21,6 +22,10 @@ function AppContextWrapper(props) {
     setUser(user);
   }
 
+  function handleDenom(denom) {
+    setDenom(denom);
+  }
+
   //Memoize context values
   const viewValue = useMemo(
     () => ({
@@ -30,8 +35,10 @@ function AppContextWrapper(props) {
       handleUserState,
       showSpray,
       handleSprayState,
+      denom,
+      handleDenom,
     }),
-    [showDrawer, user, showSpray],
+    [showDrawer, user, showSpray, denom],
   );
 
   return (

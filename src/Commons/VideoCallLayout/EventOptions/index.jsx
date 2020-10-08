@@ -5,22 +5,30 @@ import { mdiCardsHeart, mdiMessageReply, mdiAccountGroup } from '@mdi/js';
 import Colors from '../../Colors';
 import { useAppContext } from '../../../Context/AppContext';
 // import { useVideoCallContext } from '../../../Context/VideoCallContext';
-import { getCall, postCall } from '../../../APIs/requests';
+import {
+  getCall,
+  postCall,
+  postCallTransactions,
+} from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import cookie from 'js-cookie';
+import toast from 'toasted-notes';
 
-function EventOptions() {
-  const { handleSprayState } = useAppContext();
+function EventOptions({ wallet, updateWallet }) {
+  const { handleSprayState, denom } = useAppContext();
   // const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
+  const [attendee, setAttendees] = useState(0);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
-  const [attendee, setAttendees] = useState(0);
-  const [showLikeBubbles, setShowLikeBubbles] = useState(false);
+  const [tapCount, setTapCount] = useState(1);
+  const [reqSent, setReqSent] = useState(false);
+  let typingTimer;
+  let doneTypingInterval = 5000;
 
   useEffect(() => {
-    getCall(api.getEventLikes(cookie.get('eid')), {})
+    getCall(api.getEventLikeCount(cookie.get('eid')), {})
       .then((response) => {
-        setLikeCount(response.all_likes?.length);
+        setLikeCount(response.all_likes);
       })
       .catch((error) => {
         console.log(error);
@@ -41,26 +49,8 @@ function EventOptions() {
     }, 30000);
   }, []);
 
-  // function showTablesHandler() {
-  //   handleDrawerState();
-  //   handleTablesState(true);
-  //   handleSideDrawerState(false);
-  // }
-
   function handleLikeEvent(e) {
     setLiked((prevState) => !prevState);
-    setShowLikeBubbles(false);
-    setShowLikeBubbles(true);
-    let time = 4000;
-
-    if (showLikeBubbles) {
-      setTimeout(() => {
-        setShowLikeBubbles(false);
-      }, time);
-    }
-
-    clearTimeout(time);
-
     const target = e.target;
 
     target.classList.add('heartbeat');
@@ -76,32 +66,83 @@ function EventOptions() {
       });
   }
 
+  function sprayCash() {
+    setTapCount((prev) => prev + 1);
+
+    const amount = wallet - tapCount * +denom;
+    updateWallet(amount);
+    clearTimeout(typingTimer);
+    if (tapCount) {
+      typingTimer = setTimeout(charge, doneTypingInterval);
+    }
+  }
+
+  function charge() {
+    setReqSent((prev) => !prev);
+    const amount = wallet - tapCount * denom;
+    updateWallet(amount);
+
+    if (!reqSent) {
+      setReqSent(true);
+      const event = JSON.parse(window.localStorage.getItem('event'));
+      postCallTransactions(
+        api.instantCharge,
+        {
+          amount: tapCount * denom * 100,
+          clientId: process.env.REACT_APP_PAYMENT_CLIENT_ID,
+          productId: event.product_id,
+          userId: cookie.get('auid'),
+        },
+        {},
+      )
+        .then((response) => {
+          if (response.status) {
+            setReqSent(false);
+            postCallTransactions(
+              api.sprayLogs,
+              {
+                transaction_ref: response.reference,
+                amount: tapCount * denom,
+              },
+              { user_id: cookie.get('auid'), event_id: event.id },
+            )
+              .then((response) => {})
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        })
+        .catch((error) => {
+          toast.notify(error.message, { position: 'bottom', duration: 5000 });
+        });
+    } else {
+      return;
+    }
+  }
+
   return (
     <OptionsWrapper>
       <OptionItems>
+        {/* <SingleOption onClick={showTablesHandler}>
+          <Icon path={mdiBullseye} size={1} color="#fff" />
+          <span>Join Table</span>
+        </SingleOption> */}
+        {/* <SingleOption>
+          <Icon path={mdiRadioboxMarked} size={0.8} color="#fff" />
+          <span>Record</span>
+        </SingleOption> */}
         <SingleOption>
           <Icon path={mdiAccountGroup} size={1} color="#fff" />
           <span>{attendee}</span>
           <span>Attendees</span>
         </SingleOption>
-        {/* <SingleOption>
-          <Icon path={mdiRadioboxMarked} size={0.8} color="#fff" />
-          <span>Record</span>
-        </SingleOption> */}
         <SingleOption onClick={handleLikeEvent}>
           <Icon
             path={mdiCardsHeart}
             size={0.8}
-            color={!showLikeBubbles ? '#fff' : '#dd0d0d'}
+            color={!liked ? '#fff' : '#dd0d0d'}
             style={{ rotate: 'y 180deg' }}
           />
-          {showLikeBubbles ? (
-            <img
-              src="/assets/images/icons/heartbubble.gif"
-              alt="Like"
-              className="likebubble"
-            />
-          ) : null}
           <span>{likeCount}</span>
         </SingleOption>
         <SingleOption>
@@ -114,9 +155,15 @@ function EventOptions() {
           />
           <span>2.6k</span>
         </SingleOption>
-        <SingleOption onClick={handleSprayState}>
+        <SingleOption onClick={sprayCash} id="spray">
           <img src="/assets/images/icons/cashspray.svg" alt="cash" />
           <span>Spray Cash</span>
+        </SingleOption>
+        <SingleOption id="spray" onClick={handleSprayState}>
+          <span className="denom">
+            {denom || parseInt(window.localStorage.getItem('denom')) || 200}
+          </span>
+          <span>Denomination</span>
         </SingleOption>
       </OptionItems>
     </OptionsWrapper>
@@ -129,7 +176,6 @@ const OptionsWrapper = Styled.nav`
   right: 0;
   width: 70px;
   z-index: 999999;
-  overflow: hidden;
 `;
 
 const OptionItems = Styled.ul`
@@ -153,11 +199,6 @@ const SingleOption = Styled.li`
       transform: rotateY(180deg);
     }
   }
-  img.likebubble {
-    width: 6rem;
-    position: absolute;
-    top: -97%;
-  }
   span {
     font-size: 10px;
     color: #fff;
@@ -165,9 +206,12 @@ const SingleOption = Styled.li`
     text-align: center;
     width: 100%;
   }
+  span.denom {
+    font-size: 1rem;
+  }
   .heartbeat {
-	  -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
-	  animation: heartbeat 1.5s ease-in-out infinite both;
+    -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
+    animation: heartbeat 1.5s ease-in-out infinite both;
   }
   /* ----------------------------------------------
   * Generated by Animista on 2020-10-6 0:39:48

@@ -1,17 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import EventOptions from './EventOptions';
 import EventComments from './EventComments';
+import { getCallTransactions } from '../../APIs/requests';
+import cookie from 'js-cookie';
+import api from '../../APIs/endpoints';
+import Styled from 'styled-components';
 
 function VideoCallLayout({ children, showSpray }) {
+  const [walletBalance, setWalletBalance] = useState(null);
+
+  useEffect(() => {
+    const customerid = cookie.get('auid');
+
+    getCallTransactions(api.getWalletBalance(customerid), {}).then(
+      (response) => {
+        setWalletBalance(response._embedded?.wallets[0]?.balance / 100);
+      },
+    );
+  }, [showSpray]);
+
   return (
     <>
       <Header />
+      <Wallet>{walletBalance}</Wallet>
       {children}
-      <EventOptions showSpray={showSpray} />
+      <EventOptions
+        showSpray={showSpray}
+        wallet={walletBalance}
+        updateWallet={setWalletBalance}
+      />
       <EventComments />
     </>
   );
 }
+
+const Wallet = Styled.div`
+  width: max-content;
+  height: 50px;
+  position: absolute;
+  z-index: 999999;
+  top: 70px;
+  right: 5%;
+  text-align: right;
+  color: #fff;
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 0 10px;
+  border-radius: 4px;
+`;
 
 export default VideoCallLayout;
