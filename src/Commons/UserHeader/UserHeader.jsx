@@ -2,11 +2,11 @@ import React from 'react';
 import '../UserHeader/UserHeader.css';
 import PropTypes from 'prop-types';
 
-const UserHeader = ({ firstName, lastName, time, date, biggerUserImg }) => {
+const UserHeader = ({ firstName, lastName }) => {
   return (
     <div className="welcome-header">
       <div className="welcome-user">
-        <h2>Welcome to LinkUp</h2>
+        <h2>Welcome to Owanbe</h2>
         <p>
           {firstName} {lastName}
         </p>

@@ -22,7 +22,7 @@ const EventOwnerRegister = lazy(() =>
 );
 const EmailVerification = lazy(() => import('./Pages/auth/EmailVerification'));
 const OwnerPage = lazy(() => import('./Pages/Owner'));
-const DashboardPage = lazy(() => import('./Pages/Dashboard'));
+// const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 const WelcomePage = lazy(() => import('./Pages/welcomepage'));
 const TransactionPage = lazy(() => import('./Pages/Owner/Transactions'));
 const ProfilePage = lazy(() => import('./Pages/Owner/Profile'));
@@ -38,24 +38,25 @@ function App() {
                 <Route path="/" exact>
                   <HomePage />
                 </Route>
-                <Route path="/login">
-                  <EventOwnerLogin />
-                </Route>
-                <Route path="/signup">
-                  <EventOwnerRegister />
-                </Route>
+
                 <Route path="/verify">
                   <EmailVerification />
                 </Route>
                 <VideoCallContextWrapper>
                   <ProtectedRoutes>
+                    <Route path="/login">
+                      <EventOwnerLogin />
+                    </Route>
+                    <Route path="/signup">
+                      <EventOwnerRegister />
+                    </Route>
                     <Route path="/event">
                       <EventPage />
                     </Route>
-                    <Route path="/dashboard">
+                    {/* <Route path="/dashboard">
                       <DashboardPage />
-                    </Route>
-                    <Route path="/welcome">
+                    </Route> */}
+                    <Route path="/dashboard">
                       <WelcomePage />
                     </Route>
                     <Route path="/owner">

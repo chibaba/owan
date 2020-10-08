@@ -18,6 +18,11 @@ function ProtectedRoutes({ children }) {
       !token
     ) {
       push(location.pathname);
+    } else if (
+      location.pathname === '/login' ||
+      (location.pathname === '/signup' && token)
+    ) {
+      push('/dashboard');
     } else {
       push(location.pathname);
     }
