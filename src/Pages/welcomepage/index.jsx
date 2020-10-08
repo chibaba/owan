@@ -34,7 +34,7 @@ const WelcomePage = () => {
   }, []);
 
   return (
-    <OwnerLayout nav={false}>
+    <OwnerLayout nav={true}>
       <PageWrapper>
         <UserHeader
           firstName={state?.user.profile.name || userData.profile.name}

@@ -73,7 +73,7 @@ const EventOwnerLogin = () => {
           setLoading(false);
           setTimeout(function () {
             history.push({
-              pathname: state?.returnTo ? state?.returnTo : '/welcome',
+              pathname: state?.returnTo ? state?.returnTo : '/dashboard',
               state: { user },
             });
           }, 5000);
