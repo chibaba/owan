@@ -219,6 +219,11 @@ const SingleOption = Styled.li`
       transform: rotateY(180deg);
     }
   }
+  img.likebubble {
+    width: 6rem;
+    position: absolute;
+    top: -97%;
+  }
   span {
     font-size: 10px;
     color: #fff;
