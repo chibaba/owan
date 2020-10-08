@@ -22,6 +22,7 @@ function EventOptions({ wallet, updateWallet }) {
   const [likeCount, setLikeCount] = useState(0);
   const [tapCount, setTapCount] = useState(1);
   const [reqSent, setReqSent] = useState(false);
+  const [showLikeBubbles, setShowLikeBubbles] = useState(false);
   let typingTimer;
   let doneTypingInterval = 5000;
 
@@ -51,6 +52,18 @@ function EventOptions({ wallet, updateWallet }) {
 
   function handleLikeEvent(e) {
     setLiked((prevState) => !prevState);
+    setShowLikeBubbles(false);
+    setShowLikeBubbles(true);
+    let time = 4000;
+
+    if (showLikeBubbles) {
+      setTimeout(() => {
+        setShowLikeBubbles(false);
+      }, time);
+    }
+
+    clearTimeout(time);
+
     const target = e.target;
 
     target.classList.add('heartbeat');
@@ -143,6 +156,13 @@ function EventOptions({ wallet, updateWallet }) {
             color={!liked ? '#fff' : '#dd0d0d'}
             style={{ rotate: 'y 180deg' }}
           />
+          {showLikeBubbles ? (
+            <img
+              src="/assets/images/icons/heartbubble.gif"
+              alt="Like"
+              className="likebubble"
+            />
+          ) : null}
           <span>{likeCount}</span>
         </SingleOption>
         <SingleOption>
