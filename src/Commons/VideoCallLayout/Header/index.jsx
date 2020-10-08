@@ -26,7 +26,9 @@ function Header() {
             <span>496</span>
           </VideoAttendees>
         </VideoStats>
-        <EventTitle>HenryJane2020</EventTitle>
+        <EventTitle>
+          #{JSON.parse(window.localStorage.getItem('event'))?.hashtag}
+        </EventTitle>
         <SideNavToggle onClick={sideNavHandler}>
           <Icon path={mdiDotsVertical} color="#fff" size={1} />
         </SideNavToggle>
