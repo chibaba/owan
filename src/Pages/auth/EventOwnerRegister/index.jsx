@@ -9,6 +9,7 @@ import Colors from '../../../Commons/Colors';
 import toast from 'toasted-notes';
 import axios from 'axios';
 import cookie from 'js-cookie';
+import toaster from 'toasted-notes';
 
 //Request call should be refactored later
 
@@ -21,7 +22,9 @@ const EventOwnerRegister = () => {
   });
   const [error, setError] = useState(null);
   const [, setShowError] = useState(false);
+  const [agreed, setAgreed] = useState(false);
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   function inputChangeHandler(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -42,7 +45,16 @@ const EventOwnerRegister = () => {
   }
 
   function submitFormHandler(e) {
+    setLoading(true);
     e.preventDefault();
+    if (!agreed) {
+      toaster.notify('Agree to Owambe.ng Terms and Conditions', {
+        duration: 5000,
+        position: 'top',
+      });
+      setLoading(false);
+      return;
+    }
     const { email, fullName, password, phoneNumber } = formValues;
     const returnPage = window.localStorage.getItem('returnTo');
 
@@ -70,6 +82,7 @@ const EventOwnerRegister = () => {
     })
       .then((response) => {
         if (response.status === 201) {
+          setLoading(false);
           const user = response.data.data.user;
           const token = response.data.data.token;
 
@@ -91,6 +104,7 @@ const EventOwnerRegister = () => {
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.notify(error.response.data.error, {
           position: 'top',
           duration: 5000,
@@ -98,8 +112,13 @@ const EventOwnerRegister = () => {
       });
   }
 
+  function handleAgree(e) {
+    e.persist();
+    setAgreed(e.target.checked);
+  }
+
   return (
-    <EventOnwerLayout createAcc={true} title="Create A LinkUp account">
+    <EventOnwerLayout createAcc={true} title="Create An Owambe account">
       <form>
         <div>
           <Label>
@@ -146,13 +165,17 @@ const EventOwnerRegister = () => {
           </Label>
         </div>
         <Terms>
-          <CheckBox name="terms" style={{ marginBottom: '0' }} />
+          <CheckBox
+            name="terms"
+            style={{ marginBottom: '0' }}
+            onChange={handleAgree}
+          />
           <TermInstru>
             {' '}
-            I agree to LinkUp <LoginLink>Terms & Condition</LoginLink>
+            I agree to Owambe.ng <LoginLink>Terms & Condition</LoginLink>
           </TermInstru>
         </Terms>
-        <Button text="Register" onClick={submitFormHandler} />
+        <Button text="Register" onClick={submitFormHandler} loading={loading} />
       </form>
       <RedirectTwo>
         Have an account?{' '}

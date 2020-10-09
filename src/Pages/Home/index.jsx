@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function Home() {
   return (
     <ContentWrapper>
-      <Logo>LinkUp</Logo>
+      <Logo>Owambe.ng</Logo>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore lorem ipsum dolor sit amet.

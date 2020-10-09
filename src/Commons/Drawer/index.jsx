@@ -67,7 +67,8 @@ const DrawerContent = Styled.div`
       : props.position === 'left'
       ? '80%'
       : '50%'};
-  height: ${(props) => (props.position === 'bottom' ? '200px' : '100vh')};
+  height: ${(props) => (props.position === 'bottom' ? 'max-content' : '100vh')};
+  min-height: ${(props) => (props.position === 'bottom' ? '75vh' : '100vh')};
   border-top-left-radius: ${(props) =>
     props.position === 'bottom' ? '15px' : 0};
   border-top-right-radius: ${(props) =>
