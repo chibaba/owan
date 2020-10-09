@@ -13,6 +13,7 @@ import {
 import api from '../../../APIs/endpoints';
 import cookie from 'js-cookie';
 import toast from 'toasted-notes';
+import { useVideoCallContext } from '../../../Context/VideoCallContext';
 
 function EventOptions({ wallet, updateWallet }) {
   const { handleSprayState, denom } = useAppContext();
@@ -21,6 +22,11 @@ function EventOptions({ wallet, updateWallet }) {
   const [likeCount, setLikeCount] = useState(0);
   const [tapCount, setTapCount] = useState(0);
   const [showLikeBubbles, setShowLikeBubbles] = useState(false);
+  const {
+    showAttendees,
+    handleShowAttendees,
+    handleShowYoutube,
+  } = useVideoCallContext();
 
   useEffect(() => {
     getCall(api.getEventLikeCount(cookie.get('eid')), {})
@@ -47,7 +53,6 @@ function EventOptions({ wallet, updateWallet }) {
   }, []);
 
   const charge = useCallback(() => {
-    console.log(wallet < +denom, 'klsjkbdksbdjks');
     if (wallet < +denom) {
       return;
     }
@@ -128,6 +133,21 @@ function EventOptions({ wallet, updateWallet }) {
     updateWallet(amount);
   }
 
+  function at() {
+    const embed = window.localStorage.getItem('embed');
+    if (embed) {
+      if (showAttendees) {
+        handleShowYoutube(true);
+        handleShowAttendees(false);
+      } else {
+        handleShowYoutube(false);
+        handleShowAttendees(true);
+      }
+    } else {
+      handleShowAttendees(true);
+      handleShowYoutube(false);
+    }
+  }
   return (
     <OptionsWrapper>
       <OptionItems>
@@ -139,7 +159,7 @@ function EventOptions({ wallet, updateWallet }) {
           <Icon path={mdiRadioboxMarked} size={0.8} color="#fff" />
           <span>Record</span>
         </SingleOption> */}
-        <SingleOption>
+        <SingleOption onClick={at}>
           <Icon path={mdiAccountGroup} size={1} color="#fff" />
           <span>{attendee}</span>
           <span>Attendees</span>

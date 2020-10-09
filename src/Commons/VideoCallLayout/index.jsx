@@ -19,8 +19,6 @@ function VideoCallLayout({ children, showSpray }) {
     );
   }, [showSpray]);
 
-  console.log(walletBalance);
-
   return (
     <>
       <Header showSpray={showSpray} wallet={walletBalance} />
