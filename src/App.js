@@ -3,7 +3,6 @@ import './App.scss';
 import 'toasted-notes/src/styles.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppContextWrapper from './Context/AppContext';
-// import UserRegistration from './Pages/auth/UserRegistration';
 import VideoCallContextWrapper from './Context/VideoCallContext';
 import ProtectedRoutes from './Commons/Auth/ProtectedRoutes';
 import Styled from 'styled-components';
@@ -22,7 +21,6 @@ const EventOwnerRegister = lazy(() =>
 );
 const EmailVerification = lazy(() => import('./Pages/auth/EmailVerification'));
 const OwnerPage = lazy(() => import('./Pages/Owner'));
-// const DashboardPage = lazy(() => import('./Pages/Dashboard'));
 const WelcomePage = lazy(() => import('./Pages/welcomepage'));
 const TransactionPage = lazy(() => import('./Pages/Owner/Transactions'));
 const ProfilePage = lazy(() => import('./Pages/Owner/Profile'));
@@ -38,7 +36,6 @@ function App() {
                 <Route path="/" exact>
                   <HomePage />
                 </Route>
-
                 <Route path="/verify">
                   <EmailVerification />
                 </Route>
@@ -53,9 +50,6 @@ function App() {
                     <Route path="/event">
                       <EventPage />
                     </Route>
-                    {/* <Route path="/dashboard">
-                      <DashboardPage />
-                    </Route> */}
                     <Route path="/dashboard">
                       <WelcomePage />
                     </Route>
