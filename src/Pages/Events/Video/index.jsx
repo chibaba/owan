@@ -61,9 +61,6 @@ function Video() {
       if (frame) {
         // embedRef.current.innerHTML = frame;
         setFrameLink(frame);
-        console.log(window.innerWidth);
-        embedRef.current.style.width = window.innerWidth + 'px';
-        embedRef.current.style.height = window.innerHeight + 'px';
 
         handleShowYoutube(true);
         handleShowAttendees(false);
@@ -249,12 +246,19 @@ function Video() {
       ) : null}
       <VideoLayer>
         {showYoutube ? (
-          <YTVideo
-            ref={embedRef}
-            src={`${frameLink}?autoplay=1`}
-            frameborder="0"
-            allowfullscreen
-          ></YTVideo>
+          // <YTVideo
+          //   ref={embedRef}
+          //   src={`${frameLink}?autoplay=1`}
+          //   frameborder="0"
+          //   allowfullscreen
+          // ></YTVideo>
+          <YTVideo ref={embedRef}>
+            <param name="movie" value={`${frameLink}?autoplay=1`}></param>
+            <embed
+              src={`${frameLink}?autoplay=1`}
+              type="application/x-shockwave-flash"
+            ></embed>
+          </YTVideo>
         ) : null}
         <VideoPlayer
           className="video"
@@ -271,7 +275,7 @@ const SprayEffect = Styled.img`
   z-index: 9999999999;
 `;
 
-const YTVideo = Styled.iframe`
+const YTVideo = Styled.object`
   box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
   width: 100% !important;
   height: 100% !important;
@@ -281,7 +285,7 @@ const YTVideo = Styled.iframe`
   video {
     object-fit: cover;
     height: 100%;
-    
+
   }
 `;
 

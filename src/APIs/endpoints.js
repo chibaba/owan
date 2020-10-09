@@ -47,7 +47,7 @@ const api = {
 
   //Transactions
   instantCharge: `${APP_URI}/billings/charge`,
-  sprayLogs: `${EVENT_URI}/api/v1/event/spray-logs`,
+  sprayLogs: `${EVENT_URI}/api/v1/spray-logs`,
   getUserTransactionLogs: ``,
 };
 
