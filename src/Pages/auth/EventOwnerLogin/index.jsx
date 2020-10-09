@@ -45,7 +45,7 @@ const EventOwnerLogin = () => {
   function submitFormHandler(e) {
     e.preventDefault();
     const { email, password } = formValues;
-
+    const returnPage = window.localStorage.getItem('returnTo');
     validateInput({ email, password });
 
     setLoading(true);
@@ -73,7 +73,7 @@ const EventOwnerLogin = () => {
           setLoading(false);
           setTimeout(function () {
             history.push({
-              pathname: state?.returnTo ? state?.returnTo : '/dashboard',
+              pathname: state?.returnTo || returnPage || '/dashboard',
               state: { user },
             });
           }, 5000);

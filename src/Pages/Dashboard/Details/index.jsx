@@ -71,12 +71,13 @@ const DashboardDetail = () => {
         ) : (
           <Button
             text="Login To Join Event"
-            onClick={() =>
+            onClick={() => {
+              window.localStorage.setItem('returnTo', pathname);
               history.push({
                 pathname: '/login',
                 state: { returnTo: pathname },
-              })
-            }
+              });
+            }}
           />
         )}
       </ContentWrapper>

@@ -8,6 +8,7 @@ import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 import toast from 'toasted-notes';
 import axios from 'axios';
+import cookie from 'js-cookie';
 
 //Request call should be refactored later
 
@@ -43,6 +44,7 @@ const EventOwnerRegister = () => {
   function submitFormHandler(e) {
     e.preventDefault();
     const { email, fullName, password, phoneNumber } = formValues;
+    const returnPage = window.localStorage.getItem('returnTo');
 
     validateInput({ email, fullName, password, phoneNumber });
 
@@ -68,13 +70,23 @@ const EventOwnerRegister = () => {
     })
       .then((response) => {
         if (response.status === 201) {
+          const user = response.data.data.user;
+          const token = response.data.data.token;
+
+          cookie.set('uid', token);
+          cookie.set('auid', user.userId);
+          cookie.set('udt', JSON.stringify(user));
+
           toast.notify('Account created successfully', {
             position: 'top',
             duration: 5000,
             type: 'success',
           });
           setTimeout(() => {
-            history.push('/welcome');
+            history.push({
+              pathname: returnPage || '/dashboard',
+              state: { user },
+            });
           }, 3000);
         }
       })
