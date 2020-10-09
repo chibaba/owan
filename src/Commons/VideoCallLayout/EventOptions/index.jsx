@@ -26,6 +26,7 @@ function EventOptions({ wallet, updateWallet }) {
     showAttendees,
     handleShowAttendees,
     handleShowYoutube,
+    handleSprayEffect,
   } = useVideoCallContext();
 
   useEffect(() => {
@@ -53,6 +54,7 @@ function EventOptions({ wallet, updateWallet }) {
   }, []);
 
   const charge = useCallback(() => {
+    handleSprayEffect(false);
     if (wallet < +denom) {
       return;
     }
@@ -87,7 +89,7 @@ function EventOptions({ wallet, updateWallet }) {
       .catch((error) => {
         toast.notify(error.message, { position: 'top', duration: 5000 });
       });
-  }, [denom, tapCount, wallet]);
+  }, [denom, tapCount, wallet, handleSprayEffect]);
 
   useEffect(() => {
     const debounceReq = setTimeout(() => {
@@ -125,6 +127,7 @@ function EventOptions({ wallet, updateWallet }) {
   }
 
   function sprayCash() {
+    handleSprayEffect(true);
     if (wallet < +denom) {
       return;
     }
