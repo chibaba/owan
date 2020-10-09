@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import Styled from 'styled-components';
 import Button from '../../Commons/Button';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import cookie from 'js-cookie';
 
 function Home() {
+  const history = useHistory();
   useEffect(() => {
     const token = cookie.get('uid');
     if(token) {
