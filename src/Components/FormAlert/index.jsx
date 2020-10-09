@@ -121,16 +121,13 @@ const AlertLink = Styled.p`
   background: ${Colors.alertSuccessDarkGreen};
   border-radius: 5px;
   text-align: center;
-  padding: 15px 0;
+  padding: 15px 7px;
   color: ${Colors.white};
   font-weight: bold;
   font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  overflow-x: scroll;
-  white-space: nowrap;
+  white-space: pre-wrap;
+  text-align: left;
+  word-wrap: break-word;
 `;
 
 const AlertButtonArea = Styled.div`
