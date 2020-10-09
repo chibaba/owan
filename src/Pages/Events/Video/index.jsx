@@ -105,7 +105,7 @@ function Video() {
               }}
             >
               <span>{window.localStorage.getItem('denom') || 200}</span>
-              Dinomination
+              Denomination
             </DrawerItem>
             <LeaveEvent
               onClick={() => {

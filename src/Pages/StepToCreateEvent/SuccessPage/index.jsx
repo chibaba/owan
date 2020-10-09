@@ -1,33 +1,25 @@
-import React from "react";
-import BackDrop from "../../../Components/BackDrop";
-import styled from "styled-components";
-import Colors from "../../../Commons/Colors";
+import React from 'react';
+import BackDrop from '../../../Components/BackDrop';
+import styled from 'styled-components';
+import Colors from '../../../Commons/Colors';
 
-
-
-
-
-
-const SuccessPage = ({copy}) => {
+const SuccessPage = ({ copy }) => {
   return (
     <BackDrop>
       <ResponseCard>
         <ResponseContent>
-            <div>
-
-          <img src="/assets/images/icons/right.svg" alt="done" />
+          <div>
+            <img src="/assets/images/icons/right.svg" alt="done" />
           </div>
-          <span className="done">Sucessfully <br/> create event</span>
-          
+          <span className="done">
+            Sucessfully <br /> create event
+          </span>
 
-         <ButtonLnk>linkup.com/wqiwuf26356</ButtonLnk>
-         <SmallBtnDiv>
-             <SmallButton copy={true}>Copy</SmallButton>
-             <SmallButton>Share</SmallButton>
-
-         </SmallBtnDiv>
-         
-
+          <ButtonLnk>linkup.com/wqiwuf26356</ButtonLnk>
+          <SmallBtnDiv>
+            <SmallButton copy={true}>Copy</SmallButton>
+            <SmallButton>Share</SmallButton>
+          </SmallBtnDiv>
         </ResponseContent>
       </ResponseCard>
     </BackDrop>
@@ -55,56 +47,46 @@ const ResponseContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align:center;
+  text-align: center;
   margin: auto;
-  
- span.done{
-     font-weight: 600;
-     color:#fff;
-  letter-spacing: 2px;
-  padding-top: 0.7rem;
-  line-height: 1.6;
-  margin-bottom:2rem;
- }
 
-`
-const SmallBtnDiv= styled.div`
-    display:flex;
-    width:100%;
-    margin-top: 2rem;
-    justify-content: space-between;;
-
-`
+  span.done {
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 2px;
+    padding-top: 0.7rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+`;
+const SmallBtnDiv = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 2rem;
+  justify-content: space-between; ;
+`;
 const ButtonLnk = styled.div`
-width: 100%;
- border:none;
- background: #22A900;
- color:  #fff;
- font-size: 14px;
- font-family: 'Sailec', sans-serif;
- font-weight: 900;
- padding: 10px 0;
- border-radius: 5px;
- box-shadow: 0px 20px 45px rgba(0, 0, 0, 0.07);
-
-
-
-
-`
-const SmallButton= styled.button`
- width: 47%;
- border:${({copy})=> copy ? "1px solid #fff" : "none"};
- background: ${({copy})=> copy ? "none" : "#fff"};
- color:  ${({copy})=> copy ? "#fff" : "#28C101"};
- font-size: 14px;
- font-family: 'Sailec', sans-serif;
- font-weight: 900;
- padding: 10px 0;
- border-radius: 5px;
- box-shadow: 0px 20px 45px rgba(0, 0, 0, 0.07);
-
-
-`
-;
-
+  width: 100%;
+  border: none;
+  background: #22a900;
+  color: #fff;
+  font-size: 14px;
+  font-family: 'Sailec', sans-serif;
+  font-weight: 900;
+  padding: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0px 20px 45px rgba(0, 0, 0, 0.07);
+`;
+const SmallButton = styled.button`
+  width: 47%;
+  border: ${({ copy }) => (copy ? '1px solid #fff' : 'none')};
+  background: ${({ copy }) => (copy ? 'none' : '#fff')};
+  color: ${({ copy }) => (copy ? '#fff' : '#28C101')};
+  font-size: 14px;
+  font-family: 'Sailec', sans-serif;
+  font-weight: 900;
+  padding: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0px 20px 45px rgba(0, 0, 0, 0.07);
+`;
 export default SuccessPage;

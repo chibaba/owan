@@ -2,8 +2,8 @@ import React from 'react';
 import Colors from '../../Commons/Colors';
 import styled from 'styled-components';
 
-const UserList = ({ users }) => {
-  const { id, full_name, email, created_at } = users;
+const UserList = ({ users, id }) => {
+  const { full_name, email, created_at } = users;
 
   return (
     <UserListWrapper>
