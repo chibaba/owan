@@ -29,31 +29,31 @@ function Video() {
     showYoutube,
     handleShowYoutube,
     handleShowAttendees,
+    showSprayEffect,
   } = useVideoCallContext();
   const { state } = useLocation();
   const [walletBalance, setWalletBalance] = useState(0);
   const dinominationRef = useRef(null);
   const [denomination, setDenomination] = useState(0);
   const embedRef = useRef(null);
-  const iframeRef = useRef(null);
   const [frameLink, setFrameLink] = useState('');
 
-  // useEffect(() => {
-  //   if (state) {
-  //     window.localStorage.setItem('vak', state.accessKey);
-  //   }
-  //   let accessKey = state?.accessKey || window.localStorage.getItem('vak');
-  //   eyeson.onEvent((event) => {
-  //     if (event.type !== 'accept') {
-  //       return;
-  //     }
-  //     // Note: Some iOS devices might require video to have autoplay attribute set.
-  //     let video = document.querySelector('video');
-  //     video.srcObject = event.remoteStream;
-  //     video.play();
-  //   });
-  //   eyeson.start(accessKey);
-  // }, [state]);
+  useEffect(() => {
+    if (state) {
+      window.localStorage.setItem('vak', state.accessKey);
+    }
+    let accessKey = state?.accessKey || window.localStorage.getItem('vak');
+    eyeson.onEvent((event) => {
+      if (event.type !== 'accept') {
+        return;
+      }
+      // Note: Some iOS devices might require video to have autoplay attribute set.
+      let video = document.querySelector('video');
+      video.srcObject = event.remoteStream;
+      video.play();
+    });
+    eyeson.start(accessKey);
+  }, [state]);
 
   useEffect(() => {
     const frame = window.localStorage.getItem('embed');
@@ -121,9 +121,11 @@ function Video() {
     handleDenom(e.target.innerText);
     window.localStorage.setItem('denom', e.target.innerText);
   }
-
   return (
     <VideoCallLayout>
+      {showSprayEffect ? (
+        <SprayEffect src="/assets/images/raining-money.gif" alt="drop" />
+      ) : null}
       {showDrawer && showSideDrawer ? (
         <Drawer drawerPosition="right">
           <DrawerItemsWrapper>
@@ -262,6 +264,12 @@ function Video() {
     </VideoCallLayout>
   );
 }
+
+const SprayEffect = Styled.img`
+  position: absolute;
+  width: 100%;
+  z-index: 9999999999;
+`;
 
 const YTVideo = Styled.iframe`
     box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
