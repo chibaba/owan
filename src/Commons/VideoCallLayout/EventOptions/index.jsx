@@ -236,6 +236,10 @@ const OptionsWrapper = Styled.nav`
   right: 0;
   width: 70px;
   z-index: 999999;
+  background: rgba(40, 193, 1, 0.5);
+  padding: 5px 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
 `;
 
 const OptionItems = Styled.ul`
