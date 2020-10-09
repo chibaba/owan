@@ -61,7 +61,7 @@ function Video() {
     if (showYoutube) {
       if (frame) {
         // embedRef.current.innerHTML = frame;
-        setFrameLink(frame);
+        setFrameLink(`${frame}?rel=0&autoplay=1`);
 
         handleShowYoutube(true);
         handleShowAttendees(false);
@@ -252,20 +252,22 @@ function Video() {
             {isSafari ? (
               <YTVideo
                 type="application/x-shockwave-flash"
-                data={`${frameLink}?rel=0&autoplay=1`}
+                data={frameLink}
                 width="100%"
                 height="100%"
               >
-                <param name="movie" value={`${frameLink}?rel=0&autoplay=1`} />
+                <param name="movie" value={frameLink} />
                 <param name="quality" value="high" />
                 <param name="allowFullScreen" value="true" />
+                <param name="allow" value="autoplay; fullscreen" />
               </YTVideo>
             ) : (
               <YTVideos
                 ref={embedRef}
-                src={`${frameLink}?rel=0&autoplay=1`}
-                frameborder="0"
-                allowfullscreen
+                src={frameLink}
+                frameBorder="0"
+                allowFullScreen
+                allow="autoplay; fullscreen"
               ></YTVideos>
             )}
           </StreamWrapper>
