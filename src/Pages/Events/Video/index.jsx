@@ -272,12 +272,17 @@ const SprayEffect = Styled.img`
 `;
 
 const YTVideo = Styled.iframe`
-    box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
-    width: 100vw
- height: calc(100vw/1.77);
-    position: absolute;
+  box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  object-fit: cover;
+  overflow: hiddden;
+  video {
     object-fit: cover;
-    overflow: hiddden;
+    height: 100%;
+    
+  }
 `;
 
 const SpendersHeader = Styled.div`
