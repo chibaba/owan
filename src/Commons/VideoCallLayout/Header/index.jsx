@@ -69,6 +69,7 @@ const HeaderWrapper = Styled.header`
   justify-content: center;
   align-items: center;
   z-index: 9999999999;
+  background: rgba(40, 193, 1, 0.5);
 `;
 
 const HeaderNav = Styled.nav`
