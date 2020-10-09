@@ -136,6 +136,7 @@ function EventOptions({ wallet, updateWallet }) {
   function sprayCash() {
     handleSprayEffect(true);
     if (wallet < +denom) {
+      handleSprayEffect(false);
       toaster.notify('Kindly fund your wallet', {
         position: 'bottom',
         duration: 5000,
