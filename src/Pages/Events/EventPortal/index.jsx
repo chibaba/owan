@@ -10,36 +10,44 @@ import AddToCalendar from 'react-add-to-calendar';
 import { postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import toast from 'toasted-notes';
+import OwnerLayout from '../../../Commons/OwnerLayout';
 
 const EventPortal = ({ imageUrl }) => {
   const { state } = useLocation();
   const history = useHistory();
   const [calendarData, setCalendarData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [ev, setEv] = useState(null);
 
   useEffect(() => {
-    const event = state.latestEvent;
-    let date = event.event_date.split('T')[0];
-    window.localStorage.setItem('event', JSON.stringify(state.latestEvent));
+    if (state) {
+      setEv(state.latestEvent);
+      const event =
+        state.latestEvent ||
+        JSON.parse(window.localStorage.getItem('latestEvent'));
+      let date = event.event_date.split('T')[0];
+      window.localStorage.setItem('event', JSON.stringify(state.latestEvent));
 
-    const splitStart = event.event_time.split(':');
+      const splitStart = event.event_time.split(':');
 
-    const startOneHourBehind = parseInt(splitStart[0]) - 2;
-    const mainStart = `${
-      startOneHourBehind > 9 ? startOneHourBehind : `0${startOneHourBehind}`
-    }:${splitStart[1]}`;
+      const startOneHourBehind = parseInt(splitStart[0]) - 2;
+      const mainStart = `${
+        startOneHourBehind > 9 ? startOneHourBehind : `0${startOneHourBehind}`
+      }:${splitStart[1]}`;
 
-    let startTime = `${date}T${mainStart}:00-00:00`;
-    let endTime = `${date}T${mainStart}:00-00:00`;
-    const calendarData = {
-      title: `Link up event reminder for ${event.hashtag}`,
-      description: 'This is a reminder for an event happening on link up',
-      location: `https://linkup-app.netlify.app/event/detail/${event.id}`,
-      startTime,
-      endTime,
-    };
-    setCalendarData(calendarData);
-  }, [state.latestEvent]);
+      let startTime = `${date}T${mainStart}:00-00:00`;
+      let endTime = `${date}T${mainStart}:00-00:00`;
+      const calendarData = {
+        title: `Link up event reminder for ${event.hashtag}`,
+        description: 'This is a reminder for an event happening on link up',
+        location: `https://linkup-app.netlify.app/event/detail/${event.id}`,
+        startTime,
+        endTime,
+      };
+      setCalendarData(calendarData);
+    }
+    setEv(JSON.parse(window.localStorage.getItem('latestEvent')));
+  }, [state]);
 
   const handleStartEvent = (e) => {
     e.preventDefault();
@@ -65,13 +73,13 @@ const EventPortal = ({ imageUrl }) => {
   };
 
   return (
-    <>
+    <OwnerLayout nav={true}>
       <EventPortalHeader>
         <EventDetails>
           <NavEvent>
             Your Next/ Last Event
             <CurrentEvent>
-              #{state.latestEvent.hashtag || 'Pride at the Disco!'}
+              #{state?.latestEvent.hashtag || `${ev?.hashtag}`}
             </CurrentEvent>
           </NavEvent>
           <ProfileImage>
@@ -82,10 +90,11 @@ const EventPortal = ({ imageUrl }) => {
           <img src="/assets/calender.svg" alt="celender" />
           <div style={{ marginLeft: '0.8rem' }}>
             <span className="date">
-              {new Date(state.latestEvent.event_date).toDateString()}
+              {new Date(state?.latestEvent.event_date).toDateString() ||
+                new Date(ev?.event_date).toDateString()}
             </span>
             <span className="time">
-              {state.latestEvent.event_time || '5:00PM-8:00 GMT-1'}
+              {state?.latestEvent.event_time || ev?.event_time}
             </span>
             <AddToCalendarButton style={{ marginLeft: 0, marginTop: '5px' }}>
               <AddToCalendar event={calendarData} displayItemIcons={true} />
@@ -113,7 +122,7 @@ const EventPortal = ({ imageUrl }) => {
               onClick={() =>
                 history.push({
                   pathname: '/owner/event/details',
-                  state: { event: state.latestEvent },
+                  state: { event: state?.latestEvent || ev },
                 })
               }
             />
@@ -130,7 +139,7 @@ const EventPortal = ({ imageUrl }) => {
           </Card>
         </DashBoardCardLayout>
       </EventPortalHeader>
-    </>
+    </OwnerLayout>
   );
 };
 
