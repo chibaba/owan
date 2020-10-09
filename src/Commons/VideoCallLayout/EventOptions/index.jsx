@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
 import { mdiCardsHeart, mdiMessageReply, mdiAccountGroup } from '@mdi/js';
@@ -16,15 +16,11 @@ import toast from 'toasted-notes';
 
 function EventOptions({ wallet, updateWallet }) {
   const { handleSprayState, denom } = useAppContext();
-  // const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
   const [attendee, setAttendees] = useState(0);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
-  const [tapCount, setTapCount] = useState(1);
-  const [reqSent, setReqSent] = useState(false);
+  const [tapCount, setTapCount] = useState(0);
   const [showLikeBubbles, setShowLikeBubbles] = useState(false);
-  let typingTimer;
-  let doneTypingInterval = 5000;
 
   useEffect(() => {
     getCall(api.getEventLikeCount(cookie.get('eid')), {})
@@ -50,30 +46,73 @@ function EventOptions({ wallet, updateWallet }) {
     }, 30000);
   }, []);
 
-  function handleLikeEvent(e) {
-    setLiked((prevState) => !prevState);
-    setShowLikeBubbles(false);
-    setShowLikeBubbles(true);
-    let time = 4000;
-
-    if (showLikeBubbles) {
-      setTimeout(() => {
-        setShowLikeBubbles(false);
-      }, time);
+  const charge = useCallback(() => {
+    if (wallet < +denom) {
+      return;
     }
 
-    clearTimeout(time);
+    const event = JSON.parse(window.localStorage.getItem('event'));
+    postCallTransactions(
+      api.instantCharge,
+      {
+        amount: tapCount * denom * 100,
+        clientId: process.env.REACT_APP_PAYMENT_CLIENT_ID,
+        productId: event.product_id,
+        userId: cookie.get('auid'),
+      },
+      {},
+    )
+      .then((response) => {
+        if (response.status) {
+          postCallTransactions(
+            api.sprayLogs,
+            {
+              transaction_ref: response.reference,
+              amount: tapCount * denom,
+            },
+            { user_id: cookie.get('auid'), event_id: event.id },
+          )
+            .then((response) => {})
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      })
+      .catch((error) => {
+        toast.notify(error.message, { position: 'bottom', duration: 5000 });
+      });
+  }, [denom, tapCount, wallet]);
+
+  useEffect(() => {
+    const debounceReq = setTimeout(() => {
+      if (tapCount > 0) {
+        charge();
+      }
+    }, 3000);
+
+    return () => clearTimeout(debounceReq);
+  }, [tapCount]);
+
+  function handleLikeEvent(e) {
+    setLiked(true);
+    setShowLikeBubbles(true);
+
+    setTimeout(() => {
+      setShowLikeBubbles(false);
+    }, 4000);
 
     const target = e.target;
 
     target.classList.add('heartbeat');
 
-    setTimeout(() => {
-      target.classList.remove('heartbeat');
-    }, 1000);
-
     postCall(api.postEventLike, {}, { event_id: cookie.get('eid') })
-      .then((response) => {})
+      .then((response) => {
+        if (response.status === 200) {
+          setTimeout(() => {
+            setShowLikeBubbles(false);
+          }, 5000);
+        }
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -81,56 +120,8 @@ function EventOptions({ wallet, updateWallet }) {
 
   function sprayCash() {
     setTapCount((prev) => prev + 1);
-
-    const amount = wallet - tapCount * +denom;
+    const amount = wallet - +denom;
     updateWallet(amount);
-    clearTimeout(typingTimer);
-    if (tapCount) {
-      typingTimer = setTimeout(charge, doneTypingInterval);
-    }
-  }
-
-  function charge() {
-    setReqSent((prev) => !prev);
-    const amount = wallet - tapCount * denom;
-    updateWallet(amount);
-
-    if (!reqSent) {
-      setReqSent(true);
-      const event = JSON.parse(window.localStorage.getItem('event'));
-      postCallTransactions(
-        api.instantCharge,
-        {
-          amount: tapCount * denom * 100,
-          clientId: process.env.REACT_APP_PAYMENT_CLIENT_ID,
-          productId: event.product_id,
-          userId: cookie.get('auid'),
-        },
-        {},
-      )
-        .then((response) => {
-          if (response.status) {
-            setReqSent(false);
-            postCallTransactions(
-              api.sprayLogs,
-              {
-                transaction_ref: response.reference,
-                amount: tapCount * denom,
-              },
-              { user_id: cookie.get('auid'), event_id: event.id },
-            )
-              .then((response) => {})
-              .catch((error) => {
-                console.log(error);
-              });
-          }
-        })
-        .catch((error) => {
-          toast.notify(error.message, { position: 'bottom', duration: 5000 });
-        });
-    } else {
-      return;
-    }
   }
 
   return (
@@ -212,6 +203,7 @@ const SingleOption = Styled.li`
   flex-direction: column;
   margin-top: 20px;
   position: relative;
+  cursor: pointer;
   img, svg {
     align-self: center;
     margin-bottom: 7px;

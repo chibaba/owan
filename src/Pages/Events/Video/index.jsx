@@ -62,41 +62,6 @@ function Video() {
     }
   }
 
-  // function spray(e) {
-  //   e.preventDefault();
-  //   const event = JSON.parse(window.localStorage.getItem('event'));
-  //   postCallTransactions(
-  //     api.instantCharge,
-  //     {
-  //       amount: sprayAmount * 100,
-  //       clientId: process.env.REACT_APP_PAYMENT_CLIENT_ID,
-  //       productId: event.product_id,
-  //       userId: cookie.get('auid'),
-  //     },
-  //     {},
-  //   )
-  //     .then((response) => {
-  //       if (response.status) {
-  //         handleSprayState();
-  //         postCallTransactions(
-  //           api.sprayLogs,
-  //           {
-  //             transaction_ref: response.reference,
-  //             amount: sprayAmount,
-  //           },
-  //           { user_id: cookie.get('auid'), event_id: event.id },
-  //         )
-  //           .then((response) => {})
-  //           .catch((error) => {
-  //             console.log(error);
-  //           });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       toast.notify(error.message, { position: 'bottom', duration: 5000 });
-  //     });
-  // }
-
   function handleDenominationClick(e) {
     const denomination = dinominationRef.current.querySelectorAll(
       '.single-domination',
