@@ -46,7 +46,7 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
       {showDrawer ? (
         <Drawer drawerPosition="left">
           <DrawerItemWrapper>
-            <DrawerLogo>LinkUp</DrawerLogo>
+            <DrawerLogo>Owambe.ng</DrawerLogo>
             <DrawerAvatar></DrawerAvatar>
             <DrawerItem>
               <DrawerHead
