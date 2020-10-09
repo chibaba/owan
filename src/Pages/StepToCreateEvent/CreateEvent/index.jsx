@@ -16,6 +16,7 @@ import FormAlert from '../../../Components/FormAlert';
 import { postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import toaster from 'toasted-notes';
+import { useHistory } from 'react-router';
 
 const CreateEvent = () => {
   const initialState = {
@@ -33,6 +34,7 @@ const CreateEvent = () => {
   const [data, setData] = useState(initialState);
   const [eventURL, setEventURL] = useState(null);
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const [modalState, setModalState] = useState({
     show: false,
@@ -137,6 +139,7 @@ const CreateEvent = () => {
 
   const handleCloseModal = () => {
     setModalState({ type: null, show: false, message: null });
+    history.push('/owner/events');
   };
 
   const handleRadioSelect = (e) => {
@@ -148,6 +151,14 @@ const CreateEvent = () => {
 
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
+
+    if (e.target.files[0].size > 500000) {
+      toaster.notify('Image size must not be above 500kb', {
+        duration: 5000,
+        position: 'top',
+      });
+      return;
+    }
 
     reader.onloadend = () => {
       setImageData((prevState) => ({
@@ -250,7 +261,7 @@ const CreateEvent = () => {
               />
             </div>
           </div>
-          <h4 className="title">Add Images (max of 20mb for each)</h4>
+          <h4 className="title">Add Images (max of 500kb for each)</h4>
           <ImageButtonsArea>
             <ImageUploadButton
               id="image1"
