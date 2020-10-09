@@ -66,7 +66,7 @@ const EventOwnerLogin = () => {
           cookie.set('udt', JSON.stringify(user));
           handleUserState(user);
           toaster.notify('Login Successful. Redirecting...', {
-            position: 'bottom',
+            position: 'top',
             duration: 5000,
             type: 'success',
           });
@@ -81,7 +81,7 @@ const EventOwnerLogin = () => {
       })
       .catch((error) => {
         toaster.notify(error.message, {
-          position: 'bottom',
+          position: 'top',
           duration: 5000,
         });
         setLoading(false);

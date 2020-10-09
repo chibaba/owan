@@ -26,7 +26,7 @@ const Report = ({ data }) => {
         })
         .catch((error) => {
           toast.notify('Oops!. Something went wrong. Try again later', {
-            position: 'bottom',
+            position: 'top',
             duration: 5000,
           });
         });
@@ -40,7 +40,7 @@ const Report = ({ data }) => {
         })
         .catch((error) => {
           toast.notify('Oops!. Something went wrong. Try again later', {
-            position: 'bottom',
+            position: 'top',
             duration: 5000,
           });
         });
@@ -55,7 +55,7 @@ const Report = ({ data }) => {
         })
         .catch((error) => {
           toast.notify('Oops!. Something went wrong. Try again later', {
-            position: 'bottom',
+            position: 'top',
             duration: 5000,
           });
         });

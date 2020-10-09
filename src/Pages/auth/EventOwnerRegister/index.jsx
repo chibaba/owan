@@ -69,7 +69,7 @@ const EventOwnerRegister = () => {
       .then((response) => {
         if (response.status === 201) {
           toast.notify('Account created successfully', {
-            position: 'bottom',
+            position: 'top',
             duration: 5000,
             type: 'success',
           });
@@ -80,7 +80,7 @@ const EventOwnerRegister = () => {
       })
       .catch((error) => {
         toast.notify(error.response.data.error, {
-          position: 'bottom',
+          position: 'top',
           duration: 5000,
         });
       });

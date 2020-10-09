@@ -60,7 +60,7 @@ const EventPortal = ({ imageUrl }) => {
       .catch((error) => {
         setLoading(false);
         console.log(error.message);
-        toast.notify(error.message, { position: 'bottom', duration: 5000 });
+        toast.notify(error.message, { position: 'top', duration: 5000 });
       });
   };
 

@@ -27,14 +27,14 @@ const DashboardDetail = () => {
           setEvent(response.data);
         } else {
           toast.notify('This event was not found or has been deleted', {
-            position: 'bottom',
+            position: 'top',
             duration: 5000,
           });
         }
       })
       .catch((error) => {
         toast.notify(error.message, {
-          position: 'bottom',
+          position: 'top',
           duration: 5000,
         });
       });
