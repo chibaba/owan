@@ -37,6 +37,7 @@ function Video() {
   const [denomination, setDenomination] = useState(0);
   const embedRef = useRef(null);
   const [frameLink, setFrameLink] = useState('');
+  const isSafari = window.safari !== undefined;
 
   useEffect(() => {
     if (state) {
@@ -118,6 +119,7 @@ function Video() {
     handleDenom(e.target.innerText);
     window.localStorage.setItem('denom', e.target.innerText);
   }
+
   return (
     <VideoCallLayout>
       {showSprayEffect ? (
@@ -246,19 +248,27 @@ function Video() {
       ) : null}
       <VideoLayer>
         {showYoutube ? (
-          // <YTVideo
-          //   ref={embedRef}
-          //   src={`${frameLink}?autoplay=1`}
-          //   frameborder="0"
-          //   allowfullscreen
-          // ></YTVideo>
-          <YTVideo ref={embedRef}>
-            <param name="movie" value={`${frameLink}?autoplay=1`}></param>
-            <embed
-              src={`${frameLink}?autoplay=1`}
-              type="application/x-shockwave-flash"
-            ></embed>
-          </YTVideo>
+          <StreamWrapper>
+            {isSafari ? (
+              <YTVideo
+                type="application/x-shockwave-flash"
+                data={`${frameLink}?autoplay=1`}
+                width="100%"
+                height="100%"
+              >
+                <param name="movie" value={`${frameLink}?autoplay=1`} />
+                <param name="quality" value="high" />
+                <param name="allowFullScreen" value="true" />
+              </YTVideo>
+            ) : (
+              <YTVideos
+                ref={embedRef}
+                src={`${frameLink}?autoplay=1`}
+                frameborder="0"
+                allowfullscreen
+              ></YTVideos>
+            )}
+          </StreamWrapper>
         ) : null}
         <VideoPlayer
           className="video"
@@ -275,6 +285,13 @@ const SprayEffect = Styled.img`
   z-index: 9999999999;
 `;
 
+const StreamWrapper = Styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
 const YTVideo = Styled.object`
   box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
   width: 100% !important;
@@ -282,9 +299,27 @@ const YTVideo = Styled.object`
   position: absolute;
   object-fit: cover;
   overflow: hiddden;
-  video {
+  display: flex;
+  align-items: center;
+  iframe {
     object-fit: cover;
-    height: 100%;
+    height: 100% !important;
+
+  }
+`;
+
+const YTVideos = Styled.iframe`
+  box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  object-fit: cover;
+  overflow: hiddden;
+  display: flex;
+  align-items: center;
+  iframe {
+    object-fit: cover;
+    height: 100% !important;
 
   }
 `;

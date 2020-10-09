@@ -14,6 +14,7 @@ import api from '../../../APIs/endpoints';
 import cookie from 'js-cookie';
 import toast from 'toasted-notes';
 import { useVideoCallContext } from '../../../Context/VideoCallContext';
+import toaster from 'toasted-notes';
 
 function EventOptions({ wallet, updateWallet }) {
   const { denom } = useAppContext();
@@ -129,6 +130,10 @@ function EventOptions({ wallet, updateWallet }) {
   function sprayCash() {
     handleSprayEffect(true);
     if (wallet < +denom) {
+      toaster.notify('Kindly fund your wallet', {
+        position: 'bottom',
+        duration: 5000,
+      });
       return;
     }
     setTapCount((prev) => prev + 1);
