@@ -174,11 +174,10 @@ const DrawerLogo = Styled.h2`
 `;
 
 const DrawerAvatar = Styled.div`
-  width: 100px;
-  height: 100px;
+  width: 40px;
+  height: 40px;
   background: #fff;
   margin: 40px 0;
-  box-shadow: 0 0 5px #f1f1f1;
   border-radius: 50%;
   border: 1px solid rgba(0, 0, 0, 0.1);
 `;
