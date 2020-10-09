@@ -26,11 +26,15 @@ function Video() {
     showTables,
     showSideDrawer,
     handleTablesState,
+    showYoutube,
+    handleShowYoutube,
+    handleShowAttendees,
   } = useVideoCallContext();
   const { state } = useLocation();
   const [walletBalance, setWalletBalance] = useState(0);
   const dinominationRef = useRef(null);
   const [denomination, setDenomination] = useState(0);
+  const embedRef = useRef(null);
 
   useEffect(() => {
     if (state) {
@@ -50,6 +54,20 @@ function Video() {
   }, [state]);
 
   useEffect(() => {
+    const frame = window.localStorage.getItem('embed');
+    if (showYoutube) {
+      if (frame) {
+        embedRef.current.innerHTML = frame;
+        handleShowYoutube(true);
+        handleShowAttendees(false);
+      } else {
+        handleShowAttendees(true);
+        handleShowYoutube(false);
+      }
+    }
+  }, [showYoutube, handleShowAttendees, handleShowYoutube]);
+
+  useEffect(() => {
     handleDenom(window.localStorage.getItem('denom') || 200);
   }, [handleDenom]);
 
@@ -62,6 +80,19 @@ function Video() {
       },
     );
   }, [showSpray]);
+
+  // useEffect(() => {
+  //   const event = JSON.parse(window.localStorage.getItem('event'));
+  //   if (showTables) {
+  //     getCallTransactions(api.getSpendersClub(event.id))
+  //       .then((response) => {
+  //         console.log(response);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [showTables]);
 
   function closeModal(e) {
     if (e.target.id === 'modalss') {
@@ -208,11 +239,30 @@ function Video() {
         </CashModal>
       ) : null}
       <VideoLayer>
-        <VideoPlayer className="video"></VideoPlayer>
+        {showYoutube ? <YTVideo ref={embedRef}></YTVideo> : null}
+        <VideoPlayer
+          className="video"
+          style={!showYoutube ? { display: 'block' } : { display: 'none' }}
+        ></VideoPlayer>
       </VideoLayer>
     </VideoCallLayout>
   );
 }
+
+const YTVideo = Styled.div`
+    background: url(/assets/images/wedding-demo.jpg) no-repeat;
+    box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    object-fit: cover;
+    overflow: hiddden;
+    iframe {
+      width: 100% !important;
+      height: 100vh !important;
+    }
+`;
 
 const SpendersHeader = Styled.div`
   width: 100%;

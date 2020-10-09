@@ -17,6 +17,7 @@ import { getCall, postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import toast from 'toasted-notes';
 import Axios from 'axios';
+import CheckBox from '../../../Components/CheckBox';
 
 function EventsListing() {
   const { showDrawer } = useAppContext();
@@ -24,8 +25,11 @@ function EventsListing() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const location = useLocation();
+  const [hasYoutube, setHasYoututbe] = useState(false);
+  const [embedCode, setEmbedCode] = useState('');
 
-  let event = location.state.event;
+  let event =
+    location.state?.event || JSON.parse(window.localStorage.getItem('event'));
   let auid = cookie.get('auid');
   let userData = JSON.parse(cookie.get('udt'));
 
@@ -41,15 +45,18 @@ function EventsListing() {
     e.preventDefault();
     setLoading(true);
     cookie.set('eid', event.id);
-    postCall(api.startVideo, {}, { event_id: event.id })
+    window.localStorage.setItem('embed', embedCode);
+    window.localStorage.setItem('event', JSON.stringify(event));
+    postCall(api.startVideo, { iframe: embedCode }, { event_id: event.id })
       .then((response) => {
+        console.log(response);
         if (response.status === 200) {
           setLoading(false);
           history.push({
             pathname: '/event/video',
             state: {
-              roomID: response.vidlink.room_id,
-              accessKey: response.vidlink.Access_key,
+              roomID: response.vidlink[0].room_id,
+              accessKey: response.vidlink[0].Access_key,
             },
           });
         }
@@ -113,7 +120,6 @@ function EventsListing() {
         }
       })
       .catch((error) => {
-        console.log(error.message);
         getCall(api.getEvent(event.id))
           .then((response) => {
             setLoading(false);
@@ -174,6 +180,14 @@ function EventsListing() {
       });
   };
 
+  const handleYoutube = (e) => {
+    setHasYoututbe(e.target.checked);
+  };
+
+  const handleChange = (e) => {
+    setEmbedCode(e.target.value);
+  };
+
   return (
     <>
       {showDrawer ? <Drawer drawerPosition="right"></Drawer> : null}
@@ -200,11 +214,27 @@ function EventsListing() {
             <h4>#{event.hashtag}</h4>
             <p>{event.description}</p>
             {event?.user_id === auid ? (
-              <Button
-                text="Start Event"
-                onClick={handleStartEvent}
-                loading={loading}
-              />
+              <>
+                <YoutubeEmbed>
+                  <CheckBox name="embed" onChange={handleYoutube} />
+                  <p style={{ marginLeft: '30px' }}>
+                    Do you have a youtube embed code.
+                  </p>
+                </YoutubeEmbed>
+                {hasYoutube ? (
+                  <FormInput
+                    name="embedlink"
+                    placeholder="Paste youtube embed code"
+                    value={embedCode}
+                    onChange={handleChange}
+                  />
+                ) : null}
+                <Button
+                  text="Start Event"
+                  onClick={handleStartEvent}
+                  loading={loading}
+                />
+              </>
             ) : (
               <Link to="/event/video">
                 <Button
@@ -220,6 +250,12 @@ function EventsListing() {
     </>
   );
 }
+
+export const YoutubeEmbed = Styled.div`
+  position: relative;
+  display: block;
+  margin-bottom: 30px;
+`;
 
 const EventDescriptionWrapper = Styled.section`
   width: 100%;

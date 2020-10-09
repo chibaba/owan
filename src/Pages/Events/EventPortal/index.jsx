@@ -7,9 +7,6 @@ import DashBoardCardLayout from '../../../Components/DashBoardHomeCard/DashBoard
 import { Card } from '../../welcomepage';
 import { AddToCalendarButton } from '../../../Commons/EventDate';
 import AddToCalendar from 'react-add-to-calendar';
-import { postCall } from '../../../APIs/requests';
-import api from '../../../APIs/endpoints';
-import toast from 'toasted-notes';
 import OwnerLayout from '../../../Commons/OwnerLayout';
 
 const EventPortal = ({ imageUrl }) => {
@@ -52,24 +49,25 @@ const EventPortal = ({ imageUrl }) => {
   const handleStartEvent = (e) => {
     e.preventDefault();
     setLoading(true);
-    postCall(api.startVideo, {}, { event_id: state.latestEvent.id })
-      .then((response) => {
-        if (response.status === 200) {
-          setLoading(false);
-          history.push({
-            pathname: '/event/video',
-            state: {
-              roomID: response.vidlink.room_id,
-              accessKey: response.vidlink.Access_key,
-            },
-          });
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error.message);
-        toast.notify(error.message, { position: 'top', duration: 5000 });
-      });
+    // postCall(api.startVideo, {}, { event_id: state.latestEvent.id })
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       setLoading(false);
+    //       history.push({
+    //         pathname: '/event/video',
+    //         state: {
+    //           roomID: response.vidlink.room_id,
+    //           accessKey: response.vidlink.Access_key,
+    //         },
+    //       });
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     setLoading(false);
+    //     console.log(error.message);
+    //     toast.notify(error.message, { position: 'top', duration: 5000 });
+    //   });
+    history.push({ pathname: '/event', state: { event: state.latestEvent } });
   };
 
   return (

@@ -17,6 +17,7 @@ const api = {
   getTotalAmountSprayedAtEvent: (eventId) =>
     `${EVENT_URI}/api/v1/all-total?eventId=${eventId}`,
   getUpcomingEvents: (userId) => `${EVENT_URI}/api/v1/attendee/event/${userId}`,
+  getSpendersClub: (eventId) => `${EVENT_URI}/api/v1/spender/${eventId}`,
 
   //Wallet APIs
   addToWallet: `${APP_URI}/billings/wallet/fund`,

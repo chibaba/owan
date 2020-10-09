@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 // import Colors from '../../Colors';
 import Icon from '@mdi/react';
@@ -6,9 +6,15 @@ import { mdiDotsVertical } from '@mdi/js';
 import { useAppContext } from '../../../Context/AppContext';
 import { useVideoCallContext } from '../../../Context/VideoCallContext';
 
-function Header() {
+function Header({ wallet }) {
   const { handleDrawerState } = useAppContext();
   const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
+  const [walBal, setWalBal] = useState(0);
+
+  useEffect(() => {
+    setWalBal(wallet);
+  }, [wallet]);
+
   function sideNavHandler() {
     handleDrawerState();
     handleTablesState(false);
@@ -25,6 +31,7 @@ function Header() {
             <img src="/assets/images/icons/users.png" alt="users" />
             <span>496</span>
           </VideoAttendees>
+          <Wallet>&#8358;{walBal}</Wallet>
         </VideoStats>
         <EventTitle>
           #{JSON.parse(window.localStorage.getItem('event'))?.hashtag}
@@ -36,6 +43,25 @@ function Header() {
     </HeaderWrapper>
   );
 }
+
+const Wallet = Styled.div`
+  width: max-content;
+  text-align: right;
+  color: #fff;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 4px;
+  flex-direction: column;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.3);
+  padding-top: 3px;
+  span {
+    font-size: 10px;
+    font-weight: bold;
+  }
+`;
 
 const HeaderWrapper = Styled.header`
   width: 100%;
