@@ -11,6 +11,8 @@ import Colors from '../../../Commons/Colors';
 import cookie from 'js-cookie';
 import { getCallTransactions } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
+import Icon from '@mdi/react';
+import { mdiCash100 } from '@mdi/js';
 
 function Video() {
   const {
@@ -18,8 +20,13 @@ function Video() {
     showSpray,
     handleSprayState,
     handleDenom,
+    handleDrawerState,
   } = useAppContext();
-  const { showTables, showSideDrawer } = useVideoCallContext();
+  const {
+    showTables,
+    showSideDrawer,
+    handleTablesState,
+  } = useVideoCallContext();
   const { state } = useLocation();
   const [walletBalance, setWalletBalance] = useState(0);
   const dinominationRef = useRef(null);
@@ -80,10 +87,84 @@ function Video() {
   return (
     <VideoCallLayout>
       {showDrawer && showSideDrawer ? (
-        <Drawer drawerPosition="right"></Drawer>
+        <Drawer drawerPosition="right">
+          <DrawerItemsWrapper>
+            <Logo>Owambe.ng</Logo>
+            <DrawerItem
+              onClick={() => {
+                handleTablesState(true);
+              }}
+            >
+              <Icon path={mdiCash100} size={1} />
+              Spenders Club
+            </DrawerItem>
+            <DrawerItem
+              onClick={() => {
+                handleSprayState();
+                handleDrawerState();
+              }}
+            >
+              <span>{window.localStorage.getItem('denom') || 200}</span>
+              Dinomination
+            </DrawerItem>
+            <LeaveEvent
+              onClick={() => {
+                window.location.href = '/dashboard';
+              }}
+            >
+              Leave Event
+            </LeaveEvent>
+          </DrawerItemsWrapper>
+        </Drawer>
       ) : null}
       {showDrawer && showTables ? (
-        <Drawer drawerPosition="bottom"></Drawer>
+        <Drawer drawerPosition="bottom">
+          <SpendersHeader>
+            <SpenderContentWrapper>
+              <h2>Spenders Club</h2>
+            </SpenderContentWrapper>
+          </SpendersHeader>
+          <MainName>
+            <span>01</span>
+            <div></div>
+            <span className="name">Ayodele Adeleke</span>
+          </MainName>
+          <BorderB>
+            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
+              <span>02</span>
+              <div></div>
+              <span className="name">Ayodele Adeleke</span>
+            </MainName>
+          </BorderB>
+          <BorderB>
+            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
+              <span>03</span>
+              <div></div>
+              <span className="name">Ayodele Adeleke</span>
+            </MainName>
+          </BorderB>
+          <BorderB>
+            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
+              <span>04</span>
+              <div></div>
+              <span className="name">Ayodele Adeleke</span>
+            </MainName>
+          </BorderB>
+          <BorderB>
+            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
+              <span>05</span>
+              <div></div>
+              <span className="name">Ayodele Adeleke</span>
+            </MainName>
+          </BorderB>
+          <BorderB>
+            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
+              <span>06</span>
+              <div></div>
+              <span className="name">Ayodele Adeleke</span>
+            </MainName>
+          </BorderB>
+        </Drawer>
       ) : null}
       {showSpray ? (
         <CashModal onClick={closeModal} id="modalss">
@@ -132,6 +213,83 @@ function Video() {
     </VideoCallLayout>
   );
 }
+
+const SpendersHeader = Styled.div`
+  width: 100%;
+  background: ${Colors.defaultGreen};
+  height: 200px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  h2 {
+    color: #fff;
+  }
+`;
+
+const BorderB = Styled.div`
+  border-bottom: 0.5px solid #c4c4c4;
+`;
+
+const SpenderContentWrapper = Styled.div`
+  width: 80%;
+  margin: auto;
+`;
+
+const MainName = Styled.div`
+  width: 80%;
+  height: 60px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin: -10px auto 10px auto;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  span {
+    color: #999999;
+    font-weight: 700;
+  }
+  div {
+    width: 30px;
+    height: 30px;
+    border: 4px solid ${Colors.defaultGreen};
+    border-radius: 50%;
+    margin: 0 30px;
+  }
+`;
+
+const Logo = Styled.h2`
+  margin-bottom: 70px;
+`;
+
+const LeaveEvent = Styled.button`
+  background: ${Colors.red};
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  margin-top: 20px;
+`;
+
+const DrawerItem = Styled.div`
+  display: flex;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  align-items: flex-end;
+  span, svg {
+    color: rgba(0,0,0,0.4);
+    margin-right: 10px;
+    font-weight: bold;
+  }
+`;
+
+const DrawerItemsWrapper = Styled.div`
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+`;
 
 const VideoLayer = Styled.div`
   height: 100vh;
