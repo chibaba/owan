@@ -76,6 +76,7 @@ const EventOwnerLogin = () => {
               pathname: state?.returnTo || returnPage || '/dashboard',
               state: { user },
             });
+            window.location.href = state?.returnTo || returnPage || '/dashboard';
           }, 5000);
         }
       })
