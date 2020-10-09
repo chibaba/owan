@@ -3,8 +3,13 @@ import Styled from 'styled-components';
 import Colors from '../../Colors';
 import CommentInput from '../../../Components/CommentInput';
 import SingleComment from '../../../Components/SingleComment';
+import { useVideoCallContext } from '../../../Context/VideoCallContext';
+import { useAppContext } from '../../../Context/AppContext';
 
 function EventComments() {
+  const { handleTablesState } = useVideoCallContext();
+  const { handleDrawerState } = useAppContext();
+
   return (
     <CommentWrapper>
       <CommentsArea>
@@ -24,7 +29,12 @@ function EventComments() {
           </CommentList>
           <CommentInput height="38px" />
         </UserComment>
-        <Denomination>
+        <Denomination
+          onClick={() => {
+            handleTablesState(true);
+            handleDrawerState();
+          }}
+        >
           <img src="/assets/images/denomination.png" alt="D" />
         </Denomination>
       </CommentsArea>
