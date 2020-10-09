@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
-import { mdiCardsHeart, mdiMessageReply, mdiAccountGroup } from '@mdi/js';
+import {
+  mdiCardsHeart,
+  mdiMessageReply,
+  mdiAccountGroup,
+  mdiBullseye,
+} from '@mdi/js';
 import Colors from '../../Colors';
 import { useAppContext } from '../../../Context/AppContext';
 // import { useVideoCallContext } from '../../../Context/VideoCallContext';
@@ -28,6 +33,7 @@ function EventOptions({ wallet, updateWallet }) {
     handleShowAttendees,
     handleShowYoutube,
     handleSprayEffect,
+    showYoutube,
   } = useVideoCallContext();
 
   useEffect(() => {
@@ -167,11 +173,19 @@ function EventOptions({ wallet, updateWallet }) {
           <Icon path={mdiRadioboxMarked} size={0.8} color="#fff" />
           <span>Record</span>
         </SingleOption> */}
-        <SingleOption onClick={at}>
-          <Icon path={mdiAccountGroup} size={1} color="#fff" />
-          <span>{attendee}</span>
-          <span>Attendees</span>
-        </SingleOption>
+        {showYoutube ? (
+          <SingleOption onClick={at}>
+            <Icon path={mdiAccountGroup} size={1} color="#fff" />
+            <span>{attendee}</span>
+            <span>Attendees</span>
+          </SingleOption>
+        ) : (
+          <SingleOption onClick={at}>
+            <Icon path={mdiBullseye} size={1} color="#fff" />
+            <span>{attendee}</span>
+            <span>Stream</span>
+          </SingleOption>
+        )}
         <SingleOption onClick={handleLikeEvent}>
           <Icon
             path={mdiCardsHeart}

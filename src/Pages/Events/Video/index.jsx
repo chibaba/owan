@@ -252,18 +252,18 @@ function Video() {
             {isSafari ? (
               <YTVideo
                 type="application/x-shockwave-flash"
-                data={`${frameLink}?autoplay=1`}
+                data={`${frameLink}?rel=0&autoplay=1`}
                 width="100%"
                 height="100%"
               >
-                <param name="movie" value={`${frameLink}?autoplay=1`} />
+                <param name="movie" value={`${frameLink}?rel=0&autoplay=1`} />
                 <param name="quality" value="high" />
                 <param name="allowFullScreen" value="true" />
               </YTVideo>
             ) : (
               <YTVideos
                 ref={embedRef}
-                src={`${frameLink}?autoplay=1`}
+                src={`${frameLink}?rel=0&autoplay=1`}
                 frameborder="0"
                 allowfullscreen
               ></YTVideos>
