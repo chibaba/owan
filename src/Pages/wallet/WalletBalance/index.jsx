@@ -16,7 +16,7 @@ import toast from 'toasted-notes';
 import cookie from 'js-cookie';
 import { useLocation } from 'react-router-dom';
 
-const WalletBalance = ({ isOwner }) => {
+const WalletBalance = () => {
   const userId = cookie.get('auid');
   const [showModal, setShowModal] = useState(false);
   const [formAlert, setFormAlert] = useState({
