@@ -8,6 +8,8 @@ import { Card } from '../../welcomepage';
 import { AddToCalendarButton } from '../../../Commons/EventDate';
 import AddToCalendar from 'react-add-to-calendar';
 import OwnerLayout from '../../../Commons/OwnerLayout';
+import CopyToClipboard from 'react-copy-to-clipboard';
+import toaster from 'toasted-notes';
 
 const EventPortal = ({ imageUrl }) => {
   const { state } = useLocation();
@@ -37,7 +39,7 @@ const EventPortal = ({ imageUrl }) => {
       const calendarData = {
         title: `Link up event reminder for ${event.hashtag}`,
         description: 'This is a reminder for an event happening on link up',
-        location: `https://linkup-app.netlify.app/event/detail/${event.id}`,
+        location: `${process.env.REACT_APP_APP_LINK}/event/detail/${event.id}`,
         startTime,
         endTime,
       };
@@ -124,6 +126,23 @@ const EventPortal = ({ imageUrl }) => {
                 })
               }
             />
+            <CopyToClipboard
+              text={`${process.env.REACT_APP_APP_LINK}/event/detail/${
+                state?.latestEvent.id || ev?.id
+              }`}
+              onCopy={() => {
+                toaster.notify('Event link copied to clipboard', {
+                  position: 'top',
+                  duration: 5000,
+                });
+              }}
+            >
+              <p
+                style={{ color: `${Colors.defaultGreen}`, fontWeight: 'bold' }}
+              >
+                Copy Event Link
+              </p>
+            </CopyToClipboard>
           </Link>
         </ButtonDiv>
         <DashBoardCardLayout notFull={true}>

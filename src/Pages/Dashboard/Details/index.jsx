@@ -10,6 +10,7 @@ import toast from 'toasted-notes';
 import Button from '../../../Commons/Button';
 import cookie from 'js-cookie';
 import OwnerLayout from '../../../Commons/OwnerLayout';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 const DashboardDetail = () => {
   const image = '/assets/images/wedding-demo.jpg';
@@ -65,6 +66,19 @@ const DashboardDetail = () => {
           <SectionTitle>About</SectionTitle>
           <p>{event && event.description}</p>
         </ContentSection>
+        <CopyToClipboard
+          text={`${process.env.REACT_APP_APP_LINK}/event/detail/${event?.id}`}
+          onCopy={() => {
+            toast.notify('Event link copied to clipboard', {
+              position: 'top',
+              duration: 5000,
+            });
+          }}
+        >
+          <p style={{ color: `${Colors.defaultGreen}`, fontWeight: 'bold' }}>
+            Copy Event Link
+          </p>
+        </CopyToClipboard>
         {auid ? (
           <Button
             text="Join Event"
