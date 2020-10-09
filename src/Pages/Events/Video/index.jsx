@@ -35,29 +35,36 @@ function Video() {
   const dinominationRef = useRef(null);
   const [denomination, setDenomination] = useState(0);
   const embedRef = useRef(null);
+  const iframeRef = useRef(null);
+  const [frameLink, setFrameLink] = useState('');
 
-  useEffect(() => {
-    if (state) {
-      window.localStorage.setItem('vak', state.accessKey);
-    }
-    let accessKey = state?.accessKey || window.localStorage.getItem('vak');
-    eyeson.onEvent((event) => {
-      if (event.type !== 'accept') {
-        return;
-      }
-      // Note: Some iOS devices might require video to have autoplay attribute set.
-      let video = document.querySelector('video');
-      video.srcObject = event.remoteStream;
-      video.play();
-    });
-    eyeson.start(accessKey);
-  }, [state]);
+  // useEffect(() => {
+  //   if (state) {
+  //     window.localStorage.setItem('vak', state.accessKey);
+  //   }
+  //   let accessKey = state?.accessKey || window.localStorage.getItem('vak');
+  //   eyeson.onEvent((event) => {
+  //     if (event.type !== 'accept') {
+  //       return;
+  //     }
+  //     // Note: Some iOS devices might require video to have autoplay attribute set.
+  //     let video = document.querySelector('video');
+  //     video.srcObject = event.remoteStream;
+  //     video.play();
+  //   });
+  //   eyeson.start(accessKey);
+  // }, [state]);
 
   useEffect(() => {
     const frame = window.localStorage.getItem('embed');
     if (showYoutube) {
       if (frame) {
-        embedRef.current.innerHTML = frame;
+        // embedRef.current.innerHTML = frame;
+        setFrameLink(frame);
+        console.log(window.innerWidth);
+        embedRef.current.style.width = window.innerWidth + 'px';
+        embedRef.current.style.height = window.innerHeight + 'px';
+
         handleShowYoutube(true);
         handleShowAttendees(false);
       } else {
@@ -239,7 +246,14 @@ function Video() {
         </CashModal>
       ) : null}
       <VideoLayer>
-        {showYoutube ? <YTVideo ref={embedRef}></YTVideo> : null}
+        {showYoutube ? (
+          <YTVideo
+            ref={embedRef}
+            src={`${frameLink}?autoplay=1`}
+            frameborder="0"
+            allowfullscreen
+          ></YTVideo>
+        ) : null}
         <VideoPlayer
           className="video"
           style={!showYoutube ? { display: 'block' } : { display: 'none' }}
@@ -249,19 +263,13 @@ function Video() {
   );
 }
 
-const YTVideo = Styled.div`
-    background: url(/assets/images/wedding-demo.jpg) no-repeat;
+const YTVideo = Styled.iframe`
     box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
+    width: 100vw
+ height: calc(100vw/1.77);
     position: absolute;
     object-fit: cover;
     overflow: hiddden;
-    iframe {
-      width: 100% !important;
-      height: 100vh !important;
-    }
 `;
 
 const SpendersHeader = Styled.div`

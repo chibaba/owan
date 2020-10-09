@@ -49,7 +49,6 @@ function EventsListing() {
     window.localStorage.setItem('event', JSON.stringify(event));
     postCall(api.startVideo, { iframe: embedCode }, { event_id: event.id })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           setLoading(false);
           history.push({
