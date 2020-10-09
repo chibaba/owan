@@ -13,7 +13,7 @@ const OwnerEvents = () => {
 
   useEffect(() => {
     const id = cookie.get('auid');
-    if (state.userEvents) {
+    if (state) {
       setUserEvents(state.userEvents);
     } else {
       getCall(api.getUserEvents(id))
@@ -24,7 +24,7 @@ const OwnerEvents = () => {
           console.log(error);
         });
     }
-  }, [state.userEvents]);
+  }, [state]);
 
   const renderUserEvents = () => {
     return userEvents?.map((event) => {
