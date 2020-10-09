@@ -282,7 +282,7 @@ function Video() {
 const SprayEffect = Styled.img`
   position: absolute;
   width: 100%;
-  z-index: 9999999999;
+  z-index: 9999;
 `;
 
 const StreamWrapper = Styled.div`
