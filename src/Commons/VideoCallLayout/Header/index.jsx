@@ -27,10 +27,10 @@ function Header({ wallet }) {
           {/* <RecordButton>
             <Icon path={mdiRadioboxMarked} color="#fff" size={0.6} />
           </RecordButton> */}
-          <VideoAttendees>
+          {/* <VideoAttendees>
             <img src="/assets/images/icons/users.png" alt="users" />
             <span>496</span>
-          </VideoAttendees>
+          </VideoAttendees> */}
           <Wallet>&#8358;{walBal}</Wallet>
         </VideoStats>
         <EventTitle>
@@ -55,8 +55,6 @@ const Wallet = Styled.div`
   border-radius: 4px;
   flex-direction: column;
   font-weight: bold;
-  background: rgba(0, 0, 0, 0.3);
-  padding-top: 3px;
   span {
     font-size: 10px;
     font-weight: bold;
@@ -100,20 +98,20 @@ const VideoStats = Styled.ul`
 //   justify-content: center;
 //   align-items: center;
 // `;
-const VideoAttendees = Styled.li`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 21px;
-  span {
-    color: #fff;
-    font-size: 10px;
-    margin-left: 10px;
-    height: 100%;
-    padding-top: 10px;
-    font-weight: 800;
-  }
-`;
+// const VideoAttendees = Styled.li`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 21px;
+//   span {
+//     color: #fff;
+//     font-size: 10px;
+//     margin-left: 10px;
+//     height: 100%;
+//     padding-top: 10px;
+//     font-weight: 800;
+//   }
+// `;
 const EventTitle = Styled.h5`
   color:#fff;
   flex: 1;

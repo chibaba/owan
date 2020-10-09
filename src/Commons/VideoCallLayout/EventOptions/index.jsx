@@ -16,7 +16,7 @@ import toast from 'toasted-notes';
 import { useVideoCallContext } from '../../../Context/VideoCallContext';
 
 function EventOptions({ wallet, updateWallet }) {
-  const { handleSprayState, denom } = useAppContext();
+  const { denom } = useAppContext();
   const [attendee, setAttendees] = useState(0);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -197,12 +197,12 @@ function EventOptions({ wallet, updateWallet }) {
             {denom || parseInt(window.localStorage.getItem('denom')) || 200}
           </span>
         </SingleOption>
-        <SingleOption id="spray" onClick={handleSprayState}>
+        {/* <SingleOption id="spray" onClick={handleSprayState}>
           <span className="denom">
             {denom || parseInt(window.localStorage.getItem('denom')) || 200}
           </span>
           <span>Denomination</span>
-        </SingleOption>
+        </SingleOption> */}
       </OptionItems>
     </OptionsWrapper>
   );

@@ -55,8 +55,8 @@ function EventsListing() {
           history.push({
             pathname: '/event/video',
             state: {
-              roomID: response.vidlink[0].room_id,
-              accessKey: response.vidlink[0].Access_key,
+              roomID: response.vidlink.room_id,
+              accessKey: response.vidlink.Access_key,
             },
           });
         }
