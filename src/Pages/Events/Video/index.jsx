@@ -39,10 +39,6 @@ function Video() {
   const [frameLink, setFrameLink] = useState('');
   const isSafari = window.safari !== undefined;
 
-  let isIOS =
-    /iPad|iPhone|iPod/.test(navigator.platform) ||
-    navigator.platform === 'MacIntel';
-
   useEffect(() => {
     if (state) {
       window.localStorage.setItem('vak', state.accessKey);
@@ -123,7 +119,7 @@ function Video() {
     handleDenom(e.target.innerText);
     window.localStorage.setItem('denom', e.target.innerText);
   }
-  console.log(isIOS, 'platform');
+
   return (
     <VideoCallLayout>
       {showSprayEffect ? (
@@ -252,28 +248,27 @@ function Video() {
       ) : null}
       <VideoLayer>
         {showYoutube ? (
-          isSafari ? (
-            <YTVideo
-              type="application/x-shockwave-flash"
-              data="https://www.youtube.com/embed/1uVdJKL3ZxM?autoplay=1"
-              width="100%"
-              height="100%"
-            >
-              <param
-                name="movie"
-                value="https://www.youtube.com/embed/1uVdJKL3ZxM?autoplay=1"
-              />
-              <param name="quality" value="high" />
-              <param name="allowFullScreen" value="true" />
-            </YTVideo>
-          ) : (
-            <YTVideos
-              ref={embedRef}
-              src={`${frameLink}?autoplay=1`}
-              frameborder="0"
-              allowfullscreen
-            ></YTVideos>
-          )
+          <StreamWrapper>
+            {isSafari ? (
+              <YTVideo
+                type="application/x-shockwave-flash"
+                data={`${frameLink}?autoplay=1`}
+                width="100%"
+                height="100%"
+              >
+                <param name="movie" value={`${frameLink}?autoplay=1`} />
+                <param name="quality" value="high" />
+                <param name="allowFullScreen" value="true" />
+              </YTVideo>
+            ) : (
+              <YTVideos
+                ref={embedRef}
+                src={`${frameLink}?autoplay=1`}
+                frameborder="0"
+                allowfullscreen
+              ></YTVideos>
+            )}
+          </StreamWrapper>
         ) : null}
         <VideoPlayer
           className="video"
@@ -288,6 +283,13 @@ const SprayEffect = Styled.img`
   position: absolute;
   width: 100%;
   z-index: 9999999999;
+`;
+
+const StreamWrapper = Styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 const YTVideo = Styled.object`
