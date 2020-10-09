@@ -3,7 +3,7 @@ import Styled from 'styled-components';
 import AddToCalendar from 'react-add-to-calendar';
 import Colors from '../Colors';
 
-const EventDate = ({ date, time, event, style }) => {
+const EventDate = ({ date, time, event, style, cData }) => {
   return (
     <EventDates style={style}>
       <img src="/assets/images/icons/calendar.svg" alt="calendar" />
@@ -11,7 +11,7 @@ const EventDate = ({ date, time, event, style }) => {
         <p>{date}</p>
         <p className="time">{time}</p>
         <AddToCalendarButton>
-          <AddToCalendar event={event} displayItemIcons={true} />
+          <AddToCalendar event={cData} displayItemIcons={true} />
         </AddToCalendarButton>
       </div>
     </EventDates>
