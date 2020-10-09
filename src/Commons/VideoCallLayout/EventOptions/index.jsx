@@ -168,7 +168,10 @@ function EventOptions({ wallet, updateWallet }) {
         </SingleOption>
         <SingleOption onClick={sprayCash} id="spray">
           <img src="/assets/images/icons/cashspray.svg" alt="cash" />
-          <span>Spray Cash</span>
+          <span>
+            Spray{' '}
+            {denom || parseInt(window.localStorage.getItem('denom')) || 200}
+          </span>
         </SingleOption>
         <SingleOption id="spray" onClick={handleSprayState}>
           <span className="denom">

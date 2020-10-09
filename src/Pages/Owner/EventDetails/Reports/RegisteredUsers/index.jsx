@@ -19,8 +19,8 @@ const RegsisteredUsers = ({ users, data }) => {
   }, [data]);
 
   const renderUsers = () => {
-    return attendees?.map((user) => {
-      return <UserList key={user.id} users={user} />;
+    return attendees?.map((user, index) => {
+      return <UserList key={user.id} users={user} id={index + 1} />;
     });
   };
 
