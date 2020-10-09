@@ -8,8 +8,9 @@ function Home() {
     <ContentWrapper>
       <Logo>Owambe.ng</Logo>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore lorem ipsum dolor sit amet.
+        Fully virtual experiences are the new normal. Create unique social
+        experiences that engage your audiences in familiar and exciting new
+        ways.
       </p>
       <ButtonsArea>
         <Link to="/login">
