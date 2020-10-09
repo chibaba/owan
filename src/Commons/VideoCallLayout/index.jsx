@@ -23,7 +23,10 @@ function VideoCallLayout({ children, showSpray }) {
   return (
     <>
       <Header />
-      <Wallet>{walletBalance}</Wallet>
+      <Wallet>
+        <span>Wallet Balance</span>
+        &#8358;{walletBalance}
+      </Wallet>
       {children}
       <EventOptions
         showSpray={showSpray}
@@ -44,12 +47,17 @@ const Wallet = Styled.div`
   right: 5%;
   text-align: right;
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.4rem;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
-  padding: 10px 10px 0 10px;
+  padding: 5px 10px 0 10px;
   border-radius: 4px;
+  flex-direction: column;
+  span {
+    font-size: 10px;
+    font-weight: bold;
+  }
 `;
 
 export default VideoCallLayout;
