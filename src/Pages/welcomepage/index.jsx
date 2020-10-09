@@ -52,7 +52,15 @@ const WelcomePage = () => {
           </Card>
           {latestEvent ? (
             <>
-              <Card to={{ pathname: '/owner/event', state: { latestEvent } }}>
+              <Card
+                to={{ pathname: '/owner/event', state: { latestEvent } }}
+                onClick={() => {
+                  window.localStorage.setItem(
+                    'latestEvent',
+                    JSON.stringify(latestEvent),
+                  );
+                }}
+              >
                 <img
                   src="/assets/images/icons/tag.svg"
                   alt="createicon"

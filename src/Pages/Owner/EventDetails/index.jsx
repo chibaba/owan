@@ -9,10 +9,31 @@ import Detail from './Detail';
 
 const EventDetail = () => {
   const [events, setEvents] = useState(null);
+  const [calendar, setCalendar] = useState(null);
 
   useEffect(() => {
-    const event = JSON.parse(window.localStorage.getItem('event'));
-    setEvents(event);
+    const even = JSON.parse(window.localStorage.getItem('event'));
+    setEvents(even);
+    const event = JSON.parse(window.localStorage.getItem('latestEvent'));
+    let date = event.event_date.split('T')[0];
+
+    const splitStart = event.event_time.split(':');
+
+    const startOneHourBehind = parseInt(splitStart[0]) - 2;
+    const mainStart = `${
+      startOneHourBehind > 9 ? startOneHourBehind : `0${startOneHourBehind}`
+    }:${splitStart[1]}`;
+
+    let startTime = `${date}T${mainStart}:00-00:00`;
+    let endTime = `${date}T${mainStart}:00-00:00`;
+    const calendarData = {
+      title: `Link up event reminder for ${event.hashtag}`,
+      description: 'This is a reminder for an event happening on link up',
+      location: `https://linkup-app.netlify.app/event/detail/${event.id}`,
+      startTime,
+      endTime,
+    };
+    setCalendar(calendarData);
   }, []);
 
   return (
@@ -42,7 +63,7 @@ const EventDetail = () => {
       </PageLinks>
       <Switch>
         <Route path={`/owner/event/details`} exact>
-          <Detail data={events} />
+          <Detail data={events} calendar={calendar} />
         </Route>
         <Route path={`/owner/event/details/report`} exact>
           <Report data={events} />

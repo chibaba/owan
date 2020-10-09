@@ -4,7 +4,7 @@ import Colors from '../../../../Commons/Colors';
 import EventDetailBanner from '../../../../Commons/EventDetailBanner';
 import EventDate from '../../../../Commons/EventDate';
 
-const Detail = ({ data }) => {
+const Detail = ({ data, calendar }) => {
   const image = '/assets/images/wedding-demo.jpg';
   return (
     <>
@@ -21,6 +21,7 @@ const Detail = ({ data }) => {
           <EventDate
             date={data && new Date(data.event_date).toDateString()}
             time={data && data.event_time}
+            cData={calendar}
           />
         </ContentSection>
         <ContentSection>
@@ -28,12 +29,12 @@ const Detail = ({ data }) => {
           <p>{data && data.description}</p>
         </ContentSection>
       </ContentWrapper>
-      <ContentSection>
+      {/* <ContentSection>
         <SectionTitle style={{ width: '90%', margin: '15px auto' }}>
           Location on Map
         </SectionTitle>
         <MapArea></MapArea>
-      </ContentSection>
+      </ContentSection> */}
     </>
   );
 };
@@ -67,11 +68,11 @@ const EventTitle = Styled.h2`
   margin: 0;
 `;
 
-const MapArea = Styled.div`
-  width: 100%;
-  height: 200px;
-  background: ${Colors.textColor};
-`;
+// const MapArea = Styled.div`
+//   width: 100%;
+//   height: 200px;
+//   background: ${Colors.textColor};
+// `;
 
 Detail.defaultProps = {
   event: {
