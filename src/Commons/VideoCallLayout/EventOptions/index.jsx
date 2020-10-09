@@ -47,6 +47,7 @@ function EventOptions({ wallet, updateWallet }) {
   }, []);
 
   const charge = useCallback(() => {
+    console.log(wallet < +denom, 'klsjkbdksbdjks');
     if (wallet < +denom) {
       return;
     }
@@ -119,6 +120,9 @@ function EventOptions({ wallet, updateWallet }) {
   }
 
   function sprayCash() {
+    if (wallet < +denom) {
+      return;
+    }
     setTapCount((prev) => prev + 1);
     const amount = wallet - +denom;
     updateWallet(amount);
