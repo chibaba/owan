@@ -116,7 +116,7 @@ const CreateEvent = () => {
             `${process.env.REACT_APP_APP_LINK}/event/detail/${eventID}`,
           );
           toaster.notify(response.message, {
-            position: 'bottom',
+            position: 'top',
             duration: 5000,
           });
           setModalState({
@@ -131,7 +131,7 @@ const CreateEvent = () => {
         setLoading(false);
         console.log(error.message);
         toaster.notify(error.message, {
-          position: 'bottom',
+          position: 'top',
           duration: 5000,
         });
       });

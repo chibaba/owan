@@ -57,7 +57,7 @@ function EventsListing() {
       .catch((error) => {
         setLoading(false);
         console.log(error.message);
-        toast.notify(error.message, { position: 'bottom', duration: 5000 });
+        toast.notify(error.message, { position: 'top', duration: 5000 });
       });
   };
 
@@ -77,7 +77,7 @@ function EventsListing() {
         setLoading(false);
         if (response.status === 200) {
           toast.notify('Setting you up to join...', {
-            position: 'bottom',
+            position: 'top',
             duration: 5000,
           });
           Axios({
@@ -90,7 +90,7 @@ function EventsListing() {
           })
             .then((response) => {
               toast.notify('Redirecting...', {
-                position: 'bottom',
+                position: 'top',
                 duration: 5000,
               });
               setTimeout(() => {
@@ -106,7 +106,7 @@ function EventsListing() {
             })
             .catch((error) => {
               toast.notify(error.response.data.message, {
-                position: 'bottom',
+                position: 'top',
                 duration: 5000,
               });
             });
@@ -120,7 +120,7 @@ function EventsListing() {
             if (response.status === 200 && response.data) {
               if (!response.data.room_id || !response.data.room_id.Access_key) {
                 toast.notify('This event has not started', {
-                  position: 'bottom',
+                  position: 'top',
                   duration: 5000,
                 });
               } else {
@@ -136,7 +136,7 @@ function EventsListing() {
                 })
                   .then((response) => {
                     toast.notify('Redirecting...', {
-                      position: 'bottom',
+                      position: 'top',
                       duration: 5000,
                     });
                     setTimeout(() => {
@@ -152,14 +152,14 @@ function EventsListing() {
                   })
                   .catch((error) => {
                     toast.notify(error.response.data.message, {
-                      position: 'bottom',
+                      position: 'top',
                       duration: 5000,
                     });
                   });
               }
             } else {
               toast.notify('This event was not found or has been deleted', {
-                position: 'bottom',
+                position: 'top',
                 duration: 5000,
               });
             }
@@ -167,7 +167,7 @@ function EventsListing() {
           .catch((error) => {
             setLoading(false);
             toast.notify(error.message, {
-              position: 'bottom',
+              position: 'top',
               duration: 5000,
             });
           });

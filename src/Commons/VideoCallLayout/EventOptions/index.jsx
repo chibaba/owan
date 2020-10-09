@@ -79,7 +79,7 @@ function EventOptions({ wallet, updateWallet }) {
         }
       })
       .catch((error) => {
-        toast.notify(error.message, { position: 'bottom', duration: 5000 });
+        toast.notify(error.message, { position: 'top', duration: 5000 });
       });
   }, [denom, tapCount, wallet]);
 
