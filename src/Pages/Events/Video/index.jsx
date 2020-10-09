@@ -128,7 +128,7 @@ function Video() {
       {showDrawer && showSideDrawer ? (
         <Drawer drawerPosition="right">
           <DrawerItemsWrapper>
-            <Logo>Owambe.ng</Logo>
+            <Logo src="/assets/images/owambe-logo.png" alt="Logo" />
             <DrawerItem
               onClick={() => {
                 handleTablesState(true);
@@ -368,8 +368,9 @@ const MainName = Styled.div`
   }
 `;
 
-const Logo = Styled.h2`
+const Logo = Styled.img`
   margin-bottom: 70px;
+  width: 80%;
 `;
 
 const LeaveEvent = Styled.button`

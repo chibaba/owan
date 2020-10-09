@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function Home() {
   return (
     <ContentWrapper>
-      <Logo>Owambe.ng</Logo>
+      <Logo src="/assets/images/owambe-logo.png" alt="logo" />
       <p>
         Fully virtual experiences are the new normal. Create unique social
         experiences that engage your audiences in familiar and exciting new
@@ -37,10 +37,11 @@ const ContentWrapper = Styled.section`
  }
 `;
 
-const Logo = Styled.h1`
+const Logo = Styled.img`
   font-weight: bold;
   font-size: 46px;
   margin: 0;
+  width: 70%;
 `;
 
 const ButtonsArea = Styled.div`

@@ -46,7 +46,7 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
       {showDrawer ? (
         <Drawer drawerPosition="left">
           <DrawerItemWrapper>
-            <DrawerLogo>Owambe.ng</DrawerLogo>
+            <DrawerLogo src="/assets/images/owambe-logo.png" alt="Logo" />
             <DrawerAvatar></DrawerAvatar>
             <DrawerItem>
               <DrawerHead
@@ -167,10 +167,11 @@ const DrawerItemWrapper = Styled.div`
   padding: 10px 20px;
 `;
 
-const DrawerLogo = Styled.h2`
+const DrawerLogo = Styled.img`
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   padding-bottom: 10px;
   font-weight: bold;
+  width: 70%;
 `;
 
 const DrawerAvatar = Styled.div`
@@ -179,7 +180,6 @@ const DrawerAvatar = Styled.div`
   background: #fff;
   margin: 40px 0;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
 const DrawerItem = Styled.div`

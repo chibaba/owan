@@ -8,7 +8,7 @@ const DualHeader = ({ isLogin, children }) => {
       {isLogin ? (
         <WelcomeLogo>Welcome to Owambe.ng</WelcomeLogo>
       ) : (
-        <Logo>Owambe.ng</Logo>
+        <Logo src="/assets/images/owambe-logo.png" alt="Logo" />
       )}
       {children}
     </HeaderWrapper>
@@ -24,10 +24,11 @@ const HeaderWrapper = styled.div`
   padding: 3rem 1rem 2rem 1rem;
   line-height: 1.7;
 `;
-const Logo = styled.h1`
+const Logo = styled.img`
   font-weight: 900;
   font-size: 28px;
   margin: 0;
+  width: 70%;
 `;
 const WelcomeLogo = styled.h2`
   font-size: 18px;
