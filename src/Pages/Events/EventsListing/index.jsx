@@ -71,6 +71,8 @@ function EventsListing() {
   const handleJoinEvent = (e) => {
     e.preventDefault();
     setLoading(true);
+    window.localStorage.setItem('event', JSON.stringify(event));
+    window.localStorage.setItem('eveBg', event?.images[0]);
     postCall(
       api.createAttendee,
       {

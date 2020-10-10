@@ -14,7 +14,11 @@ function VideoCallLayout({ children, showSpray }) {
 
     getCallTransactions(api.getWalletBalance(customerid), {}).then(
       (response) => {
-        setWalletBalance(response._embedded?.wallets[0]?.balance / 100);
+        if (response._embedded?.wallets.length) {
+          setWalletBalance(response._embedded?.wallets[0]?.balance / 100);
+        } else {
+          setWalletBalance(0);
+        }
       },
     );
   }, [showSpray]);
