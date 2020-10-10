@@ -6,6 +6,9 @@ import Colors from '../../../../Commons/Colors';
 // import EventDetailBanner from '../../../../Commons/EventDetailBanner';
 import EventDate from '../../../../Commons/EventDate';
 import EventsCarousel from '../../../../Components/EventsCarousel';
+import CopyToClipboard from 'react-copy-to-clipboard';
+import { WhatsappShareButton, WhatsappIcon } from 'react-share';
+import toast from 'toasted-notes';
 
 const Detail = ({ data, calendar }) => {
   // const image = '/assets/images/wedding-demo.jpg';
@@ -36,6 +39,34 @@ const Detail = ({ data, calendar }) => {
         <ContentSection>
           <EventTitle>{data && data.name}</EventTitle>
           <span className="by-who">by {user?.name}</span>
+        </ContentSection>
+        <ContentSection>
+          <CopyToClipboard
+            text={`${process.env.REACT_APP_APP_LINK}/event/detail/${data?.id}`}
+            onCopy={() => {
+              toast.notify('Event link copied to clipboard', {
+                position: 'top',
+                duration: 5000,
+              });
+            }}
+          >
+            <p
+              style={{
+                color: `${Colors.defaultGreen}`,
+                fontWeight: 'bold',
+                fontSize: '16px',
+              }}
+            >
+              Copy Event Link
+            </p>
+          </CopyToClipboard>
+          <p>Share on Whatsapp</p>
+          <WhatsappShareButton
+            url={`${process.env.REACT_APP_APP_LINK}/event/detail/${data?.id}`}
+            title={'Inviting you to attend my wedding on link up'}
+          >
+            <WhatsappIcon size={35}></WhatsappIcon>
+          </WhatsappShareButton>
         </ContentSection>
         <ContentSection>
           <EventDate
