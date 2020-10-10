@@ -144,9 +144,11 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
           </DrawerItemWrapper>
         </Drawer>
       ) : null}
-      {nav ? (
-        <TitleBar page={pageTitle} toggleDrawer={handleDrawerState}></TitleBar>
-      ) : null}
+      <TitleBar
+        page={pageTitle}
+        toggleDrawer={handleDrawerState}
+        nav={nav}
+      ></TitleBar>
       <ContentWrapper full={fullWidth}>{children}</ContentWrapper>
     </LayoutWrapper>
   );

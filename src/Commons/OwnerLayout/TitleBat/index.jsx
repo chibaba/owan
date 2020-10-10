@@ -1,18 +1,28 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-const TitleBar = ({ page, toggleDrawer }) => {
+const TitleBar = ({ page, toggleDrawer, nav }) => {
   return (
     <HeaderWrapper>
-      <div>
-        <img
-          src="/assets/images/icons/menu.svg"
-          alt="menu"
-          onClick={toggleDrawer}
-        />
-        <h2>{page}</h2>
-        <Logo src="/assets/images/owambe-logo.png" alt="Logo" />
-      </div>
+      {nav ? (
+        <div>
+          <img
+            src="/assets/images/icons/menu.svg"
+            alt="menu"
+            onClick={toggleDrawer}
+          />
+          <h2>{page}</h2>
+          <Logo src="/assets/images/owambe-logo.png" alt="Logo" />
+        </div>
+      ) : (
+        <div>
+          <Logo
+            src="/assets/images/owambe-logo.png"
+            style={{ margin: 'auto' }}
+            alt="Logo"
+          />
+        </div>
+      )}
     </HeaderWrapper>
   );
 };
