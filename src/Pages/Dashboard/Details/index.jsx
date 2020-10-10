@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import Colors from '../../../Commons/Colors';
-import EventDetailBanner from '../../../Commons/EventDetailBanner';
+// import EventDetailBanner from '../../../Commons/EventDetailBanner';
 import EventDate from '../../../Commons/EventDate';
 import { getCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
@@ -11,11 +11,13 @@ import Button from '../../../Commons/Button';
 import cookie from 'js-cookie';
 import OwnerLayout from '../../../Commons/OwnerLayout';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import EventsCarousel from '../../../Components/EventsCarousel';
 
 const DashboardDetail = () => {
-  const image = '/assets/images/wedding-demo.jpg';
+  // const image = '/assets/images/wedding-demo.jpg';
   const { pathname } = useLocation();
   const [event, setEvent] = useState(null);
+  const [user, setUser] = useState(null);
   const history = useHistory();
   const auid = cookie.get('uid');
 
@@ -45,16 +47,31 @@ const DashboardDetail = () => {
       });
   }, [pathname]);
 
+  useEffect(() => {
+    if (event) {
+      getCall(api.getUser(event?.user_id))
+        .then((response) => {
+          if (response.data) {
+            setUser(response.data.profile);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [event]);
+
   return (
     <OwnerLayout nav={auid ? true : false}>
-      <EventDetailBanner
+      <EventsCarousel data={event} />
+      {/* <EventDetailBanner
         imageURL={(event && event.images[0]) || image}
         text="Upcoming Event"
-      />
+      /> */}
       <ContentWrapper>
         <ContentSection>
           <EventTitle>{event && event.name}</EventTitle>
-          <span className="by-who">by Tinji Obaoye</span>
+          <span className="by-who">by {user?.name}</span>
         </ContentSection>
         <ContentSection>
           <EventDate
@@ -103,7 +120,7 @@ const DashboardDetail = () => {
         {/* <SectionTitle style={{ width: '90%', margin: '15px auto' }}>
           Location on Map
         </SectionTitle> */}
-        <MapArea></MapArea>
+        {/* <MapArea></MapArea> */}
       </ContentSection>
     </OwnerLayout>
   );

@@ -1,13 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
-import {
-  mdiCardsHeart,
-  mdiMessageReply,
-  mdiAccountGroup,
-  mdiBullseye,
-} from '@mdi/js';
-import Colors from '../../Colors';
+import { mdiCardsHeart, mdiAccountGroup, mdiBullseye } from '@mdi/js';
 import { useAppContext } from '../../../Context/AppContext';
 // import { useVideoCallContext } from '../../../Context/VideoCallContext';
 import {
@@ -203,7 +197,7 @@ function EventOptions({ wallet, updateWallet }) {
           ) : null}
           <span>{likeCount}</span>
         </SingleOption>
-        <SingleOption>
+        {/* <SingleOption>
           <CommentNotification />
           <Icon
             path={mdiMessageReply}
@@ -212,7 +206,7 @@ function EventOptions({ wallet, updateWallet }) {
             style={{ rotate: 'y 180deg' }}
           />
           <span>2.6k</span>
-        </SingleOption>
+        </SingleOption> */}
         <SingleOption onClick={sprayCash} id="spray">
           <img src="/assets/images/icons/cashspray.svg" alt="cash" />
           <span>
@@ -366,14 +360,14 @@ const SingleOption = Styled.li`
   }
 `;
 
-const CommentNotification = Styled.div`
-  width: 7px;
-  height: 7px;
-  background: ${Colors.defaultGreen};
-  border-radius: 50%;
-  position: absolute;
-  right: 0;
-  top: -3.5px;
-`;
+// const CommentNotification = Styled.div`
+//   width: 7px;
+//   height: 7px;
+//   background: ${Colors.defaultGreen};
+//   border-radius: 50%;
+//   position: absolute;
+//   right: 0;
+//   top: -3.5px;
+// `;
 
 export default EventOptions;
