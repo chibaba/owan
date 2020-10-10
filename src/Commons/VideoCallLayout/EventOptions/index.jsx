@@ -31,8 +31,6 @@ function EventOptions({ wallet, updateWallet }) {
     handleFundWallet,
   } = useVideoCallContext();
 
-  const { handleSprayState } = useAppContext();
-
   useEffect(() => {
     getCall(api.getEventLikeCount(cookie.get('eid')), {})
       .then((response) => {
@@ -218,12 +216,12 @@ function EventOptions({ wallet, updateWallet }) {
             {denom || parseInt(window.localStorage.getItem('denom')) || 200}
           </span>
         </SingleOption>
-        <SingleOption id="spray" onClick={handleSprayState}>
+        {/* <SingleOption id="spray" onClick={handleSprayState}>
           <span className="denom">
             {denom || parseInt(window.localStorage.getItem('denom')) || 200}
           </span>
           <span>Change Denomination</span>
-        </SingleOption>
+        </SingleOption> */}
       </OptionItems>
     </OptionsWrapper>
   );

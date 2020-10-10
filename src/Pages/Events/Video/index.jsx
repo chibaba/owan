@@ -15,7 +15,7 @@ import {
 } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import Icon from '@mdi/react';
-import { mdiCash100 } from '@mdi/js';
+import { mdiCash100, mdiWallet } from '@mdi/js';
 import {
   ModalContentArea,
   ModalForm,
@@ -218,7 +218,16 @@ function Video() {
               }}
             >
               <span>{window.localStorage.getItem('denom') || 200}</span>
-              Denomination
+              Change Denomination
+            </DrawerItem>
+            <DrawerItem
+              onClick={() => {
+                handleFundWallet(true);
+                handleDrawerState();
+              }}
+            >
+              <Icon path={mdiWallet} size={1} />
+              Fund Wallet
             </DrawerItem>
             <LeaveEvent
               onClick={() => {
@@ -473,6 +482,7 @@ const DrawerItem = Styled.div`
   font-weight: bold;
   margin-bottom: 20px;
   align-items: flex-end;
+  cursor: pointer;
   span, svg {
     color: rgba(0,0,0,0.4);
     margin-right: 10px;
