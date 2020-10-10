@@ -11,7 +11,7 @@ const TitleBar = ({ page, toggleDrawer }) => {
           onClick={toggleDrawer}
         />
         <h2>{page}</h2>
-        <span></span>
+        <Logo src="/assets/images/owambe-logo.png" alt="Logo" />
       </div>
     </HeaderWrapper>
   );
@@ -20,6 +20,7 @@ const TitleBar = ({ page, toggleDrawer }) => {
 const HeaderWrapper = Styled.header`
   width: 100%;
   height: 70px;
+  margin-bottom: 10px;
   div {
     width: 90%;
     margin: auto;
@@ -37,6 +38,10 @@ const HeaderWrapper = Styled.header`
       margin: 0;
     }
   }
+`;
+
+const Logo = Styled.img`
+  width: 40%;
 `;
 
 export default TitleBar;
