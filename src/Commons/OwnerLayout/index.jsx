@@ -38,6 +38,7 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
   function handleLogout() {
     cookie.remove('uid');
     cookie.remove('auid');
+    window.localStorage.clear();
     window.location.href = '/';
   }
 
@@ -76,7 +77,7 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
                 <span>Event</span>
               </DrawerHead>
               <DrawerItemDropdown>
-                <Link to="/owner/createevent">Create Event</Link>
+                {/* <Link to="/owner/createevent">Create Event</Link> */}
                 <Link to="/owner/events">My Events</Link>
                 <Link to="/owner/upcoming">Upcoming Events</Link>
               </DrawerItemDropdown>

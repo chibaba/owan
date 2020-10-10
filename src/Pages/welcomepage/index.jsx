@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import cookie from 'js-cookie';
 import { getCall } from '../../APIs/requests';
 import api from '../../APIs/endpoints';
+import { EventToday } from '../auth/EventOwnerLogin';
 
 const WelcomePage = () => {
   const { state } = useLocation();
@@ -18,6 +19,7 @@ const WelcomePage = () => {
   }`;
   const [latestEvent, setLatestEvent] = useState(null);
   const [userEvents, setUserEvents] = useState(null);
+  const [event, setEvent] = useState(null);
 
   const userData = JSON.parse(cookie.get('udt'));
 
@@ -27,6 +29,7 @@ const WelcomePage = () => {
       .then((response) => {
         setLatestEvent(response.event[0]);
         setUserEvents(response.event);
+        setEvent(JSON.parse(window.localStorage.getItem('evtoday')));
       })
       .catch((error) => {
         console.log(error);
@@ -41,15 +44,34 @@ const WelcomePage = () => {
           time={time}
           date={today.toDateString()}
         />
+        <EventToday>
+          <img src={event && event.images[0]} alt="Event" />
+          <div>
+            <p style={{ fontWeight: 'BOLD', fontSize: '14px' }}>
+              Happening today
+            </p>
+            <p>#{event?.hashtag}</p>
+            <Link
+              to={{ pathname: `/event/detail/${event?.id}` }}
+              style={{
+                color: `${Colors.defaultGreen}`,
+                fontSize: '12px',
+                marginTop: '10px',
+              }}
+            >
+              View Details
+            </Link>
+          </div>
+        </EventToday>
         <div className="event-directory">
-          <Card to="/owner/createevent">
+          {/* <Card to="/owner/createevent">
             <img
               src="/assets/createEventGreen.svg"
               alt="createicon"
               className="directoryicon"
             />
             <p>Create Event</p>
-          </Card>
+          </Card> */}
           {latestEvent ? (
             <>
               <Card

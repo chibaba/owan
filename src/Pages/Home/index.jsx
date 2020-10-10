@@ -3,6 +3,8 @@ import Styled from 'styled-components';
 import Button from '../../Commons/Button';
 import { Link, useHistory } from 'react-router-dom';
 import cookie from 'js-cookie';
+import api from '../../APIs/endpoints';
+import { getCall } from '../../APIs/requests';
 
 function Home() {
   const history = useHistory();
@@ -12,6 +14,19 @@ function Home() {
       history.push('/dashboard');
     }
   }, [history]);
+
+  useEffect(() => {
+    getCall(api.getEvent(process.env.REACT_APP_EVENT_TODAY))
+      .then((response) => {
+        if (response.status === 200 && response.data) {
+          window.localStorage.setItem('evtoday', JSON.stringify(response.data));
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, []);
+
   return (
     <ContentWrapper>
       <Logo src="/assets/images/owambe-logo.png" alt="logo" />
