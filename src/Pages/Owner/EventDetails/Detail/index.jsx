@@ -1,21 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
+import api from '../../../../APIs/endpoints';
+import { getCall } from '../../../../APIs/requests';
 import Colors from '../../../../Commons/Colors';
-import EventDetailBanner from '../../../../Commons/EventDetailBanner';
+// import EventDetailBanner from '../../../../Commons/EventDetailBanner';
 import EventDate from '../../../../Commons/EventDate';
+import EventsCarousel from '../../../../Components/EventsCarousel';
 
 const Detail = ({ data, calendar }) => {
-  const image = '/assets/images/wedding-demo.jpg';
+  // const image = '/assets/images/wedding-demo.jpg';
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (data) {
+      getCall(api.getUser(data?.user_id))
+        .then((response) => {
+          if (response.data) {
+            setUser(response.data.profile);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [data]);
+
   return (
     <>
-      <EventDetailBanner
+      {/* <EventDetailBanner
         imageURL={(data && data.images[0]) || image}
         text="Upcoming Event"
-      />
+      /> */}
+      <EventsCarousel data={data} />
       <ContentWrapper>
         <ContentSection>
           <EventTitle>{data && data.name}</EventTitle>
-          <span className="by-who">by Tinji Obaoye</span>
+          <span className="by-who">by {user?.name}</span>
         </ContentSection>
         <ContentSection>
           <EventDate
