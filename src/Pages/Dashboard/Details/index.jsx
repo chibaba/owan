@@ -27,8 +27,8 @@ const DashboardDetail = () => {
     getCall(api.getEvent(id))
       .then((response) => {
         if (response.status === 200 && response.data) {
-          if (response.data.room_id.iframe) {
-            window.localStorage.setItem('embed', response.data.room_id.iframe);
+          if (response.data.room_id) {
+            window.localStorage.setItem('embed', response.data.room_id?.iframe);
           }
           setEvent(response.data);
         } else {
