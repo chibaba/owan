@@ -22,7 +22,10 @@ const LoaderWrapper = Styled.div`
   align-items: center;
   justify-content: center;
   img {
-    width: 10%;
+    width: 55%;
+    @media(min-width: 768px) {
+        width: 10%;
+    }
   }
   .heartbeat {
 	-webkit-animation: heartbeat 1.5s ease-in-out infinite both;
