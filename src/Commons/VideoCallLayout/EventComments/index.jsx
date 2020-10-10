@@ -1,8 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
 import Colors from '../../Colors';
-import CommentInput from '../../../Components/CommentInput';
-import SingleComment from '../../../Components/SingleComment';
 import { useVideoCallContext } from '../../../Context/VideoCallContext';
 import { useAppContext } from '../../../Context/AppContext';
 
@@ -13,7 +11,7 @@ function EventComments() {
   return (
     <CommentWrapper>
       <CommentsArea>
-        <UserComment>
+        {/* <UserComment>
           <CommentList>
             <SingleComment
               image="/assets/images/me.jpeg"
@@ -28,7 +26,7 @@ function EventComments() {
             />
           </CommentList>
           <CommentInput height="38px" />
-        </UserComment>
+        </UserComment> */}
         <Denomination
           onClick={() => {
             handleTablesState(true);
@@ -56,14 +54,14 @@ const CommentsArea = Styled.div`
   display: flex;
 `;
 
-const UserComment = Styled.div`
-  align-self: flex-end;
-  height: 100%;
-  width: 75%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;
+// const UserComment = Styled.div`
+//   align-self: flex-end;
+//   height: 100%;
+//   width: 75%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-end;
+// `;
 
 const Denomination = Styled.div`
   position: relative;
@@ -83,12 +81,12 @@ background: linear-gradient(90deg, ${Colors.defaultGreen} 0%, rgba(0,0,0,1) 95%)
   }
 `;
 
-const CommentList = Styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-self: flex-end;
-  margin-bottom: 10px;
-`;
+// const CommentList = Styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   align-self: flex-end;
+//   margin-bottom: 10px;
+// `;
 
 export default EventComments;

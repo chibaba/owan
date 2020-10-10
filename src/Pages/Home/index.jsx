@@ -8,10 +8,10 @@ function Home() {
   const history = useHistory();
   useEffect(() => {
     const token = cookie.get('uid');
-    if(token) {
+    if (token) {
       history.push('/dashboard');
     }
-  }, [])
+  }, [history]);
   return (
     <ContentWrapper>
       <Logo src="/assets/images/owambe-logo.png" alt="logo" />
