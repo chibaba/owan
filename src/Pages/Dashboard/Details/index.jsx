@@ -18,7 +18,6 @@ const DashboardDetail = () => {
   // const image = '/assets/images/wedding-demo.jpg';
   const { pathname } = useLocation();
   const [event, setEvent] = useState(null);
-  const [user, setUser] = useState(null);
   const history = useHistory();
   const auid = cookie.get('uid');
 
@@ -47,20 +46,6 @@ const DashboardDetail = () => {
       });
   }, [pathname]);
 
-  useEffect(() => {
-    if (event) {
-      getCall(api.getUser(event?.user_id))
-        .then((response) => {
-          if (response.data) {
-            setUser(response.data.profile);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [event]);
-
   return (
     <OwnerLayout nav={auid ? true : false}>
       <EventsCarousel data={event} />
@@ -71,7 +56,7 @@ const DashboardDetail = () => {
       <ContentWrapper>
         <ContentSection>
           <EventTitle>{event && event.name}</EventTitle>
-          <span className="by-who">by {user?.name}</span>
+          {/* <span className="by-who">by {user?.name}</span> */}
         </ContentSection>
         <ContentSection>
           <CopyToClipboard
