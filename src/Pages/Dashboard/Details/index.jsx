@@ -12,6 +12,7 @@ import cookie from 'js-cookie';
 import OwnerLayout from '../../../Commons/OwnerLayout';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import EventsCarousel from '../../../Components/EventsCarousel';
+import { WhatsappShareButton, WhatsappIcon } from 'react-share';
 
 const DashboardDetail = () => {
   // const image = '/assets/images/wedding-demo.jpg';
@@ -30,7 +31,6 @@ const DashboardDetail = () => {
           if (response.data.room_id.iframe) {
             window.localStorage.setItem('embed', response.data.room_id.iframe);
           }
-          console.log(response);
           setEvent(response.data);
         } else {
           toast.notify('This event was not found or has been deleted', {
@@ -74,6 +74,34 @@ const DashboardDetail = () => {
           <span className="by-who">by {user?.name}</span>
         </ContentSection>
         <ContentSection>
+          <CopyToClipboard
+            text={`${process.env.REACT_APP_APP_LINK}/event/detail/${event?.id}`}
+            onCopy={() => {
+              toast.notify('Event link copied to clipboard', {
+                position: 'top',
+                duration: 5000,
+              });
+            }}
+          >
+            <p
+              style={{
+                color: `${Colors.defaultGreen}`,
+                fontWeight: 'bold',
+                fontSize: '16px',
+              }}
+            >
+              Copy Event Link
+            </p>
+          </CopyToClipboard>
+          <p>Share on Whatsapp</p>
+          <WhatsappShareButton
+            url={`${process.env.REACT_APP_APP_LINK}/event/detail/${event?.id}`}
+            title={'Inviting you to attend my wedding on link up'}
+          >
+            <WhatsappIcon size={35}></WhatsappIcon>
+          </WhatsappShareButton>
+        </ContentSection>
+        <ContentSection>
           <EventDate
             date={event && new Date(event.event_date).toDateString()}
             time={event && event.event_time}
@@ -83,19 +111,6 @@ const DashboardDetail = () => {
           <SectionTitle>About</SectionTitle>
           <p>{event && event.description}</p>
         </ContentSection>
-        <CopyToClipboard
-          text={`${process.env.REACT_APP_APP_LINK}/event/detail/${event?.id}`}
-          onCopy={() => {
-            toast.notify('Event link copied to clipboard', {
-              position: 'top',
-              duration: 5000,
-            });
-          }}
-        >
-          <p style={{ color: `${Colors.defaultGreen}`, fontWeight: 'bold' }}>
-            Copy Event Link
-          </p>
-        </CopyToClipboard>
         {auid ? (
           <Button
             text="Join Event"
