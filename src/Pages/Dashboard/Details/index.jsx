@@ -155,11 +155,11 @@ const EventTitle = Styled.h2`
   margin: 0;
 `;
 
-const MapArea = Styled.div`
-  width: 100%;
-  height: 200px;
-  background: ${Colors.textColor};
-`;
+// const MapArea = Styled.div`
+//   width: 100%;
+//   height: 200px;
+//   background: ${Colors.textColor};
+// `;
 
 DashboardDetail.defaultProps = {
   event: {

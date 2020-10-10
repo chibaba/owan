@@ -39,14 +39,14 @@ const Detail = ({ data, calendar }) => {
         </ContentSection>
         <ContentSection>
           <EventDate
-            date={data && new Date(data.event_date).toDateString()}
-            time={data && data.event_time}
+            date={data && new Date(data?.event_date).toDateString()}
+            time={data && data?.event_time}
             cData={calendar}
           />
         </ContentSection>
         <ContentSection>
           <SectionTitle>About</SectionTitle>
-          <p>{data && data.description}</p>
+          <p>{data && data?.description}</p>
         </ContentSection>
       </ContentWrapper>
       {/* <ContentSection>
