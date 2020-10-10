@@ -28,6 +28,7 @@ function EventOptions({ wallet, updateWallet }) {
     handleShowYoutube,
     handleSprayEffect,
     showYoutube,
+    handleFundWallet,
   } = useVideoCallContext();
 
   const { handleSprayState } = useAppContext();
@@ -133,6 +134,7 @@ function EventOptions({ wallet, updateWallet }) {
     handleSprayEffect(true);
     if (wallet < +denom) {
       handleSprayEffect(false);
+      handleFundWallet(true);
       toaster.notify('Kindly fund your wallet', {
         position: 'bottom',
         duration: 5000,

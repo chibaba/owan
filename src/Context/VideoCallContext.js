@@ -9,6 +9,7 @@ function VideoCallContextWrapper(props) {
   const [showAttendees, setShowAttendees] = useState(false);
   const [showYoutube, setShowYoutube] = useState(true);
   const [showSprayEffect, setShowSprayEffect] = useState(false);
+  const [showFundWallet, setShowFundWallet] = useState(false);
 
   //Global toggle tables drawer
   function handleTablesState(value) {
@@ -30,6 +31,10 @@ function VideoCallContextWrapper(props) {
     setShowSprayEffect(value);
   }
 
+  function handleFundWallet(value) {
+    setShowFundWallet(value);
+  }
+
   //Memoize context values
   const viewValue = useMemo(
     () => ({
@@ -43,8 +48,17 @@ function VideoCallContextWrapper(props) {
       handleShowYoutube,
       showSprayEffect,
       handleSprayEffect,
+      showFundWallet,
+      handleFundWallet,
     }),
-    [showTables, showSideDrawer, showAttendees, showYoutube, showSprayEffect],
+    [
+      showTables,
+      showSideDrawer,
+      showAttendees,
+      showYoutube,
+      showSprayEffect,
+      showFundWallet,
+    ],
   );
 
   return (
