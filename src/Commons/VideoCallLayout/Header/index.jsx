@@ -8,7 +8,11 @@ import { useVideoCallContext } from '../../../Context/VideoCallContext';
 
 function Header({ wallet }) {
   const { handleDrawerState } = useAppContext();
-  const { handleTablesState, handleSideDrawerState } = useVideoCallContext();
+  const {
+    handleTablesState,
+    handleSideDrawerState,
+    handleFundWallet,
+  } = useVideoCallContext();
   const [walBal, setWalBal] = useState(0);
 
   useEffect(() => {
@@ -31,7 +35,13 @@ function Header({ wallet }) {
             <img src="/assets/images/icons/users.png" alt="users" />
             <span>496</span>
           </VideoAttendees> */}
-          <Wallet>&#8358;{walBal}</Wallet>
+          <Wallet
+            onClick={() => {
+              handleFundWallet(true);
+            }}
+          >
+            &#8358;{walBal}
+          </Wallet>
         </VideoStats>
         <EventTitle>
           #{JSON.parse(window.localStorage.getItem('event'))?.hashtag}

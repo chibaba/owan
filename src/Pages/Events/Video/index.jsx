@@ -9,10 +9,21 @@ import eyeson from 'eyeson';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 import cookie from 'js-cookie';
-import { getCallTransactions } from '../../../APIs/requests';
+import {
+  getCallTransactions,
+  postCallTransactions,
+} from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import Icon from '@mdi/react';
 import { mdiCash100 } from '@mdi/js';
+import {
+  ModalContentArea,
+  ModalForm,
+  WalletModal,
+  LoadingDiv,
+} from '../../wallet/WalletBalance';
+import FormInput from '../../../Components/FormInput/Index';
+import toast from 'toasted-notes';
 
 function Video() {
   const {
@@ -30,13 +41,18 @@ function Video() {
     handleShowYoutube,
     handleShowAttendees,
     showSprayEffect,
+    showFundWallet,
+    handleFundWallet,
   } = useVideoCallContext();
-  const { state } = useLocation();
+  const { state, pathname } = useLocation();
   const [walletBalance, setWalletBalance] = useState(0);
   const dinominationRef = useRef(null);
   const [denomination, setDenomination] = useState(0);
   const embedRef = useRef(null);
   const [frameLink, setFrameLink] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [loading, setLoading] = useState(false);
+
   const isSafari = window.safari !== undefined;
 
   useEffect(() => {
@@ -120,8 +136,66 @@ function Video() {
     window.localStorage.setItem('denom', e.target.innerText);
   }
 
+  const handleAmountChange = (e) => {
+    setAmount(e.target.value);
+  };
+
+  const handleInitializePayment = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const data = {
+      amount: (amount * 100).toString(),
+      redirectUrl: `${process.env.REACT_APP_APP_URI}${pathname}`,
+    };
+
+    postCallTransactions(api.initializePayment, data, {})
+      .then((response) => {
+        if (response.data) {
+          window.location.href = response.data.url;
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+        toast.notify(error.message, { position: 'top', duration: 5000 });
+      });
+  };
+
   return (
     <VideoCallLayout>
+      {showFundWallet ? (
+        <WalletModal style={{ zIndex: '9999999' }}>
+          <ModalContentArea>
+            <ModalForm onSubmit={(e) => e.preventDefault()}>
+              {loading ? (
+                <LoadingDiv>
+                  <img
+                    src="/assets/images/icons/loading.svg"
+                    alt="Loading..."
+                  />
+                </LoadingDiv>
+              ) : null}
+              <h3>Amount</h3>
+              <FormInput
+                placeholder="Enter amount to fund wallet"
+                name="amount"
+                type="number"
+                onChange={handleAmountChange}
+                inputStyle={{ textAlign: 'center', marginBottom: '50px' }}
+              />
+              <Button
+                text="Continue"
+                onClick={handleInitializePayment}
+                loading={loading}
+              />
+              <Button
+                text="Cancel"
+                cancelbtn={true}
+                onClick={() => handleFundWallet(false)}
+              />
+            </ModalForm>
+          </ModalContentArea>
+        </WalletModal>
+      ) : null}
       {showSprayEffect ? (
         <SprayEffect src="/assets/images/raining-money.gif" alt="drop" />
       ) : null}
@@ -242,7 +316,15 @@ function Video() {
             </SelectDomination>
             <span>You’re spraying &#8358;{denomination} denominations</span>
             <Button text="Change" onClick={handleSprayState} />
-            <Button text="Fund Wallet" cancelbtn={true} />
+            <Button
+              text="Fund Wallet"
+              cancelbtn={true}
+              onClick={() => {
+                handleFundWallet(true);
+                handleDrawerState();
+                handleSprayState();
+              }}
+            />
           </CashModalWrapper>
         </CashModal>
       ) : null}

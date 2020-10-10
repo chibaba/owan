@@ -284,7 +284,7 @@ const WalletBalance = () => {
   );
 };
 
-const LoadingDiv = Styled.div`
+export const LoadingDiv = Styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
