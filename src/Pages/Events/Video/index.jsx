@@ -52,6 +52,7 @@ function Video() {
   const [frameLink, setFrameLink] = useState('');
   const [amount, setAmount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [eveBg, setEveBg] = useState('');
 
   const isSafari = window.safari !== undefined;
 
@@ -77,7 +78,7 @@ function Video() {
     if (showYoutube) {
       if (frame) {
         // embedRef.current.innerHTML = frame;
-        setFrameLink(`${frame}?rel=0&autoplay=1`);
+        setFrameLink(`${frame}?rel=0&autoplay=1&playsinline=0`);
 
         handleShowYoutube(true);
         handleShowAttendees(false);
@@ -101,6 +102,10 @@ function Video() {
       },
     );
   }, [showSpray]);
+
+  useEffect(() => {
+    setEveBg(window.localStorage.getItem('eveBg'));
+  }, []);
 
   // useEffect(() => {
   //   const event = JSON.parse(window.localStorage.getItem('event'));
@@ -366,6 +371,7 @@ function Video() {
         <VideoPlayer
           className="video"
           style={!showYoutube ? { display: 'block' } : { display: 'none' }}
+          bg={eveBg}
         ></VideoPlayer>
       </VideoLayer>
     </VideoCallLayout>
@@ -502,7 +508,7 @@ const VideoLayer = Styled.div`
 `;
 
 const VideoPlayer = Styled.video`
-  background: url('/assets/images/wedding-demo.jpg') no-repeat;
+  background: ${(props) => `url(${props.eveBg}) no-repeat`};
   box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
   background-size: cover;
   width: 100%;

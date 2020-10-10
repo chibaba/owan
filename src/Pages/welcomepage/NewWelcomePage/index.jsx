@@ -11,14 +11,14 @@ const NewWelcomePage = () => {
     <NewDashBoardLayout lastName="Opeyemi" firstName="Tamkloe">
       <OptionHeader>Here are a few things you can do</OptionHeader>
       <DashBoardCardLayout>
-        <DashBoardHomeCard>
+        {/* <DashBoardHomeCard>
           <img src="/assets/greenLayers.svg" alt="Create" />
           <span>
             <Link to="/createevent" style={{ color: `${Colors.defaultGreen}` }}>
               Create Event
             </Link>
           </span>
-        </DashBoardHomeCard>
+        </DashBoardHomeCard> */}
         <DashBoardHomeCard>
           <img src="/assets/greenVector.svg" alt="Join" />
           <span>

@@ -47,6 +47,7 @@ function EventsListing() {
     cookie.set('eid', event.id);
     window.localStorage.setItem('embed', embedCode);
     window.localStorage.setItem('event', JSON.stringify(event));
+    window.localStorage.setItem('eveBg', event?.images[0]);
     postCall(api.startVideo, { iframe: embedCode }, { event_id: event.id })
       .then((response) => {
         if (response.status === 200) {

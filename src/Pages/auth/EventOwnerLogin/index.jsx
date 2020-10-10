@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EventOwnerLayout from '../../../Commons/EventOwnerLayout';
 import styled from 'styled-components';
 import FormInput from '../../../Components/FormInput/Index';
@@ -6,7 +6,7 @@ import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Label } from '../EventOwnerRegister';
-import { postCall } from '../../../APIs/requests';
+import { getCall, postCall } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import { useAppContext } from '../../../Context/AppContext';
 import toaster from 'toasted-notes';
@@ -22,6 +22,20 @@ const EventOwnerLogin = () => {
   const [error, setError] = useState(null);
   const [, setShowError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [event, setEvent] = useState(null);
+
+  useEffect(() => {
+    getCall(api.getEvent(process.env.REACT_APP_EVENT_TODAY))
+      .then((response) => {
+        if (response.status === 200 && response.data) {
+          setEvent(response.data);
+          window.localStorage.setItem('evtoday', JSON.stringify(response.data));
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, []);
 
   function inputChangeHandler(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -76,7 +90,8 @@ const EventOwnerLogin = () => {
               pathname: state?.returnTo || returnPage || '/dashboard',
               state: { user },
             });
-            window.location.href = state?.returnTo || returnPage || '/dashboard';
+            window.location.href =
+              state?.returnTo || returnPage || '/dashboard';
           }, 5000);
         }
       })
@@ -88,6 +103,7 @@ const EventOwnerLogin = () => {
         setLoading(false);
       });
   }
+
   return (
     <EventOwnerLayout createAcc={false} title="Log in into your account">
       {loading ? (
@@ -95,6 +111,25 @@ const EventOwnerLogin = () => {
           <img src="/assets/images/icons/loading.svg" alt="Loading..." />
         </LoadingIcon>
       ) : null}
+      <EventToday>
+        <img src={event && event.images[0]} alt="Event" />
+        <div>
+          <p style={{ fontWeight: 'BOLD', fontSize: '14px' }}>
+            Happening today
+          </p>
+          <p>#{event?.hashtag}</p>
+          <Link
+            to={{ pathname: `/event/detail/${event?.id}` }}
+            style={{
+              color: `${Colors.defaultGreen}`,
+              fontSize: '12px',
+              marginTop: '10px',
+            }}
+          >
+            View Details
+          </Link>
+        </div>
+      </EventToday>
       <EventOwnerLoginForm>
         <div>
           <Label>
@@ -131,6 +166,24 @@ const EventOwnerLogin = () => {
     </EventOwnerLayout>
   );
 };
+
+export const EventToday = styled.div`
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  img {
+    width: 100px;
+    border-radius: 4px;
+    margin-right: 20px;
+  }
+  div {
+    p {
+      margin: 0;
+    }
+  }
+`;
+
 const EventOwnerLoginForm = styled.form`
   display: flex;
   flex-direction: column;
