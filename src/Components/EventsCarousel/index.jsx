@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import Styled from 'styled-components';
+// import Slider from 'infinite-react-carousel';
 
 function EventsCarousel({ data }) {
   const wrapperRef = useRef(null);
@@ -33,6 +34,7 @@ function EventsCarousel({ data }) {
 
   return (
     <>
+      {/* <Slider dots>{renderSec()}</Slider> */}
       <CarouselWrapper ref={wrapperRef}>
         {renderEvents()}
         <SpaceAtEnd />
