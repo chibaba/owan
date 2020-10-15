@@ -64,14 +64,14 @@ const WelcomePage = () => {
           </div>
         </EventToday>
         <div className="event-directory">
-          {/* <Card to="/owner/createevent">
+          <Card to="/owner/createevent">
             <img
               src="/assets/createEventGreen.svg"
               alt="createicon"
               className="directoryicon"
             />
             <p>Create Event</p>
-          </Card> */}
+          </Card>
           {latestEvent ? (
             <>
               <Card
