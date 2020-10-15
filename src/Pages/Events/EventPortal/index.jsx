@@ -146,10 +146,10 @@ const EventPortal = ({ imageUrl }) => {
           </Link>
         </ButtonDiv>
         <DashBoardCardLayout notFull={true}>
-          {/* <Card to={{ pathname: '/owner/createEvent' }}>
+          <Card to={{ pathname: '/owner/createEvent' }}>
             <img src="/assets/createEventGreen.svg" alt="Create" />
             <p>Create Event</p>
-          </Card> */}
+          </Card>
           <Card to={{ pathname: '/owner/wallet' }}>
             <img src="/assets/walletgreen.svg" alt="Create" />
             <p>Wallet</p>
