@@ -14,8 +14,6 @@ import {
 import api from '../../../APIs/endpoints';
 import toast from 'toasted-notes';
 import cookie from 'js-cookie';
-import { Link } from 'react-router-dom';
-import { EventToday } from '../../auth/EventOwnerLogin';
 import { PaystackConsumer } from 'react-paystack';
 
 const WalletBalance = () => {
@@ -43,7 +41,6 @@ const WalletBalance = () => {
     null,
   );
   const [loading, setLoading] = useState(false);
-  const [event, setEvent] = useState(null);
   const [userData, setUserData] = useState(null);
 
   const paystackProps = {
@@ -62,7 +59,6 @@ const WalletBalance = () => {
 
   useEffect(() => {
     const customerid = cookie.get('auid');
-    setEvent(JSON.parse(window.localStorage.getItem('evtoday')));
     setUserData(JSON.parse(cookie.get('udt')));
 
     getCallTransactions(api.getWalletBalance(customerid), {}).then(
@@ -270,25 +266,6 @@ const WalletBalance = () => {
         </WalletModal>
       ) : null}
       <WalletLayout>
-        <EventToday>
-          <img src={event && event.images[0]} alt="Event" />
-          <div>
-            <p style={{ fontWeight: 'BOLD', fontSize: '14px' }}>
-              Happening today
-            </p>
-            <p>#{event?.hashtag}</p>
-            <Link
-              to={{ pathname: `/event/detail/${event?.id}` }}
-              style={{
-                color: `${Colors.defaultGreen}`,
-                fontSize: '12px',
-                marginTop: '10px',
-              }}
-            >
-              View Details
-            </Link>
-          </div>
-        </EventToday>
         <CurrBalance balance={balance} />
         {/* {isOwner ? (
           <DashBoardCardLayout>
