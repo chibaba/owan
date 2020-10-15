@@ -33,7 +33,11 @@ export const postCall = async (url, data, headers, noClient) => {
   })
     .then((response) => response.data)
     .catch((error) => {
-      throw new Error(error.response.data.message);
+      if (error.response.data.message) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error(error.response.data.error);
+      }
     });
 };
 
