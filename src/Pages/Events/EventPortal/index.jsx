@@ -54,12 +54,15 @@ const EventPortal = ({ imageUrl }) => {
     const currentDate = new Date();
     const eventEnd = new Date(ev?.end_date);
 
-    if (currentDate > eventEnd) {
+    if (currentDate > eventEnd || !ev?.end_date) {
       setLoading(false);
-      toaster.notify('The end date of this event has passed.', {
-        position: 'top',
-        duration: 5000,
-      });
+      toaster.notify(
+        'The end date of this event has passed. Kindly create a new one.',
+        {
+          position: 'top',
+          duration: 5000,
+        },
+      );
 
       return;
     }
