@@ -9,10 +9,7 @@ import eyeson from 'eyeson';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 import cookie from 'js-cookie';
-import {
-  getCallTransactions,
-  postCallTransactions,
-} from '../../../APIs/requests';
+import { getCallTransactions } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import Icon from '@mdi/react';
 import { mdiCash100, mdiWallet } from '@mdi/js';
@@ -24,6 +21,7 @@ import {
 } from '../../wallet/WalletBalance';
 import FormInput from '../../../Components/FormInput/Index';
 import toast from 'toasted-notes';
+import { PaystackConsumer } from 'react-paystack';
 
 function Video() {
   const {
@@ -44,15 +42,30 @@ function Video() {
     showFundWallet,
     handleFundWallet,
   } = useVideoCallContext();
-  const { state, pathname } = useLocation();
+  const { state } = useLocation();
   const [walletBalance, setWalletBalance] = useState(0);
   const dinominationRef = useRef(null);
   const [denomination, setDenomination] = useState(0);
   const embedRef = useRef(null);
   const [frameLink, setFrameLink] = useState('');
   const [amount, setAmount] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [eveBg, setEveBg] = useState('');
+  const [userData, setUserData] = useState(null);
+
+  const paystackProps = {
+    email: userData?.email,
+    amount,
+    publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
+    text: 'Fund wallet',
+    reference: new Date().getTime(),
+    onSuccess: () =>
+      toast.notify('Wallet successfully funded!', {
+        position: 'bottom',
+        duration: 5000,
+      }),
+    onClose: () => {},
+  };
 
   const isSafari = window.safari !== undefined;
 
@@ -105,6 +118,7 @@ function Video() {
 
   useEffect(() => {
     setEveBg(window.localStorage.getItem('eveBg'));
+    setUserData(JSON.parse(cookie.get('udt')));
   }, []);
 
   // useEffect(() => {
@@ -142,27 +156,7 @@ function Video() {
   }
 
   const handleAmountChange = (e) => {
-    setAmount(e.target.value);
-  };
-
-  const handleInitializePayment = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const data = {
-      amount: (amount * 100).toString(),
-      redirectUrl: `${process.env.REACT_APP_APP_URI}${pathname}`,
-    };
-
-    postCallTransactions(api.initializePayment, data, {})
-      .then((response) => {
-        if (response.data) {
-          window.location.href = response.data.url;
-        }
-      })
-      .catch((error) => {
-        console.log(error.message);
-        toast.notify(error.message, { position: 'top', duration: 5000 });
-      });
+    setAmount(+e.target.value * 100);
   };
 
   return (
@@ -187,11 +181,24 @@ function Video() {
                 onChange={handleAmountChange}
                 inputStyle={{ textAlign: 'center', marginBottom: '50px' }}
               />
-              <Button
-                text="Continue"
-                onClick={handleInitializePayment}
-                loading={loading}
-              />
+              <PaystackConsumer {...paystackProps}>
+                {({ initializePayment }) => (
+                  <Button
+                    onClick={() => {
+                      if (!amount || amount / 100 < 100) {
+                        toast.notify(
+                          'You can only fund your wallet with 100 naira and above',
+                          { position: 'top', duration: 5000 },
+                        );
+                      } else {
+                        initializePayment();
+                      }
+                    }}
+                    text="Continue"
+                    loading={loading}
+                  />
+                )}
+              </PaystackConsumer>
               <Button
                 text="Cancel"
                 cancelbtn={true}

@@ -20,10 +20,10 @@ const EventPortal = ({ imageUrl }) => {
 
   useEffect(() => {
     if (state) {
-      setEv(state.latestEvent);
       const event =
         state.latestEvent ||
         JSON.parse(window.localStorage.getItem('latestEvent'));
+      setEv(event);
       let date = event.event_date.split('T')[0];
       window.localStorage.setItem('event', JSON.stringify(state.latestEvent));
 
@@ -51,6 +51,22 @@ const EventPortal = ({ imageUrl }) => {
   const handleStartEvent = (e) => {
     e.preventDefault();
     setLoading(true);
+    const currentDate = new Date();
+    const eventEnd = new Date(ev?.end_date);
+
+    if (currentDate > eventEnd || !ev?.end_date) {
+      setLoading(false);
+      toaster.notify(
+        'The end date of this event has passed. Kindly create a new one.',
+        {
+          position: 'top',
+          duration: 5000,
+        },
+      );
+
+      return;
+    }
+
     // postCall(api.startVideo, {}, { event_id: state.latestEvent.id })
     //   .then((response) => {
     //     if (response.status === 200) {
@@ -90,8 +106,7 @@ const EventPortal = ({ imageUrl }) => {
           <img src="/assets/calender.svg" alt="celender" />
           <div style={{ marginLeft: '0.8rem' }}>
             <span className="date">
-              {new Date(state?.latestEvent.event_date).toDateString() ||
-                new Date(ev?.event_date).toDateString()}
+              {new Date(ev?.event_date).toDateString()}
             </span>
             <span className="time">
               {state?.latestEvent.event_time || ev?.event_time}

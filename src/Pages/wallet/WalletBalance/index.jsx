@@ -14,8 +14,7 @@ import {
 import api from '../../../APIs/endpoints';
 import toast from 'toasted-notes';
 import cookie from 'js-cookie';
-import { Link, useLocation } from 'react-router-dom';
-import { EventToday } from '../../auth/EventOwnerLogin';
+import { PaystackConsumer } from 'react-paystack';
 
 const WalletBalance = () => {
   const userId = cookie.get('auid');
@@ -30,7 +29,6 @@ const WalletBalance = () => {
   const [amount, setAmount] = useState(0);
   const [balance, setBalance] = useState(0);
   const [banks, setBanks] = useState(null);
-  const { pathname } = useLocation();
   const [transferAuth, setTransferAuth] = useState({
     bankCode: '',
     accountNumber: '',
@@ -43,11 +41,25 @@ const WalletBalance = () => {
     null,
   );
   const [loading, setLoading] = useState(false);
-  const [event, setEvent] = useState(null);
+  const [userData, setUserData] = useState(null);
+
+  const paystackProps = {
+    email: userData?.email,
+    amount,
+    publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
+    text: 'Fund wallet',
+    reference: new Date().getTime(),
+    onSuccess: () =>
+      toast.notify('Wallet successfully funded!', {
+        position: 'bottom',
+        duration: 5000,
+      }),
+    onClose: () => {},
+  };
 
   useEffect(() => {
     const customerid = cookie.get('auid');
-    setEvent(JSON.parse(window.localStorage.getItem('evtoday')));
+    setUserData(JSON.parse(cookie.get('udt')));
 
     getCallTransactions(api.getWalletBalance(customerid), {}).then(
       (response) => {
@@ -115,7 +127,7 @@ const WalletBalance = () => {
   // };
 
   const handleAmountChange = (e) => {
-    setAmount(e.target.value);
+    setAmount(+e.target.value * 100);
   };
 
   const handleFormAlertReset = () => {
@@ -124,26 +136,6 @@ const WalletBalance = () => {
       message: null,
       show: false,
     });
-  };
-
-  const handleInitializePayment = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const data = {
-      amount: (amount * 100).toString(),
-      redirectUrl: `${process.env.REACT_APP_APP_URI}${pathname}`,
-    };
-
-    postCallTransactions(api.initializePayment, data, {})
-      .then((response) => {
-        if (response.data) {
-          window.location.href = response.data.url;
-        }
-      })
-      .catch((error) => {
-        console.log(error.message);
-        toast.notify(error.message, { position: 'top', duration: 5000 });
-      });
   };
 
   const handleAddTransferAuth = () => {
@@ -183,11 +175,24 @@ const WalletBalance = () => {
                     onChange={handleAmountChange}
                     inputStyle={{ textAlign: 'center', marginBottom: '50px' }}
                   />
-                  <Button
-                    text="Continue"
-                    onClick={handleInitializePayment}
-                    loading={loading}
-                  />
+                  <PaystackConsumer {...paystackProps}>
+                    {({ initializePayment }) => (
+                      <Button
+                        onClick={() => {
+                          if (!amount || amount / 100 < 100) {
+                            toast.notify(
+                              'You can only fund your wallet with 100 naira and above',
+                              { position: 'top', duration: 5000 },
+                            );
+                          } else {
+                            initializePayment();
+                          }
+                        }}
+                        text="Continue"
+                        loading={loading}
+                      />
+                    )}
+                  </PaystackConsumer>
                   <Button
                     text="Cancel"
                     cancelbtn={true}
@@ -261,25 +266,6 @@ const WalletBalance = () => {
         </WalletModal>
       ) : null}
       <WalletLayout>
-        <EventToday>
-          <img src={event && event.images[0]} alt="Event" />
-          <div>
-            <p style={{ fontWeight: 'BOLD', fontSize: '14px' }}>
-              Happening today
-            </p>
-            <p>#{event?.hashtag}</p>
-            <Link
-              to={{ pathname: `/event/detail/${event?.id}` }}
-              style={{
-                color: `${Colors.defaultGreen}`,
-                fontSize: '12px',
-                marginTop: '10px',
-              }}
-            >
-              View Details
-            </Link>
-          </div>
-        </EventToday>
         <CurrBalance balance={balance} />
         {/* {isOwner ? (
           <DashBoardCardLayout>

@@ -44,6 +44,21 @@ function EventsListing() {
   const handleStartEvent = (e) => {
     e.preventDefault();
     setLoading(true);
+    const today = new Date();
+    const end_date = new Date(event?.end_date);
+
+    if (today > end_date || !event?.end_date) {
+      setLoading(false);
+      toast.notify(
+        'The end date of this event has passed. Kindly create a new one.',
+        {
+          position: 'top',
+          duration: 5000,
+        },
+      );
+
+      return;
+    }
     cookie.set('eid', event.id);
     window.localStorage.setItem('embed', embedCode);
     window.localStorage.setItem('event', JSON.stringify(event));
@@ -71,6 +86,22 @@ function EventsListing() {
   const handleJoinEvent = (e) => {
     e.preventDefault();
     setLoading(true);
+    const today = new Date();
+    const end_date = new Date(event?.end_date);
+
+    if (today > end_date || !event?.end_date) {
+      setLoading(false);
+      toast.notify(
+        'The end date of this event has passed. Kindly create a new one.',
+        {
+          position: 'top',
+          duration: 5000,
+        },
+      );
+
+      return;
+    }
+
     window.localStorage.setItem('event', JSON.stringify(event));
     window.localStorage.setItem('eveBg', event?.images[0]);
     postCall(
