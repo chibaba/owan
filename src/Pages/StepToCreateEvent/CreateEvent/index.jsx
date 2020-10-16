@@ -25,6 +25,7 @@ const CreateEvent = () => {
     location: 'online',
     event_date: '',
     event_time: '',
+    end_date: '',
     meta: {
       cashgifts: false,
       reminder: false,
@@ -80,6 +81,7 @@ const CreateEvent = () => {
       description: '',
       location: 'online',
       event_date: '',
+      end_date: '',
       event_time: '',
       meta: {
         cashgifts: false,
@@ -92,6 +94,15 @@ const CreateEvent = () => {
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
+
+    if (new Date(data.event_date) > new Date(data.end_date)) {
+      toaster.notify('End date must be ahead of start date', {
+        position: 'top',
+        duration: 5000,
+      });
+      return;
+    }
+
     let formData = new FormData();
 
     for (let i in data) {
@@ -207,18 +218,27 @@ const CreateEvent = () => {
             <DateInput
               className="half"
               name="event_date"
-              label="Date"
+              label="Start Date"
               placeholder="Date"
               value={data.event_date}
               onChange={handleInputChange}
             />
-            <TimeInput
+            <DateInput
               className="half"
-              name="event_time"
-              value={data.event_time}
+              name="end_date"
+              label="End Date"
+              placeholder="Date"
+              value={data.end_date}
               onChange={handleInputChange}
             />
           </div>
+          <TimeInput
+            className="half"
+            name="event_time"
+            label="Time"
+            value={data.event_time}
+            onChange={handleInputChange}
+          />
           <h4 className="tittle">Location</h4>
           <div className="radio-area multiple">
             <RadioButton
