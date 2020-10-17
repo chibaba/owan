@@ -26,7 +26,9 @@ const CreateEvent = () => {
     event_date: '',
     event_time: '',
     end_date: '',
+    eventStatus: 'Public',
     meta: {
+      how_we_met: '',
       cashgifts: false,
       reminder: false,
     },
@@ -214,6 +216,13 @@ const CreateEvent = () => {
             required
             label="Event description"
           />
+          <FormTextarea
+            name="how_we_met"
+            value={data.how_we_met}
+            onChange={handleInputChange}
+            required
+            label="How did the couple meet? (Optional)"
+          />
           <div className="multiple-inputs">
             <DateInput
               className="half"
@@ -239,6 +248,21 @@ const CreateEvent = () => {
             value={data.event_time}
             onChange={handleInputChange}
           />
+          <h4 className="tittle">Event Type</h4>
+          <div className="radio-area multiple">
+            <RadioButton
+              name="eventStatus"
+              label="Private"
+              value="private"
+              onSelect={handleRadioSelect}
+            />
+            <RadioButton
+              name="eventStatus"
+              label="Public"
+              value="public"
+              onSelect={handleRadioSelect}
+            />
+          </div>
           <h4 className="tittle">Location</h4>
           <div className="radio-area multiple">
             <RadioButton
