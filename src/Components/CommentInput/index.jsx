@@ -1,11 +1,11 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-function CommentInput({ height }) {
+function CommentInput({ height, value, onChange, onClick }) {
   return (
     <InputWrapper height={height}>
-      <Input placeholder="Comment" />
-      <SubmitButton>
+      <Input placeholder="Comment" value={value} onChange={onChange} />
+      <SubmitButton onClick={onClick}>
         <img src="/assets/images/icons/send.png" alt="send" />
       </SubmitButton>
     </InputWrapper>
