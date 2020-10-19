@@ -26,9 +26,11 @@ const CreateEvent = () => {
     event_date: '',
     event_time: '',
     end_date: '',
+    eventStatus: 'Public',
     meta: {
-      cashgifts: false,
-      reminder: false,
+      'met': '',
+      'cashgifts': false,
+      'reminder': false,
     },
     hashtag: '',
   };
@@ -67,6 +69,11 @@ const CreateEvent = () => {
       });
     }
   };
+
+  const handleMetChange =(e) => {
+    setData({...data, meta: {...data.meta, met: e.target.value}})
+  }
+
   const handleInputCancel = (event) => {
     event.preventDefault();
     setData({
@@ -84,8 +91,9 @@ const CreateEvent = () => {
       end_date: '',
       event_time: '',
       meta: {
-        cashgifts: false,
-        reminder: false,
+        'met': '',
+        'cashgifts': false,
+        'reminder': false,
       },
       hashtag: '',
     });
@@ -214,6 +222,13 @@ const CreateEvent = () => {
             required
             label="Event description"
           />
+          <FormTextarea
+            name="met"
+            value={data.meta.met}
+            onChange={handleMetChange}
+            required
+            label="How did the couple meet? (Optional)"
+          />
           <div className="multiple-inputs">
             <DateInput
               className="half"
@@ -239,6 +254,21 @@ const CreateEvent = () => {
             value={data.event_time}
             onChange={handleInputChange}
           />
+          <h4 className="tittle">Event Type</h4>
+          <div className="radio-area multiple">
+            <RadioButton
+              name="eventStatus"
+              label="Private"
+              value="private"
+              onSelect={handleRadioSelect}
+            />
+            <RadioButton
+              name="eventStatus"
+              label="Public"
+              value="public"
+              onSelect={handleRadioSelect}
+            />
+          </div>
           <h4 className="tittle">Location</h4>
           <div className="radio-area multiple">
             <RadioButton
