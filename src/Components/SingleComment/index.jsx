@@ -42,7 +42,7 @@ const CommentHead = Styled.div`
   display: flex;
   h6 {
     color: #fff;
-    font-size: 8px;
+    font-size: 12px;
     margin: 0;
     margin-right: 10px;
   }
@@ -50,11 +50,11 @@ const CommentHead = Styled.div`
 
 const HeadNotification = Styled.span`
   color: #fff;
-  font-size: 8px;
+  font-size: 12px;
 `;
 
 const Comment = Styled.p`
-  font-size: 8px;
+  font-size: 12px;
   color: #fff;
 `;
 
