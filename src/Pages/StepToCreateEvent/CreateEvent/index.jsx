@@ -28,9 +28,9 @@ const CreateEvent = () => {
     end_date: '',
     eventStatus: 'Public',
     meta: {
-      how_we_met: '',
-      cashgifts: false,
-      reminder: false,
+      'met': '',
+      'cashgifts': false,
+      'reminder': false,
     },
     hashtag: '',
   };
@@ -69,6 +69,11 @@ const CreateEvent = () => {
       });
     }
   };
+
+  const handleMetChange =(e) => {
+    setData({...data, meta: {...data.meta, met: e.target.value}})
+  }
+
   const handleInputCancel = (event) => {
     event.preventDefault();
     setData({
@@ -86,8 +91,9 @@ const CreateEvent = () => {
       end_date: '',
       event_time: '',
       meta: {
-        cashgifts: false,
-        reminder: false,
+        'met': '',
+        'cashgifts': false,
+        'reminder': false,
       },
       hashtag: '',
     });
@@ -217,9 +223,9 @@ const CreateEvent = () => {
             label="Event description"
           />
           <FormTextarea
-            name="how_we_met"
-            value={data.how_we_met}
-            onChange={handleInputChange}
+            name="met"
+            value={data.meta.met}
+            onChange={handleMetChange}
             required
             label="How did the couple meet? (Optional)"
           />
