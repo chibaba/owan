@@ -91,7 +91,7 @@ function Video() {
     if (showYoutube) {
       if (frame) {
         // embedRef.current.innerHTML = frame;
-        setFrameLink(`${frame}?rel=0&autoplay=1&playsinline=0`);
+        setFrameLink(`${frame}?rel=0&autoplay=1&playsinline=1`);
 
         handleShowYoutube(true);
         handleShowAttendees(false);
