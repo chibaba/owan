@@ -18,19 +18,19 @@ function EventComments() {
     messageType: 'TEXT',
   });
   const [messageSent, setMessageSent] = useState(false);
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     let event = JSON.parse(window.localStorage.getItem('event'));
     setMessageData((prevState) => ({ ...prevState, to: event?.group_id }));
 
-    initializeConnection()
+    initializeConnection();
   }, []);
 
   const initializeConnection = () => {
     const udt = JSON.parse(cookie.get('udt'));
 
-     socket.on('connect', function (socket) {
+    socket.on('connect', function (socket) {
       console.log('Connected');
     });
 
@@ -41,9 +41,11 @@ function EventComments() {
       });
     });
     socket.on('broadcast:message:receive', (payload) => {
-      setMessages((prevState) => [...prevState, payload])
-    })
-  }
+      if(payload.messageType === "TEXT") {
+        setMessages((prevState) => [...prevState, payload]);
+      }
+    });
+  };
 
   const handleCommentChange = (e) => {
     setMessageData({ ...messageData, content: e.target.value });
@@ -57,22 +59,23 @@ function EventComments() {
   };
 
   const renderMessages = () => {
-    return messages.map(message => {
-      return (<SingleComment
-              image="/assets/images/me.jpeg"
-              name={message?.sender?.name}
-              comment={message?.content}
-            />)
-    })
-  }
+    return messages.map((message, index) => {
+      return (
+        <SingleComment
+          image="/assets/images/me.jpeg"
+          name={message?.sender?.name}
+          comment={message?.content}
+          key={index}
+        />
+      );
+    });
+  };
 
   return (
     <CommentWrapper>
       <CommentsArea>
         <UserComment>
-          <CommentList>
-            {renderMessages()}
-          </CommentList>
+          <CommentList>{renderMessages()}</CommentList>
           <CommentInput
             height="38px"
             onChange={handleCommentChange}
