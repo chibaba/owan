@@ -14,6 +14,7 @@ import cookie from 'js-cookie';
 import toast from 'toasted-notes';
 import { useVideoCallContext } from '../../../Context/VideoCallContext';
 import toaster from 'toasted-notes';
+import socket from '../../../socket';
 
 function EventOptions({ wallet, updateWallet }) {
   const { denom } = useAppContext();
@@ -30,6 +31,12 @@ function EventOptions({ wallet, updateWallet }) {
     showYoutube,
     handleFundWallet,
   } = useVideoCallContext();
+  const [likeData] = useState({
+    to: JSON.parse(window.localStorage.getItem('event')).group_id,
+    recipientType: 'group',
+    content: 'like',
+    messageType: 'LIKE',
+  });
 
   useEffect(() => {
     getCall(api.getEventLikeCount(cookie.get('eid')), {})
@@ -39,7 +46,16 @@ function EventOptions({ wallet, updateWallet }) {
       .catch((error) => {
         console.log(error);
       });
-  }, [liked]);
+      socket.on('broadcast:message:receive', (payload) => {
+        if(payload.messageType.toLowerCase() === "like") {
+          setShowLikeBubbles(true);
+          setTimeout(() => {
+            setShowLikeBubbles(false);
+          }, 3000)
+          setLikeCount(prevState => prevState + 1);
+        }
+      })
+  }, []);
 
   useEffect(() => {
     setInterval(() => {
@@ -104,8 +120,8 @@ function EventOptions({ wallet, updateWallet }) {
   }, [tapCount]);
 
   function handleLikeEvent(e) {
+    socket.emit('message:send', likeData);
     setLiked(true);
-    setShowLikeBubbles(true);
 
     setTimeout(() => {
       setShowLikeBubbles(false);
