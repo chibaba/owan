@@ -14,7 +14,9 @@ import {
 import api from '../../../APIs/endpoints';
 import toast from 'toasted-notes';
 import cookie from 'js-cookie';
-import { PaystackConsumer } from 'react-paystack';
+import {  PaystackButton } from 'react-paystack';
+import './style.scss'
+// import api from ''
 
 const WalletBalance = () => {
   const userId = cookie.get('auid');
@@ -42,24 +44,32 @@ const WalletBalance = () => {
   );
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState(null);
-
-  const paystackProps = {
-    email: userData?.email,
+  const [paystackProps, setPaystackProps] = useState({
+    email: '',
     amount,
     publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
     text: 'Fund wallet',
-    reference: new Date().getTime(),
+    reference: '',
     onSuccess: () =>
       toast.notify('Wallet successfully funded!', {
         position: 'bottom',
         duration: 5000,
       }),
     onClose: () => {},
+  });
+
+  const initializePaymentData = {
+    amount,
+    email: userData?.email,
+    provider: 'paystack',
+    userId: userData?.userId,
   };
 
   useEffect(() => {
     const customerid = cookie.get('auid');
-    setUserData(JSON.parse(cookie.get('udt')));
+    let userData = JSON.parse(cookie.get('udt'));
+    setUserData(userData);
+    setPaystackProps((prevState) => ({ ...prevState, email: userData?.email }));
 
     getCallTransactions(api.getWalletBalance(customerid), {}).then(
       (response) => {
@@ -106,6 +116,13 @@ const WalletBalance = () => {
     }
   }, [accountNumber, transferAuth, userId, withdrawAmount]);
 
+  const initializeModalPayment = async () => {
+    return postCallTransactions(
+      'https://sandbox.api.humbergames.com/payments/v1/paystack/initialize',
+      initializePaymentData,
+    ).then((response) => response.data.reference);
+  };
+
   const renderBanks = () => {
     return banks?.map((bank, index) => {
       return (
@@ -127,7 +144,9 @@ const WalletBalance = () => {
   // };
 
   const handleAmountChange = (e) => {
+    let amount = e.target.value;
     setAmount(+e.target.value * 100);
+    setPaystackProps((prevState) => ({ ...prevState, amount: +amount * 100 }));
   };
 
   const handleFormAlertReset = () => {
@@ -143,13 +162,15 @@ const WalletBalance = () => {
     postCallTransactions(api.withdrawFunds, initializeWithdrawalData, {})
       .then((response) => {
         setLoading(false);
-        console.log(response);
       })
       .catch((error) => {
         setLoading(false);
         toast.notify(error.message, { position: 'top', duration: 5000 });
       });
   };
+
+  const callback = () => {};
+  const close = () => {};
 
   return (
     <>
@@ -175,24 +196,44 @@ const WalletBalance = () => {
                     onChange={handleAmountChange}
                     inputStyle={{ textAlign: 'center', marginBottom: '50px' }}
                   />
-                  <PaystackConsumer {...paystackProps}>
-                    {({ initializePayment }) => (
-                      <Button
-                        onClick={() => {
-                          if (!amount || amount / 100 < 100) {
-                            toast.notify(
-                              'You can only fund your wallet with 100 naira and above',
-                              { position: 'top', duration: 5000 },
-                            );
-                          } else {
-                            initializePayment();
+                  <PaystackButton
+                    text="Make Payment"
+                    className="payButton"
+                    callback={callback}
+                    close={close}
+                    reference={paystackProps.reference}
+                    email={paystackProps.email}
+                    amount={paystackProps.amount}
+                    publicKey={process.env.REACT_APP_PAYSTACK_PUBLIC_KEY}
+                    embed={true}
+                    tag="button"
+                  />
+                  <Button
+                    onClick={async () => {
+                      if (!amount || amount / 100 < 100) {
+                        toast.notify(
+                          'You can only fund your wallet with 100 naira and above',
+                          { position: 'top', duration: 5000 },
+                        );
+                      } else {
+                        setLoading(true);
+                        initializeModalPayment().then((response) => {
+                          console.log(response)
+                          if(response) {
+                            setPaystackProps((prevState) => ({
+                              ...prevState,
+                              reference: response,
+                            }));
+                            setTimeout(() => {
+                              document.querySelector('.payButton').click();
+                            }, 2000)
                           }
-                        }}
-                        text="Continue"
-                        loading={loading}
-                      />
-                    )}
-                  </PaystackConsumer>
+                        });
+                      }
+                    }}
+                    text="Continue"
+                    loading={loading}
+                  />
                   <Button
                     text="Cancel"
                     cancelbtn={true}
