@@ -23,6 +23,7 @@ function EventOptions({ wallet, updateWallet }) {
   const [likeCount, setLikeCount] = useState(0);
   const [tapCount, setTapCount] = useState(0);
   const [showLikeBubbles, setShowLikeBubbles] = useState(false);
+  const [event] = useState(JSON.parse(window.localStorage.getItem('event')));
   const {
     showAttendees,
     handleShowAttendees,
@@ -32,20 +33,20 @@ function EventOptions({ wallet, updateWallet }) {
     handleFundWallet,
   } = useVideoCallContext();
   const [likeData] = useState({
-    to: JSON.parse(window.localStorage.getItem('event')).group_id,
+    to: event?.group_id,
     recipientType: 'group',
     content: 'like',
     messageType: 'LIKE',
   });
   const [sprayData] = useState({
-    to: JSON.parse(window.localStorage.getItem('event')).group_id,
+    to: event?.group_id,
     recipientType: 'group',
     content: 'spray',
     messageType: 'SPRAY',
   });
 
   useEffect(() => {
-    getCall(api.getEventLikeCount(cookie.get('eid')), {})
+    getCall(api.getEventLikeCount(event?.id), {})
       .then((response) => {
         setLikeCount(response.all_likes);
       })
@@ -71,7 +72,7 @@ function EventOptions({ wallet, updateWallet }) {
 
   useEffect(() => {
     setInterval(() => {
-      getCall(api.getEventAttendee(cookie.get('eid')))
+      getCall(api.getEventAttendee(event?.id))
         .then((response) => {
           if (response.status === 200) {
             setAttendees(response.attendee.length);
@@ -81,7 +82,7 @@ function EventOptions({ wallet, updateWallet }) {
           console.log(error);
         });
     }, 30000);
-  }, []);
+  }, [event]);
 
   const charge = useCallback(() => {
     handleSprayEffect(false);
@@ -89,26 +90,27 @@ function EventOptions({ wallet, updateWallet }) {
       return;
     }
 
-    const event = JSON.parse(window.localStorage.getItem('event'));
     postCallTransactions(
       api.instantCharge,
       {
         amount: tapCount * denom * 100,
         clientId: process.env.REACT_APP_PAYMENT_CLIENT_ID,
-        productId: event.product_id,
+        productId: event?.product_id,
         userId: cookie.get('auid'),
       },
       {},
     )
       .then((response) => {
+        const userData = JSON.parse(cookie.get('udt'))
         if (response.status) {
           postCallTransactions(
             api.sprayLogs,
             {
               transaction_ref: response.reference,
               amount: tapCount * denom,
+              user_name: userData?.profile?.name
             },
-            { user_id: cookie.get('auid'), event_id: event.id },
+            { user_id: cookie.get('auid'), event_id: event?.id },
           )
             .then((response) => {})
             .catch((error) => {
@@ -119,7 +121,7 @@ function EventOptions({ wallet, updateWallet }) {
       .catch((error) => {
         toast.notify(error.message, { position: 'top', duration: 5000 });
       });
-  }, [denom, tapCount, wallet, handleSprayEffect]);
+  }, [denom, tapCount, wallet, handleSprayEffect, event]);
 
   useEffect(() => {
     const debounceReq = setTimeout(() => {
@@ -143,7 +145,7 @@ function EventOptions({ wallet, updateWallet }) {
 
     target.classList.add('heartbeat');
 
-    postCall(api.postEventLike, {}, { event_id: cookie.get('eid') })
+    postCall(api.postEventLike, {}, { event_id: event?.id })
       .then((response) => {
         if (response.status === 200) {
           setTimeout(() => {
