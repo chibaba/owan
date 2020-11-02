@@ -118,7 +118,7 @@ const WalletBalance = () => {
 
   const initializeModalPayment = async () => {
     return postCallTransactions(
-      'https://sandbox.api.humbergames.com/payments/v1/paystack/initialize',
+      api.initializePayment,
       initializePaymentData,
     ).then((response) => response.data.reference);
   };

@@ -26,7 +26,7 @@ import {
 import FormInput from '../../../Components/FormInput/Index';
 import toast from 'toasted-notes';
 import { PaystackButton } from 'react-paystack';
-import './styles.scss'
+import './styles.scss';
 
 function Video() {
   const {
@@ -57,6 +57,8 @@ function Video() {
   const [loading, setLoading] = useState(false);
   const [eveBg, setEveBg] = useState('');
   const [userData, setUserData] = useState(null);
+  const [spenders, setSpenders] = useState(null);
+  const [mainSpender, setMainSpender] = useState(null);
 
   const [paystackProps, setPaystackProps] = useState({
     email: userData?.email,
@@ -123,7 +125,13 @@ function Video() {
       const event = JSON.parse(window.localStorage.getItem('event'));
       getCall(api.getSpendersClub(event.id))
         .then((response) => {
-          console.log(response);
+          if (response.status === 200) {
+            const filtered = response.spenders.filter(
+              (spender) => spender !== null,
+            );
+            setMainSpender(filtered[0]);
+            setSpenders(filtered.splice(0, 1));
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -161,7 +169,7 @@ function Video() {
 
   const initializeModalPayment = async () => {
     return postCallTransactions(
-      'https://sandbox.api.humbergames.com/payments/v1/paystack/initialize',
+      api.initializePayment,
       initializePaymentData,
     ).then((response) => response.data.reference);
   };
@@ -193,6 +201,23 @@ function Video() {
 
   const callback = () => {};
   const close = () => {};
+
+  const renderSprender = () => {
+    return (
+      spenders &&
+      spenders.map((spender, index) => {
+        return (
+          <BorderB key={index}>
+            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
+              <span>{index + 2}</span>
+              <div></div>
+              <span className="name">{spender}</span>
+            </MainName>
+          </BorderB>
+        );
+      })
+    );
+  };
 
   return (
     <VideoCallLayout>
@@ -314,45 +339,11 @@ function Video() {
             </SpenderContentWrapper>
           </SpendersHeader>
           <MainName>
-            <span>01</span>
+            <span>1</span>
             <div></div>
-            <span className="name">Ayodele Adeleke</span>
+            <span className="name">{mainSpender && mainSpender}</span>
           </MainName>
-          <BorderB>
-            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
-              <span>02</span>
-              <div></div>
-              <span className="name">Ayodele Adeleke</span>
-            </MainName>
-          </BorderB>
-          <BorderB>
-            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
-              <span>03</span>
-              <div></div>
-              <span className="name">Ayodele Adeleke</span>
-            </MainName>
-          </BorderB>
-          <BorderB>
-            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
-              <span>04</span>
-              <div></div>
-              <span className="name">Ayodele Adeleke</span>
-            </MainName>
-          </BorderB>
-          <BorderB>
-            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
-              <span>05</span>
-              <div></div>
-              <span className="name">Ayodele Adeleke</span>
-            </MainName>
-          </BorderB>
-          <BorderB>
-            <MainName style={{ boxShadow: 'none', marginTop: '10px' }}>
-              <span>06</span>
-              <div></div>
-              <span className="name">Ayodele Adeleke</span>
-            </MainName>
-          </BorderB>
+          {renderSprender()}
         </Drawer>
       ) : null}
       {showSpray ? (
