@@ -23,7 +23,7 @@ function EventOptions({ wallet, updateWallet }) {
   const [likeCount, setLikeCount] = useState(0);
   const [tapCount, setTapCount] = useState(0);
   const [showLikeBubbles, setShowLikeBubbles] = useState(false);
-  const [event, setEvent] = useState(JSON.parse(window.localStorage.getItem('event')));
+  const [event] = useState(JSON.parse(window.localStorage.getItem('event')));
   const {
     showAttendees,
     handleShowAttendees,
