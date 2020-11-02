@@ -9,7 +9,11 @@ import eyeson from 'eyeson';
 import Button from '../../../Commons/Button';
 import Colors from '../../../Commons/Colors';
 import cookie from 'js-cookie';
-import { getCallTransactions } from '../../../APIs/requests';
+import {
+  getCallTransactions,
+  getCall,
+  postCallTransactions,
+} from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
 import Icon from '@mdi/react';
 import { mdiCash100, mdiWallet } from '@mdi/js';
@@ -21,7 +25,8 @@ import {
 } from '../../wallet/WalletBalance';
 import FormInput from '../../../Components/FormInput/Index';
 import toast from 'toasted-notes';
-import { PaystackConsumer } from 'react-paystack';
+import { PaystackButton } from 'react-paystack';
+import './styles.scss'
 
 function Video() {
   const {
@@ -49,11 +54,11 @@ function Video() {
   const embedRef = useRef(null);
   const [frameLink, setFrameLink] = useState('');
   const [amount, setAmount] = useState(0);
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [eveBg, setEveBg] = useState('');
   const [userData, setUserData] = useState(null);
 
-  const paystackProps = {
+  const [paystackProps, setPaystackProps] = useState({
     email: userData?.email,
     amount,
     publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
@@ -65,6 +70,13 @@ function Video() {
         duration: 5000,
       }),
     onClose: () => {},
+  });
+
+  const initializePaymentData = {
+    amount,
+    email: userData?.email,
+    provider: 'paystack',
+    userId: userData?.userId,
   };
 
   const isSafari = window.safari !== undefined;
@@ -107,6 +119,19 @@ function Video() {
   }, [handleDenom]);
 
   useEffect(() => {
+    if (showTables) {
+      const event = JSON.parse(window.localStorage.getItem('event'));
+      getCall(api.getSpendersClub(event.id))
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [showTables]);
+
+  useEffect(() => {
     const customerid = cookie.get('auid');
 
     getCallTransactions(api.getWalletBalance(customerid), {}).then(
@@ -134,6 +159,13 @@ function Video() {
   //   }
   // }, [showTables]);
 
+  const initializeModalPayment = async () => {
+    return postCallTransactions(
+      'https://sandbox.api.humbergames.com/payments/v1/paystack/initialize',
+      initializePaymentData,
+    ).then((response) => response.data.reference);
+  };
+
   function closeModal(e) {
     if (e.target.id === 'modalss') {
       handleSprayState();
@@ -159,6 +191,9 @@ function Video() {
     setAmount(+e.target.value * 100);
   };
 
+  const callback = () => {};
+  const close = () => {};
+
   return (
     <VideoCallLayout>
       {showFundWallet ? (
@@ -181,24 +216,44 @@ function Video() {
                 onChange={handleAmountChange}
                 inputStyle={{ textAlign: 'center', marginBottom: '50px' }}
               />
-              <PaystackConsumer {...paystackProps}>
-                {({ initializePayment }) => (
-                  <Button
-                    onClick={() => {
-                      if (!amount || amount / 100 < 100) {
-                        toast.notify(
-                          'You can only fund your wallet with 100 naira and above',
-                          { position: 'top', duration: 5000 },
-                        );
-                      } else {
-                        initializePayment();
+              <PaystackButton
+                text="Make Payment"
+                className="payButton"
+                callback={callback}
+                close={close}
+                reference={paystackProps.reference}
+                email={paystackProps.email}
+                amount={paystackProps.amount}
+                publicKey={process.env.REACT_APP_PAYSTACK_PUBLIC_KEY}
+                embed={true}
+                tag="button"
+              />
+              <Button
+                onClick={async () => {
+                  if (!amount || amount / 100 < 100) {
+                    toast.notify(
+                      'You can only fund your wallet with 100 naira and above',
+                      { position: 'top', duration: 5000 },
+                    );
+                  } else {
+                    setLoading(true);
+                    initializeModalPayment().then((response) => {
+                      console.log(response);
+                      if (response) {
+                        setPaystackProps((prevState) => ({
+                          ...prevState,
+                          reference: response,
+                        }));
+                        setTimeout(() => {
+                          document.querySelector('.payButton').click();
+                        }, 2000);
                       }
-                    }}
-                    text="Continue"
-                    loading={loading}
-                  />
-                )}
-              </PaystackConsumer>
+                    });
+                  }
+                }}
+                text="Continue"
+                loading={loading}
+              />
               <Button
                 text="Cancel"
                 cancelbtn={true}

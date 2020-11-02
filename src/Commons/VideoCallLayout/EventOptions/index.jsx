@@ -37,6 +37,12 @@ function EventOptions({ wallet, updateWallet }) {
     content: 'like',
     messageType: 'LIKE',
   });
+  const [sprayData] = useState({
+    to: JSON.parse(window.localStorage.getItem('event')).group_id,
+    recipientType: 'group',
+    content: 'spray',
+    messageType: 'SPRAY',
+  });
 
   useEffect(() => {
     getCall(api.getEventLikeCount(cookie.get('eid')), {})
@@ -53,6 +59,12 @@ function EventOptions({ wallet, updateWallet }) {
             setShowLikeBubbles(false);
           }, 3000)
           setLikeCount(prevState => prevState + 1);
+        }
+        if(payload.messageType.toLowerCase() === "spray") {
+          handleSprayEffect(true);
+          setTimeout(() => {
+            handleSprayEffect(false);
+          }, 5000)
         }
       })
   }, []);
@@ -145,6 +157,7 @@ function EventOptions({ wallet, updateWallet }) {
   }
 
   function sprayCash() {
+    socket.emit('message:send', sprayData);
     handleSprayEffect(true);
     if (wallet < +denom) {
       handleSprayEffect(false);
