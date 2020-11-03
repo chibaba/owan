@@ -5,6 +5,7 @@ const api = {
   //Auth API
   login: `${APP_URI}/users/v1/auths/login`,
   getUser: (id) => `${APP_URI}/users/v1/users/${id}`,
+  updateUser: (id) => `${APP_URI}/users/v1/users/${id}`,
 
   //Event API
   getEvents: `${EVENT_URI}/api/v1/event`,
