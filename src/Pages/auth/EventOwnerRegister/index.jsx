@@ -56,7 +56,6 @@ const EventOwnerRegister = () => {
       return;
     }
     const { email, fullName, password, phoneNumber } = formValues;
-    const returnPage = window.localStorage.getItem('returnTo');
 
     validateInput({ email, fullName, password, phoneNumber });
 
@@ -96,10 +95,7 @@ const EventOwnerRegister = () => {
             type: 'success',
           });
           setTimeout(() => {
-            history.push({
-              pathname: returnPage || '/dashboard',
-              state: { user },
-            });
+            history.push('/dressup');
           }, 3000);
         }
       })

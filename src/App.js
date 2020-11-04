@@ -19,6 +19,12 @@ const EventOwnerLogin = lazy(() => import('./Pages/auth/EventOwnerLogin'));
 const EventOwnerRegister = lazy(() =>
   import('./Pages/auth/EventOwnerRegister'),
 );
+const EventOwnerDressup = lazy(() =>
+  import('./Pages/auth/EventOwnerRegister/dressup'),
+);
+const EventOwnerLoadup = lazy(() =>
+  import('./Pages/auth/EventOwnerRegister/loadup'),
+);
 const EmailVerification = lazy(() => import('./Pages/auth/EmailVerification'));
 const OwnerPage = lazy(() => import('./Pages/Owner'));
 const WelcomePage = lazy(() => import('./Pages/welcomepage'));
@@ -46,6 +52,12 @@ function App() {
                     </Route>
                     <Route path="/signup">
                       <EventOwnerRegister />
+                    </Route>
+                    <Route path="/dressup">
+                      <EventOwnerDressup />
+                    </Route>
+                    <Route path="/loadup">
+                      <EventOwnerLoadup />
                     </Route>
                     <Route path="/event">
                       <EventPage />
