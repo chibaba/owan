@@ -1,49 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import Styled from 'styled-components';
-// import DashBoardCardLayout from '../../../Components/DashBoardHomeCard/DashBoardCardLayout';
-// import DashBoardHomeCard from '../../../Components/DashBoardHomeCard';
-import CurrBalance from '../../../Components/CurrBalance';
-import Button from '../../../Commons/Button';
-import Colors from '../../../Commons/Colors';
-import FormInput from '../../../Components/FormInput/Index';
-import {
-  postCallTransactions,
-  getCallTransactions,
-  getCall,
-} from '../../../APIs/requests';
+import React, { useState } from 'react';
+import { postCallTransactions } from '../../../APIs/requests';
 import api from '../../../APIs/endpoints';
-import toast from 'toasted-notes';
 import cookie from 'js-cookie';
-import {  PaystackButton } from 'react-paystack';
-import './style.scss'
-// import api from ''
+import Button from '../../../Commons/Button';
+import { Header, Content, Banner } from './dressup';
+import {
+  LoadingDiv,
+  ModalContentArea,
+  ModalForm,
+  WalletModal,
+  SuccessAlert,
+} from '../../wallet/WalletBalance';
+import FormInput from '../../../Components/FormInput/Index';
+import { PaystackButton } from 'react-paystack';
+import toast from 'toasted-notes';
+import { useHistory } from 'react-router-dom';
 
-const WalletBalance = () => {
+const DressUp = () => {
   const userId = cookie.get('auid');
-  const [showModal, setShowModal] = useState(false);
-  const [formAlert, setFormAlert] = useState({
-    success: false,
-    message: null,
-    show: false,
-  });
+  const userData = JSON.parse(cookie.get('udt'));
+  const [loading, setLoading] = useState(false);
   const [showFundWallet, setShowFundWallet] = useState(false);
-  const [showWithdraw] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState(0);
-  const [balance, setBalance] = useState(0);
-  const [banks, setBanks] = useState(null);
+  const [showWithdraw] = useState(false);
+  const [banks] = useState(null);
+  const [accountNumber, setAccountNumber] = useState('');
+  const [accountDetails] = useState(null);
+  const [setWithdrawAmount] = useState('');
+  const [initializeWithdrawalData] = useState(null);
+  const history = useHistory();
+  const returnPage = window.localStorage.getItem('returnTo');
+
   const [transferAuth, setTransferAuth] = useState({
     bankCode: '',
     accountNumber: '',
     userId,
   });
-  const [accountNumber, setAccountNumber] = useState('');
-  const [accountDetails, setAccountDetails] = useState(null);
-  const [withdrawAmount, setWithdrawAmount] = useState('');
-  const [initializeWithdrawalData, setInitializeWithdrawalData] = useState(
-    null,
-  );
-  const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState(null);
+
+  const initializePaymentData = {
+    amount,
+    email: userData?.email,
+    provider: 'paystack',
+    userId: userData?.userId,
+  };
+
+  const [formAlert, setFormAlert] = useState({
+    success: false,
+    message: null,
+    show: false,
+  });
+
   const [paystackProps, setPaystackProps] = useState({
     email: '',
     amount,
@@ -58,69 +65,12 @@ const WalletBalance = () => {
     onClose: () => {},
   });
 
-  const initializePaymentData = {
-    amount,
-    email: userData?.email,
-    provider: 'paystack',
-    userId: userData?.userId,
-  };
-
-  useEffect(() => {
-    const customerid = cookie.get('auid');
-    let userData = JSON.parse(cookie.get('udt'));
-    setUserData(userData);
-    setPaystackProps((prevState) => ({ ...prevState, email: userData?.email }));
-
-    getCallTransactions(`${process.env.REACT_APP_TREF_API}/billings/wallets?customerId=${customerid}`, {}).then(
-      (response) => {
-        setBalance(response._embedded?.wallets[0]?.balance);
-      },
-    );
-  }, []);
-
-  useEffect(() => {
-    if (showWithdraw) {
-      getCall(api.fetchBankList('paystack'))
-        .then((response) => {
-          setBanks(response.data);
-        })
-        .catch((error) => console.log(error));
-    }
-  }, [showWithdraw]);
-
-  useEffect(() => {
-    if (accountNumber.toString().length === 10) {
-      setLoading(true);
-      postCallTransactions(api.addTransferAuth, transferAuth, {})
-        .then((response) => {
-          setLoading(false);
-          const transferAuthResponse = response.data;
-          setAccountDetails({
-            accountName: transferAuthResponse.meta.account_name,
-          });
-          setInitializeWithdrawalData({
-            transferAuthId: transferAuthResponse.transferAuthId,
-            userId,
-            amount: withdrawAmount,
-            paymentProvider: 'paystack',
-            clientId: process.env.REACT_APP_PAYMENT_CLIENT_ID,
-          });
-        })
-        .catch((error) => {
-          setLoading(false);
-          toast.notify(error.message, {
-            position: 'top',
-            duration: 5000,
-          });
-        });
-    }
-  }, [accountNumber, transferAuth, userId, withdrawAmount]);
-
-  const initializeModalPayment = async () => {
-    return postCallTransactions(
-      api.initializePayment,
-      initializePaymentData,
-    ).then((response) => response.data.reference);
+  const handleFormAlertReset = () => {
+    setFormAlert({
+      success: false,
+      message: null,
+      show: false,
+    });
   };
 
   const renderBanks = () => {
@@ -138,23 +88,25 @@ const WalletBalance = () => {
     setShowFundWallet(!showFundWallet);
   };
 
-  // const handleWithdrawModal = () => {
-  //   setShowModal((prevState) => !prevState);
-  //   setShowWithdraw(!showWithdraw);
-  // };
-
   const handleAmountChange = (e) => {
     let amount = e.target.value;
     setAmount(+e.target.value * 100);
     setPaystackProps((prevState) => ({ ...prevState, amount: +amount * 100 }));
   };
 
-  const handleFormAlertReset = () => {
-    setFormAlert({
-      success: false,
-      message: null,
-      show: false,
-    });
+  const callback = () => {
+    setShowModal(false);
+  };
+  const close = () => {
+    setShowModal(false);
+  };
+
+  const initializeModalPayment = async () => {
+    console.log(initializePaymentData);
+    return postCallTransactions(
+      `${process.env.REACT_APP_TREF_API}/payments/v1/paystack/initialize`,
+      initializePaymentData,
+    ).then((response) => response.data.reference);
   };
 
   const handleAddTransferAuth = () => {
@@ -168,9 +120,6 @@ const WalletBalance = () => {
         toast.notify(error.message, { position: 'top', duration: 5000 });
       });
   };
-
-  const callback = () => {};
-  const close = () => {};
 
   return (
     <>
@@ -202,7 +151,7 @@ const WalletBalance = () => {
                     callback={callback}
                     close={close}
                     reference={paystackProps.reference}
-                    email={paystackProps.email}
+                    email={userData?.email}
                     amount={paystackProps.amount}
                     publicKey={process.env.REACT_APP_PAYSTACK_PUBLIC_KEY}
                     embed={true}
@@ -218,16 +167,19 @@ const WalletBalance = () => {
                       } else {
                         setLoading(true);
                         initializeModalPayment().then((response) => {
-                          console.log(response)
-                          if(response) {
+                          if (response) {
                             setPaystackProps((prevState) => ({
                               ...prevState,
                               reference: response,
                             }));
                             setTimeout(() => {
                               document.querySelector('.payButton').click();
-                              setShowModal(false)
-                            }, 2000)
+                              setShowModal(false);
+                              history.push({
+                                pathname: returnPage || '/dashboard',
+                                state: { user: userData },
+                              });
+                            }, 2000);
                           }
                         });
                       }
@@ -307,114 +259,18 @@ const WalletBalance = () => {
           ) : null}
         </WalletModal>
       ) : null}
-      <WalletLayout>
-        <CurrBalance balance={balance} />
-        {/* {isOwner ? (
-          <DashBoardCardLayout>
-            <DashBoardHomeCard>
-              <img src="/assets/images/icons/balance.svg" alt="icon" />
-              <span className="amount">N0</span>
-              <span>Cash gifts</span>
-            </DashBoardHomeCard>
-            <DashBoardHomeCard>
-              <img src="/assets/images/icons/balance.svg" alt="icon" />
-              <span className="amount">N0</span>
-              <span>Spray Balance</span>
-            </DashBoardHomeCard>
-          </DashBoardCardLayout>
-        ) : null} */}
-        {/* <Button text="Withdraw Funds" onClick={handleWithdrawModal} /> */}
-        <Button
-          text="Fund Wallet"
-          style={{ marginTop: '30px' }}
-          onClick={handleModal}
-        />
-      </WalletLayout>
+      <Header>Load Up</Header>
+      <Banner bg="/assets/spraying-money.jpg" />
+      <Content>
+        <p>
+          An Owambe is not complete without your wad of mint of money. How will
+          they know you came? Haha.
+        </p>
+        <h3 style={{ textAlign: 'center' }}>Load Your Wallet</h3>
+        <Button text="Fund Wallet" onClick={handleModal} />
+      </Content>
     </>
   );
 };
 
-export const LoadingDiv = Styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background: rgba(255, 255, 255, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    widht: 50px;
-    height: 50px;
-  }
-`;
-
-const WalletLayout = Styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  h4.moneyfor {
-    color: ${Colors.textColor};
-    font-size: 12px;
-    text-align: center;
-  }
-`;
-
-export const WalletModal = Styled.div`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  position: absolute;
-  top: 0;
-  left: 0;
-  max-width: 480px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99;
-`;
-
-export const ModalContentArea = Styled.div`
-  width: 90%;
-  margin: auto;
-  background: #fff;
-  padding: 10px 0;
-  border-radius: 5px;
-`;
-
-export const ModalForm = Styled.form`
-    width: 90%;
-    margin: auto;
-    text-align: center;
-    position: relative;
-    select {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 14px;
-      font: inherit;
-      margin-top: 5px;
-      margin-bottom: 1rem;
-      border: 1px solid #c4c4c4;
-      outline: none;
-    }
-`;
-
-export const SuccessAlert = Styled.div`
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 20px 0;
-  margin: auto;
-  p {
-    font-weight: bold;
-    width: 60%;
-    text-align: center;
-  }
-  button {
-    margin-top: 20px;
-  }
-`;
-
-export default WalletBalance;
+export default DressUp;

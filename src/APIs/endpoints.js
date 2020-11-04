@@ -1,5 +1,6 @@
 const EVENT_URI = process.env.REACT_APP_EVENT_API;
 const APP_URI = process.env.REACT_APP_API;
+const TRX_API = process.env.REACT_APP_TREF_API;
 
 const api = {
   //Auth API
@@ -36,7 +37,7 @@ const api = {
   getEventAttendee: (eventId) => `${EVENT_URI}/api/v1/attendee/${eventId}`,
 
   //Payments
-  initializePayment: `${APP_URI}/payments/v1/paystack/initialize`,
+  initializePayment: `${TRX_API}/payments/v1/paystack/initialize`,
 
   //Eyeson
   eyeson: {
