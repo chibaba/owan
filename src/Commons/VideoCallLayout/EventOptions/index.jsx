@@ -32,6 +32,7 @@ function EventOptions({ wallet, updateWallet }) {
     showYoutube,
     handleFundWallet,
   } = useVideoCallContext();
+  const [socketConnection] = useState(socket)
   const [likeData] = useState({
     to: event?.group_id,
     recipientType: 'group',
@@ -53,7 +54,7 @@ function EventOptions({ wallet, updateWallet }) {
       .catch((error) => {
         console.log(error);
       });
-      socket.on('broadcast:message:receive', (payload) => {
+      socketConnection.on('broadcast:message:receive', (payload) => {
         if(payload.messageType.toLowerCase() === "like") {
           setShowLikeBubbles(true);
           setTimeout(() => {
@@ -134,7 +135,7 @@ function EventOptions({ wallet, updateWallet }) {
   }, [tapCount]);
 
   function handleLikeEvent(e) {
-    socket.emit('message:send', likeData);
+    socketConnection.emit('message:send', likeData);
     setLiked(true);
 
     setTimeout(() => {
@@ -159,7 +160,7 @@ function EventOptions({ wallet, updateWallet }) {
   }
 
   function sprayCash() {
-    socket.emit('message:send', sprayData);
+    socketConnection.emit('message:send', sprayData);
     handleSprayEffect(true);
     if (wallet < +denom) {
       handleSprayEffect(false);
