@@ -25,6 +25,7 @@ const EventOwnerDressup = lazy(() =>
 const EventOwnerLoadup = lazy(() =>
   import('./Pages/auth/EventOwnerRegister/loadup'),
 );
+const AllSetPage = lazy(() => import('./Pages/auth/EventOwnerRegister/allset'));
 const EmailVerification = lazy(() => import('./Pages/auth/EmailVerification'));
 const OwnerPage = lazy(() => import('./Pages/Owner'));
 const WelcomePage = lazy(() => import('./Pages/welcomepage'));
@@ -58,6 +59,9 @@ function App() {
                     </Route>
                     <Route path="/loadup">
                       <EventOwnerLoadup />
+                    </Route>
+                    <Route path="/allset">
+                      <AllSetPage />
                     </Route>
                     <Route path="/event">
                       <EventPage />
