@@ -30,7 +30,6 @@ const DressUp = () => {
   const [setWithdrawAmount] = useState('');
   const [initializeWithdrawalData] = useState(null);
   const history = useHistory();
-  const returnPage = window.localStorage.getItem('returnTo');
 
   const [transferAuth, setTransferAuth] = useState({
     bankCode: '',
@@ -176,7 +175,7 @@ const DressUp = () => {
                               document.querySelector('.payButton').click();
                               setShowModal(false);
                               history.push({
-                                pathname: returnPage || '/dashboard',
+                                pathname: '/allset',
                                 state: { user: userData },
                               });
                             }, 2000);
@@ -273,8 +272,7 @@ const DressUp = () => {
           cancelbtn={true}
           onClick={() => {
             history.push({
-              pathname: returnPage || '/dashboard',
-              state: { user: userData },
+              pathname: '/allset',
             });
           }}
         />
