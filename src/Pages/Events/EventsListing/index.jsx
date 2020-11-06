@@ -67,13 +67,8 @@ function EventsListing() {
       .then((response) => {
         if (response.status === 200) {
           setLoading(false);
-          history.push({
-            pathname: '/event/video',
-            state: {
-              roomID: response.vidlink.room_id,
-              accessKey: response.vidlink.Access_key,
-            },
-          });
+          window.localStorage.setItem('vak', response.vidlink.Access_key)
+          window.location.href = "/event/video"
         }
       })
       .catch((error) => {
