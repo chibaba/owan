@@ -268,6 +268,16 @@ const DressUp = () => {
         </p>
         <h3 style={{ textAlign: 'center' }}>Load Your Wallet</h3>
         <Button text="Fund Wallet" onClick={handleModal} />
+        <Button
+          text="Skip"
+          cancelbtn={true}
+          onClick={() => {
+            history.push({
+              pathname: returnPage || '/dashboard',
+              state: { user: userData },
+            });
+          }}
+        />
       </Content>
     </>
   );
