@@ -2,11 +2,16 @@ import React from 'react';
 import Styled from 'styled-components';
 import Colors from '../../Commons/Colors';
 import Icon from '@mdi/react';
-import { mdiPlus } from '@mdi/js';
+import { mdiPlus, mdiClose } from '@mdi/js';
 
-const ImageUploadButton = ({ id, onChange, name, previewSrc }) => {
+const ImageUploadButton = ({ id, onChange, name, previewSrc, clearField }) => {
   return (
     <ButtonWrapper>
+      {previewSrc ? (
+        <label onClick={clearField}>
+          <Icon path={mdiClose} size={0.7} color={Colors.white} />
+        </label>
+      ) : null}
       <img
         src={previewSrc}
         alt={id}
@@ -34,6 +39,18 @@ const ButtonWrapper = Styled.div`
   label {
     position: absolute;
     z-index: 999;
+    &:first-child {
+      top: 0;
+      background: #dd0d0d;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      right: 0;
+      z-index: 9;
+    }
   }
   img {
     display: none;

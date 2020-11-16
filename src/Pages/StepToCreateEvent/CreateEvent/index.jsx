@@ -169,23 +169,34 @@ const CreateEvent = () => {
     e.persist();
 
     const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
 
-    if (e.target.files[0].size > 500000) {
-      toaster.notify('Image size must not be above 500kb', {
-        duration: 5000,
-        position: 'top',
-      });
-      return;
+    if(e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+  
+      if (e.target.files[0].size > 500000) {
+        toaster.notify('Image size must not be above 500kb', {
+          duration: 5000,
+          position: 'top',
+        });
+        return;
+      }
+  
+      reader.onloadend = () => {
+        setImageData((prevState) => ({
+          ...prevState,
+          [e.target.name]: { file: e.target.files[0], result: reader.result },
+        }));
+      };
     }
-
-    reader.onloadend = () => {
-      setImageData((prevState) => ({
-        ...prevState,
-        [e.target.name]: { file: e.target.files[0], result: reader.result },
-      }));
-    };
   };
+
+  const clearImgField = (e, name) => {
+    e.persist();
+    setImageData((prevState) => ({
+        ...prevState,
+        [name]: { file: null, result: null },
+      }));
+  }
 
   return (
     <>
@@ -318,36 +329,42 @@ const CreateEvent = () => {
               name="image1"
               onChange={handleImageUpload}
               previewSrc={imageData.image1.result}
+              clearField={(e) => clearImgField(e, 'image1')}
             />
             <ImageUploadButton
               id="image2"
               name="image2"
               onChange={handleImageUpload}
               previewSrc={imageData.image2.result}
+              clearField={(e) => clearImgField(e, 'image2')}
             />
             <ImageUploadButton
               id="image3"
               name="image3"
               onChange={handleImageUpload}
               previewSrc={imageData.image3.result}
+              clearField={(e) => clearImgField(e, 'image3')}
             />
             <ImageUploadButton
               id="image4"
               name="image4"
               onChange={handleImageUpload}
               previewSrc={imageData.image4.result}
+              clearField={(e) => clearImgField(e, 'image4')}
             />
             <ImageUploadButton
               id="image5"
               name="image5"
               onChange={handleImageUpload}
               previewSrc={imageData.image5.result}
+              clearField={(e) => clearImgField(e, 'image5')}
             />
             <ImageUploadButton
               id="image6"
               name="image6"
               onChange={handleImageUpload}
               previewSrc={imageData.image6.result}
+              clearField={(e) => clearImgField(e, 'image6')}
             />
           </ImageButtonsArea>
           <Button cancelbtn={false} text={'Create Event'} loading={loading} />

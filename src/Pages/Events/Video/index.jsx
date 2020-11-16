@@ -27,6 +27,7 @@ import FormInput from '../../../Components/FormInput/Index';
 import toast from 'toasted-notes';
 import { PaystackButton } from 'react-paystack';
 import './styles.scss';
+import ReactPlayer from 'react-player';
 
 function Video() {
   const {
@@ -154,19 +155,6 @@ function Video() {
     setUserData(JSON.parse(cookie.get('udt')));
   }, []);
 
-  // useEffect(() => {
-  //   const event = JSON.parse(window.localStorage.getItem('event'));
-  //   if (showTables) {
-  //     getCallTransactions(api.getSpendersClub(event.id))
-  //       .then((response) => {
-  //         console.log(response);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, [showTables]);
-
   const initializeModalPayment = async () => {
     return postCallTransactions(
       api.initializePayment,
@@ -218,6 +206,8 @@ function Video() {
       })
     );
   };
+
+  const onProgress = () => {}
 
   return (
     <VideoCallLayout>
@@ -419,6 +409,14 @@ function Video() {
                 allow="autoplay; fullscreen"
               ></YTVideos>
             )}
+            <ReactPlayer
+                className="react-player"
+                width="100%"
+                height="100vh"
+                url={frameLink}
+                controls={true}
+                onProgress={onProgress}
+              />
           </StreamWrapper>
         ) : null}
         <VideoPlayer
@@ -446,17 +444,14 @@ const StreamWrapper = Styled.div`
 
 const YTVideo = Styled.object`
   box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
-  width: 100% !important;
-  height: 100% !important;
-  position: absolute;
-  object-fit: cover;
-  overflow: hiddden;
-  display: flex;
-  align-items: center;
-  iframe {
-    object-fit: cover;
-    height: 100% !important;
-
+  position: relative;
+  padding-top: 56.25% ;/* Player ratio: 100 / (1280 / 720) */
+  width:'100%';
+  height:'100vh'
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 `;
 
