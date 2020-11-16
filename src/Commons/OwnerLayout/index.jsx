@@ -77,9 +77,30 @@ const OwnerLayout = ({ children, pageTitle, fullWidth, nav }) => {
                 <span>Event</span>
               </DrawerHead>
               <DrawerItemDropdown>
-                <Link to="/owner/createevent">Create Event</Link>
-                <Link to="/owner/events">My Events</Link>
-                <Link to="/owner/upcoming">Upcoming Events</Link>
+                <Link
+                  to="/owner/createevent"
+                  onClick={() => {
+                    handleDrawerState();
+                  }}
+                >
+                  Create Event
+                </Link>
+                <Link
+                  to="/owner/events"
+                  onClick={() => {
+                    handleDrawerState();
+                  }}
+                >
+                  My Events
+                </Link>
+                <Link
+                  to="/owner/upcoming"
+                  onClick={() => {
+                    handleDrawerState();
+                  }}
+                >
+                  Upcoming Events
+                </Link>
               </DrawerItemDropdown>
             </DrawerItem>
             <DrawerItem>
