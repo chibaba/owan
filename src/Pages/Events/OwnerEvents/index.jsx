@@ -32,6 +32,9 @@ const OwnerEvents = () => {
         <Link
           to={{ pathname: '/owner/event', state: { latestEvent: event } }}
           key={event.id}
+          onClick={() => {
+            window.localStorage.setItem('ev', JSON.stringify(event));
+          }}
         >
           <EventCard key={event.id}>
             <EventImgWrapper>

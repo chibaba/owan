@@ -22,7 +22,7 @@ const EventPortal = ({ imageUrl }) => {
     if (state) {
       const event =
         state.latestEvent ||
-        JSON.parse(window.localStorage.getItem('latestEvent'));
+        JSON.parse(window.localStorage.getItem('ev'));
       setEv(event);
       let date = event.event_date.split('T')[0];
       window.localStorage.setItem('event', JSON.stringify(state.latestEvent));
@@ -44,8 +44,9 @@ const EventPortal = ({ imageUrl }) => {
         endTime,
       };
       setCalendarData(calendarData);
+    } else {
+      setEv(JSON.parse(window.localStorage.getItem('ev')));
     }
-    setEv(JSON.parse(window.localStorage.getItem('latestEvent')));
   }, [state]);
 
   const handleStartEvent = (e) => {
@@ -54,7 +55,9 @@ const EventPortal = ({ imageUrl }) => {
     const currentDate = new Date();
     const eventEnd = new Date(ev?.end_date);
 
-    if (currentDate < eventEnd || !ev?.end_date) {
+    console.log(currentDate, eventEnd, currentDate < eventEnd)
+
+    if (currentDate > eventEnd || !ev?.end_date) {
       setLoading(false);
       toaster.notify(
         'The end date of this event has passed. Kindly create a new one.',
@@ -67,25 +70,7 @@ const EventPortal = ({ imageUrl }) => {
       return;
     }
 
-    // postCall(api.startVideo, {}, { event_id: state.latestEvent.id })
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       setLoading(false);
-    //       history.push({
-    //         pathname: '/event/video',
-    //         state: {
-    //           roomID: response.vidlink.room_id,
-    //           accessKey: response.vidlink.Access_key,
-    //         },
-    //       });
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error.message);
-    //     toast.notify(error.message, { position: 'top', duration: 5000 });
-    //   });
-    history.push({ pathname: '/event', state: { event: state.latestEvent } });
+    history.push({ pathname: '/event', state: { event: ev} });
   };
 
   return (
@@ -95,7 +80,7 @@ const EventPortal = ({ imageUrl }) => {
           <NavEvent>
             Your Next/ Last Event
             <CurrentEvent>
-              #{state?.latestEvent.hashtag || `${ev?.hashtag}`}
+              #{ev?.hashtag}
             </CurrentEvent>
           </NavEvent>
           <ProfileImage>
@@ -109,7 +94,7 @@ const EventPortal = ({ imageUrl }) => {
               {new Date(ev?.event_date).toDateString()}
             </span>
             <span className="time">
-              {state?.latestEvent.event_time || ev?.event_time}
+              {ev?.event_time}
             </span>
             <AddToCalendarButton style={{ marginLeft: 0, marginTop: '5px' }}>
               <AddToCalendar event={calendarData} displayItemIcons={true} />
@@ -137,7 +122,7 @@ const EventPortal = ({ imageUrl }) => {
               onClick={() =>
                 history.push({
                   pathname: '/owner/event/details',
-                  state: { event: state?.latestEvent || ev },
+                  state: { event: ev },
                 })
               }
             />
