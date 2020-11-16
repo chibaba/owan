@@ -52,7 +52,6 @@ function Video() {
   const [walletBalance, setWalletBalance] = useState(0);
   const dinominationRef = useRef(null);
   const [denomination, setDenomination] = useState(0);
-  const embedRef = useRef(null);
   const [frameLink, setFrameLink] = useState('');
   const [amount, setAmount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -81,8 +80,6 @@ function Video() {
     provider: 'paystack',
     userId: userData?.userId,
   };
-
-  const isSafari = window.safari !== undefined;
 
   useEffect(() => {
     if (state) {
@@ -388,35 +385,16 @@ function Video() {
       <VideoLayer>
         {showYoutube ? (
           <StreamWrapper>
-            {isSafari ? (
-              <YTVideo
-                type="application/x-shockwave-flash"
-                data={frameLink}
-                width="100%"
-                height="100%"
-              >
-                <param name="movie" value={frameLink} />
-                <param name="quality" value="high" />
-                <param name="allowFullScreen" value="true" />
-                <param name="allow" value="autoplay; fullscreen" />
-              </YTVideo>
-            ) : (
-              <YTVideos
-                ref={embedRef}
-                src={frameLink}
-                frameBorder="0"
-                allowFullScreen
-                allow="autoplay; fullscreen"
-              ></YTVideos>
-            )}
-            <ReactPlayer
-                className="react-player"
-                width="100%"
-                height="100vh"
-                url={frameLink}
-                controls={true}
-                onProgress={onProgress}
-              />
+            <YTVideo>
+              <ReactPlayer
+                  className="react-player"
+                  width="100%"
+                  height="100vh"
+                  url={frameLink}
+                  controls={true}
+                  onProgress={onProgress}
+                />
+            </YTVideo>
           </StreamWrapper>
         ) : null}
         <VideoPlayer
@@ -445,29 +423,12 @@ const StreamWrapper = Styled.div`
 const YTVideo = Styled.object`
   box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
   position: relative;
-  padding-top: 56.25% ;/* Player ratio: 100 / (1280 / 720) */
-  width:'100%';
-  height:'100vh'
+  width: 100%;
+  height: 100vh
   .react-player {
     position: absolute;
     top: 0;
     left: 0;
-  }
-`;
-
-const YTVideos = Styled.iframe`
-  box-shadow: inset 0px 0px 14px 50px rgba(0,0,0,0.3);
-  width: 100% !important;
-  height: 100% !important;
-  position: absolute;
-  object-fit: cover;
-  overflow: hiddden;
-  display: flex;
-  align-items: center;
-  iframe {
-    object-fit: cover;
-    height: 100% !important;
-
   }
 `;
 
