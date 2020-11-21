@@ -4,7 +4,6 @@ import EventOptions from './EventOptions';
 import EventComments from './EventComments';
 import { getCallTransactions } from '../../APIs/requests';
 import cookie from 'js-cookie';
-import api from '../../APIs/endpoints';
 
 function VideoCallLayout({ children, showSpray }) {
   const [walletBalance, setWalletBalance] = useState(null);
@@ -12,7 +11,7 @@ function VideoCallLayout({ children, showSpray }) {
   useEffect(() => {
     const customerid = cookie.get('auid');
 
-    getCallTransactions(api.getWalletBalance(customerid), {}).then(
+    getCallTransactions(`${process.env.REACT_APP_TREF_API}/billings/wallets?customerId=${customerid}`, {}).then(
       (response) => {
         if (response._embedded?.wallets.length) {
           setWalletBalance(response._embedded?.wallets[0]?.balance / 100);
@@ -20,7 +19,9 @@ function VideoCallLayout({ children, showSpray }) {
           setWalletBalance(0);
         }
       },
-    );
+    ).catch(error => {
+      console.log(error)
+    });
   }, [showSpray]);
 
   return (

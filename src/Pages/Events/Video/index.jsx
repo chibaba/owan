@@ -62,7 +62,7 @@ function Video() {
 
   const [paystackProps, setPaystackProps] = useState({
     email: userData?.email,
-    amount,
+    amount: 0,
     publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
     text: 'Fund wallet',
     reference: new Date().getTime(),
@@ -149,7 +149,9 @@ function Video() {
 
   useEffect(() => {
     setEveBg(window.localStorage.getItem('eveBg'));
-    setUserData(JSON.parse(cookie.get('udt')));
+    let userData = JSON.parse(cookie.get('udt'));
+    setUserData(userData);
+    setPaystackProps((prevState) => ({ ...prevState, email: userData?.email }));
   }, []);
 
   const initializeModalPayment = async () => {
@@ -181,11 +183,20 @@ function Video() {
   }
 
   const handleAmountChange = (e) => {
-    setAmount(+e.target.value * 100);
+    setAmount(+e.target.value * 100)
+    setPaystackProps({...paystackProps, amount: +e.target.value * 100});
   };
 
-  const callback = () => {};
-  const close = () => {};
+  const callback = () => {
+  };
+  const close = () => {
+    setLoading(false);
+  };
+
+  const success = () => {
+    setLoading(false);
+    handleFundWallet(false);
+  }
 
   const renderSprender = () => {
     return (
@@ -232,7 +243,8 @@ function Video() {
                 text="Make Payment"
                 className="payButton"
                 callback={callback}
-                close={close}
+                onClose={close}
+                onSuccess={success}
                 reference={paystackProps.reference}
                 email={paystackProps.email}
                 amount={paystackProps.amount}

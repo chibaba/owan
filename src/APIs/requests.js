@@ -116,9 +116,7 @@ export const getCallTransactions = async (url, headers) => {
     headers: requestHeader,
   })
     .then((response) => response.data)
-    .catch((error) => {
-      throw new Error(error);
-    });
+    .catch((error) => error);
 };
 
 export const putCall = async (url, data, headers) => {

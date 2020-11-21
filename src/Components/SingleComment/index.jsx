@@ -1,18 +1,18 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-function SingleComment({ image, name, isPinned, comment }) {
+function SingleComment({ name, isPinned, comment }) {
   return (
     <SingleCommentWrapper>
       <ProfileImage>
-        <img src={image} alt="me" />
+        <img src={comment?.avatar} alt="me" />
       </ProfileImage>
       <CommentDetails>
         <CommentHead>
           <h6>{name}</h6>
           {isPinned ? <HeadNotification>PINNED</HeadNotification> : null}
         </CommentHead>
-        <Comment>{comment}</Comment>
+        <Comment>{comment?.message}</Comment>
       </CommentDetails>
     </SingleCommentWrapper>
   );
@@ -27,8 +27,8 @@ const ProfileImage = Styled.div`
   margin-right: 10px;
   flex: 1;
   img {
-    width: 15px;
-    height: 15px;
+    width: 25px;
+    height: 25px;
     background: #fff;
     border-radius: 50%;
   }

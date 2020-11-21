@@ -75,7 +75,9 @@ const WalletBalance = () => {
       (response) => {
         setBalance(response._embedded?.wallets[0]?.balance);
       },
-    );
+    ).catch(error => {
+      console.log(error)
+    });
   }, []);
 
   useEffect(() => {
@@ -170,7 +172,9 @@ const WalletBalance = () => {
   };
 
   const callback = () => {};
-  const close = () => {};
+  const close = () => {
+    setLoading(false);
+  };
 
   return (
     <>
@@ -200,7 +204,7 @@ const WalletBalance = () => {
                     text="Make Payment"
                     className="payButton"
                     callback={callback}
-                    close={close}
+                    onClose={close}
                     reference={paystackProps.reference}
                     email={paystackProps.email}
                     amount={paystackProps.amount}
@@ -218,7 +222,6 @@ const WalletBalance = () => {
                       } else {
                         setLoading(true);
                         initializeModalPayment().then((response) => {
-                          console.log(response)
                           if(response) {
                             setPaystackProps((prevState) => ({
                               ...prevState,
