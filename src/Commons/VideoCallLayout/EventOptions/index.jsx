@@ -54,22 +54,22 @@ function EventOptions({ wallet, updateWallet }) {
       .catch((error) => {
         console.log(error);
       });
-      socketConnection.on('broadcast:message:receive', (payload) => {
-        if(payload.messageType.toLowerCase() === "like") {
-          setShowLikeBubbles(true);
-          setTimeout(() => {
-            setShowLikeBubbles(false);
-          }, 3000)
-          setLikeCount(prevState => prevState + 1);
-        }
-        if(payload.messageType.toLowerCase() === "spray") {
-          handleSprayEffect(true);
-          setTimeout(() => {
-            handleSprayEffect(false);
-          }, 5000)
-        }
-      })
-  }, []);
+    socketConnection.on('broadcast:message:receive', (payload) => {
+      if (payload.messageType.toLowerCase() === "like") {
+        setShowLikeBubbles(true);
+        setTimeout(() => {
+          setShowLikeBubbles(false);
+        }, 3000)
+        setLikeCount(prevState => prevState + 1);
+      }
+      if (payload.messageType.toLowerCase() === "spray") {
+        handleSprayEffect(true);
+        setTimeout(() => {
+          handleSprayEffect(false);
+        }, 5000)
+      }
+    })
+  }, [event, handleSprayEffect, socketConnection]);
 
   useEffect(() => {
     setInterval(() => {
@@ -113,7 +113,7 @@ function EventOptions({ wallet, updateWallet }) {
             },
             { user_id: cookie.get('auid'), event_id: event?.id },
           )
-            .then((response) => {})
+            .then((response) => { })
             .catch((error) => {
               console.log(error);
             });
@@ -132,7 +132,7 @@ function EventOptions({ wallet, updateWallet }) {
     }, 3000);
 
     return () => clearTimeout(debounceReq);
-  }, [tapCount]);
+  }, [tapCount, charge]);
 
   function handleLikeEvent(e) {
     socketConnection.emit('message:send', likeData);
@@ -209,12 +209,12 @@ function EventOptions({ wallet, updateWallet }) {
             <span>Attendees</span>
           </SingleOption>
         ) : (
-          <SingleOption onClick={at}>
-            <Icon path={mdiBullseye} size={1} color="#fff" />
-            <span>{attendee}</span>
-            <span>Stream</span>
-          </SingleOption>
-        )}
+            <SingleOption onClick={at}>
+              <Icon path={mdiBullseye} size={1} color="#fff" />
+              <span>{attendee}</span>
+              <span>Stream</span>
+            </SingleOption>
+          )}
         <SingleOption onClick={handleLikeEvent}>
           <Icon
             path={mdiCardsHeart}

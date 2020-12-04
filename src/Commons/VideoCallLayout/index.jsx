@@ -11,7 +11,7 @@ function VideoCallLayout({ children, showSpray }) {
   useEffect(() => {
     const customerid = cookie.get('auid');
 
-    getCallTransactions(`${process.env.REACT_APP_TREF_API}/billings/wallets?customerId=${customerid}`, {}).then(
+    getCallTransactions(`${process.env.REACT_APP_API}/billings/wallets?customerId=${customerid}`, {}).then(
       (response) => {
         if (response._embedded?.wallets.length) {
           setWalletBalance(response._embedded?.wallets[0]?.balance / 100);

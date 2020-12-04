@@ -103,7 +103,7 @@ const DressUp = () => {
   const initializeModalPayment = async () => {
     console.log(initializePaymentData);
     return postCallTransactions(
-      `${process.env.REACT_APP_TREF_API}/payments/v1/paystack/initialize`,
+      `${process.env.REACT_APP_API}/payments/v1/paystack/initialize`,
       initializePaymentData,
     ).then((response) => response.data.reference);
   };
